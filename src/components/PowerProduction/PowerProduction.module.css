@@ -1,0 +1,19 @@
+.card {
+    min-height: 150px;
+}
+
+.cardContent {
+    padding-top: 24px;
+}
+
+.cardContentText {
+    text-align: center;
+}
+
+.gridItem {
+    width: 30%;
+}
+
+.cardName {
+    text-align: center;
+}
