@@ -5,12 +5,13 @@ import Divider from '@mui/material/Divider'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
-import { Link } from 'react-router-dom'
+import { Link, matchPath, useLocation } from 'react-router-dom'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { ElectricBolt, QueryStats, WindPower, ManageAccounts } from '@mui/icons-material'
 
 const AppSideNav: React.FC = () => {
+  const location = useLocation()
   return (
     <Drawer
       sx={{
@@ -29,7 +30,7 @@ const AppSideNav: React.FC = () => {
       <Divider />
       <List>
         <ListItem key={'power-production'} disablePadding>
-          <ListItemButton component={Link} to={'/power-production'}>
+          <ListItemButton component={Link} to={'/power-production'} selected={matchPath(location.pathname, '/power-production') !== null}>
             <ListItemIcon>
               <ElectricBolt />
             </ListItemIcon>
@@ -37,7 +38,7 @@ const AppSideNav: React.FC = () => {
           </ListItemButton>
         </ListItem>
         <ListItem key={'power-stations'} disablePadding>
-          <ListItemButton component={Link} to={'/power-stations'}>
+          <ListItemButton component={Link} to={'/power-stations'} selected={matchPath({ path: '/power-stations', end: false }, location.pathname) !== null}>
             <ListItemIcon>
               <WindPower />
             </ListItemIcon>
@@ -45,7 +46,7 @@ const AppSideNav: React.FC = () => {
           </ListItemButton>
         </ListItem>
         <ListItem key={'power-prediction'} disablePadding>
-          <ListItemButton component={Link} to={'/power-prediction'}>
+          <ListItemButton component={Link} to={'/power-prediction'} selected={matchPath(location.pathname, '/power-prediction') !== null}>
             <ListItemIcon>
               <QueryStats />
             </ListItemIcon>
@@ -53,7 +54,7 @@ const AppSideNav: React.FC = () => {
           </ListItemButton>
         </ListItem>
         <ListItem key={'admin'} disablePadding>
-          <ListItemButton component={Link} to={'/admin'}>
+          <ListItemButton component={Link} to={'/admin'} selected={matchPath(location.pathname, '/admin') !== null}>
             <ListItemIcon>
               <ManageAccounts />
             </ListItemIcon>
