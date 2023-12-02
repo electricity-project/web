@@ -7,12 +7,17 @@ import AppSideNav from './AppSideNav'
 import { CssBaseline } from '@mui/material'
 
 const AppContainer: React.FC = () => {
+  const [isOpen, setIsOpen] = React.useState(false)
+  const toggleDrawer = (): void => {
+    setIsOpen(!isOpen)
+  }
+
   return (
     <Box sx={{ display: 'flex' }}>
       <CssBaseline />
-      <AppHeader />
-      <AppSideNav />
-      <Box sx={{ height: '100vh', display: 'flex', flexFlow: 'column', flex: 1 }}>
+      <AppHeader onIconClick={toggleDrawer} />
+      <AppSideNav isOpen={isOpen} />
+      <Box sx={{ height: '100vh', display: 'flex', flexFlow: 'column', flex: 1, minWidth: 0 }}>
         <Toolbar style={{ padding: 0 }}/>
         <Box
           component="main"

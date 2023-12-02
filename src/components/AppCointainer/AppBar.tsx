@@ -1,14 +1,29 @@
 import * as React from 'react'
-import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import { IconButton } from '@mui/material'
+import { Menu } from '@mui/icons-material'
+import AppBar from '@mui/material/AppBar'
 
-const AppHeader: React.FC = () => {
+interface AppHeaderProps {
+  onIconClick: () => void
+}
+
+const AppHeader: React.FC<AppHeaderProps> = ({ onIconClick }) => {
   return (
     <AppBar position="fixed">
       <Toolbar>
+        <IconButton
+          color="inherit"
+          aria-label="open drawer"
+          onClick={onIconClick}
+          edge="start"
+          sx={{ mr: 2 }}
+        >
+          <Menu />
+        </IconButton>
         <Typography variant="h6" noWrap component="div">
-          SZOZE
+          System Zarządzania OZE
         </Typography>
       </Toolbar>
     </AppBar>

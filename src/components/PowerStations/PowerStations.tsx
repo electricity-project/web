@@ -92,7 +92,7 @@ const PowerStations: React.FC = () => {
       field: 'ipv6',
       headerName: 'Adres IPv6',
       description: 'Adres IPv6 elektrowni',
-      flex: 6,
+      flex: 4,
       minWidth: 303,
       hideable: false,
       valueFormatter: (params) => ipaddr.parse(params.value).toString(),
@@ -112,7 +112,7 @@ const PowerStations: React.FC = () => {
       headerName: 'Status',
       description: 'Status elektrowni',
       flex: 4,
-      minWidth: 105,
+      minWidth: 145,
       hideable: false,
       type: 'singleSelect',
       valueOptions: [PowerStationStatus.Running, PowerStationStatus.Stopped, PowerStationStatus.Damaged, PowerStationStatus.Maintenance],
@@ -307,8 +307,7 @@ const PowerStations: React.FC = () => {
     }
   }
 
-  const renderConfirmDialog = (): null | JSX.Element => {
-    console.log('renderConfirmDialog')
+  const renderDisconnectConfirmDialog = (): null | JSX.Element => {
     if (promiseArguments === null) {
       return null
     }
@@ -336,11 +335,13 @@ const PowerStations: React.FC = () => {
 
   return (
     <>
+      {renderDisconnectConfirmDialog()}
       <Typography variant='h4' mb={1}>
         Elektrownie
       </Typography>
-      <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3 }}>
-        {renderConfirmDialog()}
+      <Box sx={{
+        width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3
+      }}>
         <DataGrid
           slots={{
             toolbar: PowerStationsToolbar
@@ -356,11 +357,11 @@ const PowerStations: React.FC = () => {
             [`& .${gridClasses.cell}:focus, & .${gridClasses.cell}:focus-within`]: {
               outline: 'none'
             },
-            [`& .${gridClasses.columnHeader}:focus, & .${gridClasses.columnHeader}:focus-within`]:
-              {
-                outline: 'none'
-              },
-            minHeight: '203px'
+            [`& .${gridClasses.columnHeader}:focus, & .${gridClasses.columnHeader}:focus-within`]: {
+              outline: 'none'
+            },
+            minHeight: '300px',
+            minWidth: '700px'
           }}
           localeText={plPL.components.MuiDataGrid.defaultProps.localeText}
         />
