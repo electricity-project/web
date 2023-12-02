@@ -9,7 +9,7 @@ import { Link, matchPath, useLocation } from 'react-router-dom'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
 import { ElectricBolt, QueryStats, WindPower, ManageAccounts } from '@mui/icons-material'
-import { type CSSObject, styled, type Theme, Tooltip } from '@mui/material'
+import { type CSSObject, styled, type Theme } from '@mui/material'
 
 const navElements = [
   {
@@ -104,20 +104,18 @@ const AppSideNav: React.FC<AppSideNavProps> = ({ isOpen }) => {
       <List disablePadding>
         {navElements.map((navElement) => (
           <>
-            <Tooltip disableInteractive title={isOpen ? undefined : navElement.text}>
-              <ListItem key={navElement.key} disablePadding>
-                <ListItemButton
-                  component={Link} to={navElement.linkTo}
-                  selected={matchPath(navElement.isSelectedPattern, location.pathname) !== null}
-                  sx={{ minHeight: 64.2, px: 2.5 }}
-                >
-                  <ListItemIcon sx={{ minWidth: 0, mr: 2.5, justifyContent: 'center' }}>
-                    {navElement.icon}
-                  </ListItemIcon>
-                  <ListItemText primary={navElement.text} sx={{ opacity: isOpen ? 1 : 1 }}/>
-                </ListItemButton>
-              </ListItem>
-            </Tooltip>
+            <ListItem key={navElement.key} disablePadding>
+              <ListItemButton
+                component={Link} to={navElement.linkTo}
+                selected={matchPath(navElement.isSelectedPattern, location.pathname) !== null}
+                sx={{ minHeight: 64.2, px: 2.5 }}
+              >
+                <ListItemIcon sx={{ minWidth: 0, mr: 2.5, justifyContent: 'center' }}>
+                  {navElement.icon}
+                </ListItemIcon>
+                <ListItemText primary={navElement.text} sx={{ opacity: isOpen ? 1 : 1 }}/>
+              </ListItemButton>
+            </ListItem>
             <Divider/>
           </>
         ))}
