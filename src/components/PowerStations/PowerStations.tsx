@@ -45,26 +45,26 @@ enum PowerStationType {
 }
 
 const rows: GridRowsProp = [
-  { id: 1, ipv6: '0000:0000:0000:0000:0000:0000:0000:0001', status: PowerStationStatus.Running, typ: PowerStationType.WindTurbine },
-  { id: 2, ipv6: '0000:0000:0000:0000:0000:0000:0000:0002', status: PowerStationStatus.Stopped, typ: PowerStationType.WindTurbine },
-  { id: 3, ipv6: '0000:0000:0000:0000:0000:0000:0000:0003', status: PowerStationStatus.Damaged, typ: PowerStationType.SolarPanel },
-  { id: 4, ipv6: '0000:0000:0000:0000:0000:0000:0000:0004', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 5, ipv6: '0000:0000:0000:0000:0000:0000:0000:0005', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 6, ipv6: '0000:0000:0000:0000:0000:0000:0000:0006', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 7, ipv6: '0000:0000:0000:0000:0000:0000:0000:0007', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 8, ipv6: '0000:0000:0000:0000:0000:0000:0000:0008', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 9, ipv6: '0000:0000:0000:0000:0000:0000:0000:0009', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 10, ipv6: '0000:0000:0000:0000:0000:0000:0000:000a', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 11, ipv6: '0000:0000:0000:0000:0000:0000:0000:000b', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 12, ipv6: '0000:0000:0000:0000:0000:0000:0000:000c', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 13, ipv6: '0000:0000:0000:0000:0000:0000:0000:000d', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 14, ipv6: '0000:0000:0000:0000:0000:0000:0000:000e', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 15, ipv6: '0000:0000:0000:0000:0000:0000:0000:000f', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 16, ipv6: '0000:0000:0000:0000:0000:0000:0000:0010', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 17, ipv6: '0000:0000:0000:0000:0000:0000:0000:0011', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 18, ipv6: '0000:0000:0000:0000:0000:0000:0000:0012', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 19, ipv6: '0000:0000:0000:0000:0000:0000:0000:0013', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
-  { id: 20, ipv6: '0000:0000:0000:0000:0000:0000:0000:0014', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel }
+  { id: 1, ipv6: '2f:0000:5120:1234:0000:0000:3:0001', status: PowerStationStatus.Running, typ: PowerStationType.SolarPanel },
+  { id: 2, ipv6: '0000:0000:23:0000:12:0000:42:0002', status: PowerStationStatus.Stopped, typ: PowerStationType.WindTurbine },
+  { id: 3, ipv6: 'ac2:da2:0000:0000:153:235:a:0003', status: PowerStationStatus.Damaged, typ: PowerStationType.SolarPanel },
+  { id: 4, ipv6: '0000:0000:0000:a57b:63c9:912a:521b:0004', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  { id: 5, ipv6: '13:0000:0000:0:0:0:0000:0005', status: PowerStationStatus.Running, typ: PowerStationType.SolarPanel },
+  { id: 6, ipv6: '2:0000:0000:0000:4a:124:ac:0006', status: PowerStationStatus.Running, typ: PowerStationType.WindTurbine },
+  { id: 7, ipv6: '53:32:0000:1ac:0000:32:0000:0007', status: PowerStationStatus.Stopped, typ: PowerStationType.SolarPanel },
+  { id: 8, ipv6: 'fac:0000:dddf:0000:132:0000:ff5:0008', status: PowerStationStatus.Maintenance, typ: PowerStationType.WindTurbine },
+  { id: 9, ipv6: 'ff4:f1:0000:231a:e24:0000:d2:0009', status: PowerStationStatus.Stopped, typ: PowerStationType.SolarPanel },
+  { id: 10, ipv6: '865:0000:0000:0000:31da:f112:231:000a', status: PowerStationStatus.Damaged, typ: PowerStationType.WindTurbine },
+  { id: 11, ipv6: '1000:1000:1000:1000:1000:1000:1000:100b', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel }
+  // { id: 12, ipv6: '0000:0000:0000:0000:0000:0000:0000:000c', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 13, ipv6: '0000:0000:0000:0000:0000:0000:0000:000d', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 14, ipv6: '0000:0000:0000:0000:0000:0000:0000:000e', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 15, ipv6: '0000:0000:0000:0000:0000:0000:0000:000f', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 16, ipv6: '0000:0000:0000:0000:0000:0000:0000:0010', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 17, ipv6: '0000:0000:0000:0000:0000:0000:0000:0011', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 18, ipv6: '0000:0000:0000:0000:0000:0000:0000:0012', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 19, ipv6: '0000:0000:0000:0000:0000:0000:0000:0013', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel },
+  // { id: 20, ipv6: '0000:0000:0000:0000:0000:0000:0000:0014', status: PowerStationStatus.Maintenance, typ: PowerStationType.SolarPanel }
 ]
 
 function PowerStationsToolbar (): JSX.Element {
@@ -92,8 +92,8 @@ const PowerStations: React.FC = () => {
       field: 'ipv6',
       headerName: 'Adres IPv6',
       description: 'Adres IPv6 elektrowni',
-      flex: 4,
       minWidth: 303,
+      width: 350,
       hideable: false,
       valueFormatter: (params) => ipaddr.parse(params.value).toString(),
       renderHeader: (params: GridColumnHeaderParams) => (
@@ -106,6 +106,50 @@ const PowerStations: React.FC = () => {
           {params.formattedValue}
         </Tooltip>
       )
+    },
+    {
+      field: 'typ',
+      headerName: 'Typ',
+      description: 'Typ elektrowni',
+      flex: 3,
+      minWidth: 150,
+      hideable: false,
+      type: 'singleSelect',
+      valueOptions: [PowerStationType.WindTurbine, PowerStationType.SolarPanel],
+      renderHeader: (params: GridColumnHeaderParams) => (
+        <Tooltip disableInteractive title={params.colDef.description}>
+          <strong>{params.colDef.headerName}</strong>
+        </Tooltip>
+      ),
+      renderCell: (params: GridRenderCellParams<any, PowerStationType>) => {
+        let icon
+        let color
+        let title
+        switch (params.value) {
+          case PowerStationType.WindTurbine:
+            color = '#6a86d3'
+            icon = <WindPower color='inherit' />
+            title = 'Turbina wiatrowa'
+            break
+          case PowerStationType.SolarPanel:
+            color = '#e1b907'
+            icon = <SolarPower color='inherit' />
+            title = 'Panele solarne'
+            break
+          default:
+            return null
+        }
+        return (
+          <Tooltip disableInteractive title={title} >
+            <Chip
+              size="medium"
+              variant="outlined"
+              sx={{ color, borderColor: color }}
+              icon={icon}
+              label={params.value} />
+          </Tooltip>
+        )
+      }
     },
     {
       field: 'status',
@@ -162,50 +206,6 @@ const PowerStations: React.FC = () => {
       }
     },
     {
-      field: 'typ',
-      headerName: 'Typ',
-      description: 'Typ elektrowni',
-      flex: 3,
-      minWidth: 150,
-      hideable: false,
-      type: 'singleSelect',
-      valueOptions: [PowerStationType.WindTurbine, PowerStationType.SolarPanel],
-      renderHeader: (params: GridColumnHeaderParams) => (
-        <Tooltip disableInteractive title={params.colDef.description}>
-          <strong>{params.colDef.headerName}</strong>
-        </Tooltip>
-      ),
-      renderCell: (params: GridRenderCellParams<any, PowerStationType>) => {
-        let icon
-        let color
-        let title
-        switch (params.value) {
-          case PowerStationType.WindTurbine:
-            color = '#6a86d3'
-            icon = <WindPower color='inherit' />
-            title = 'Turbina wiatrowa'
-            break
-          case PowerStationType.SolarPanel:
-            color = '#e1b907'
-            icon = <SolarPower color='inherit' />
-            title = 'Panele solarne'
-            break
-          default:
-            return null
-        }
-        return (
-          <Tooltip disableInteractive title={title} >
-            <Chip
-              size="medium"
-              variant="outlined"
-              sx={{ color, borderColor: color }}
-              icon={icon}
-              label={params.value} />
-          </Tooltip>
-        )
-      }
-    },
-    {
       field: 'actions',
       headerName: 'Akcje',
       description: 'Możliwe do wykonania akcje',
@@ -227,7 +227,7 @@ const PowerStations: React.FC = () => {
             title='Zobacz szczegóły'>
             <span>
               <GridActionsCellItem
-                icon={<Info color={'info'} />}
+                icon={<Info color={'info'} sx={{ fontSize: 25 }} />}
                 onClick={() => { navigate(`/power-stations/${params.row.id}`) }}
                 label="Details"
                 key={'details'} />
@@ -241,7 +241,7 @@ const PowerStations: React.FC = () => {
               title='Zatrzymaj pracę elektrowni'>
             <span>
               <GridActionsCellItem
-                icon={<Pause />}
+                icon={<Pause sx={{ fontSize: 25 }} />}
                 onClick={() => { console.log('stop') }}
                 label="Stop"
                 key={'stop'} />
@@ -256,7 +256,7 @@ const PowerStations: React.FC = () => {
             <span>
               <GridActionsCellItem
                 disabled={isDisabled}
-                icon={<PlayArrow />}
+                icon={<PlayArrow sx={{ fontSize: 25 }} />}
                 onClick={() => { console.log('start') }}
                 label="Start"
                 key={'start'} />
@@ -269,7 +269,7 @@ const PowerStations: React.FC = () => {
             title='Odłącz elektrownię od systemu'>
           <span>
             <GridActionsCellItem
-              icon={<HighlightOff color={'error'} />}
+              icon={<HighlightOff color={'error'} sx={{ fontSize: 25 }} />}
               onClick={() => { setPromiseArguments({ id: params.id }) }}
               label="Disconnect"
               key={'disconnect'} />

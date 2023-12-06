@@ -1,0 +1,3 @@
+{
+  "/power-stations/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6"
+}
