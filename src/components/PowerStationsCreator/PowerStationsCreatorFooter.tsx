@@ -3,12 +3,12 @@ import { GridFooterContainer } from '@mui/x-data-grid'
 import { Button, Grid } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  clear,
+  reset,
   connectPowerStations,
   PowerStationStatus,
   selectIsLoading,
   selectRows
-} from '../../redux/slices/powerStationCreatorSlice'
+} from '../../redux/slices/powerStationsCreatorSlice'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom'
 
@@ -18,18 +18,22 @@ const PowerStationsCreatorFooter: React.FC = () => {
   const rows = useAppSelector(selectRows)
   const isLoading = useAppSelector(selectIsLoading)
 
-  const handleSave = async (): Promise<void> => {
-    await dispatch(connectPowerStations(rows.map((row) => row.ipv6)))
-    navigate('/power-stations')
+  const handleSave = (): void => {
+    dispatch(connectPowerStations(rows.map((row) => row.ipv6)))
+      .then((result) => {
+        if (result.type === connectPowerStations.fulfilled.type) {
+          navigate('/power-stations')
+        }
+      }).catch(() => {})
   }
   const handleCancel = (): void => {
-    navigate('/power-stations')
-    dispatch(clear())
+    navigate('/power-stations', { state: { block: false } })
+    dispatch(reset())
   }
 
-  const isSaveDisabled = (): boolean => {
-    return isLoading || rows.length === 0 || rows.some((row) => row.status !== PowerStationStatus.Success)
-  }
+  const isSaveDisabled: boolean = isLoading ||
+    rows.length === 0 ||
+    rows.some((row) => row.status !== PowerStationStatus.Success)
 
   return (
     <GridFooterContainer>
@@ -50,7 +54,7 @@ const PowerStationsCreatorFooter: React.FC = () => {
           <div style={{ width: 12 }}></div>
         </Grid>
         <Grid item>
-          <Button variant="contained" onClick={() => { void handleSave() }} disabled={isSaveDisabled()}>
+          <Button variant="contained" onClick={handleSave} disabled={isSaveDisabled}>
             Dodaj do systemu
           </Button>
         </Grid>

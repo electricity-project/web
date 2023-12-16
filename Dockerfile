@@ -1,18 +1,12 @@
-FROM node:20-alpine3.17 AS development
-
-ENV NODE_ENV development
-
-COPY ./package.json /react-app
-
-WORKDIR /usr/app
-
-COPY ./ /usr/app
-
-RUN npm install
-RUN npm install -g json-server
-
+FROM node:alpine AS builder
+ENV NODE_ENV production
+WORKDIR /app
+COPY ./package*.json ./
+RUN npm ci
 COPY . .
+RUN npm run build
 
-EXPOSE 3000
-
-CMD npm start
+FROM nginx
+COPY --from=builder /app/build /usr/share/nginx/html
+COPY nginx/nginx.conf /etc/nginx/conf.d/default.conf
+CMD ["nginx", "-g", "daemon off;"]

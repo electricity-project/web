@@ -10,16 +10,17 @@ import {
   plPL
 } from '@mui/x-data-grid'
 import {
-  clear,
+  reset,
   PowerStationStatus, selectIsLoading, selectRowModesModel,
   selectRows,
   setNewRowModesModel, updateRow, validatePowerStationByIpv6
-} from '../../redux/slices/powerStationCreatorSlice'
+} from '../../redux/slices/powerStationsCreatorSlice'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import PowerStationsCreatorToolbar from './PowerStationsCreatorToolbar'
 import getColumns from './ColumnsDefinition'
 import PowerStationsCreatorFooter from './PowerStationsCreatorFooter'
 import { useEffect } from 'react'
+import UnsavedChangesPrompt from '../../routing/UnsavedChangesPrompt'
 
 const PowerStationsCreator: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -29,7 +30,7 @@ const PowerStationsCreator: React.FC = () => {
 
   useEffect(() => {
     return () => {
-      dispatch(clear())
+      dispatch(reset())
     }
   }, [])
 
@@ -53,6 +54,7 @@ const PowerStationsCreator: React.FC = () => {
 
   return (
     <>
+      <UnsavedChangesPrompt hasUnsavedChanges={rows.length !== 0}/>
       <Typography variant='h4' mb={1}>
         Nowe elektrownie
       </Typography>
@@ -68,17 +70,16 @@ const PowerStationsCreator: React.FC = () => {
           processRowUpdate={handleProcessRowUpdate}
           loading={isLoading}
           onProcessRowUpdateError={(error) => {
+            // TODO
             console.log(error)
           }}
           slots={{
             toolbar: PowerStationsCreatorToolbar,
             footer: PowerStationsCreatorFooter
           }}
-          // hideFooter
           disableColumnMenu
           disableColumnSelector
           disableRowSelectionOnClick
-          // autoPageSize
           columns={getColumns()}
           rows={rows}
           sx={{

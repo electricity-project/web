@@ -11,35 +11,28 @@ import { type GridRowModesModelProps } from '@mui/x-data-grid/models/api/gridEdi
 export const validatePowerStationByIpv6 = createAsyncThunk(
   'powerStationsCreator/validateByIpv6',
   async ({ ipv6, id }: { ipv6: string, id: GridRowId }, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 5000))
-    switch (ipv6) {
-      case '0000:0000:0000:0000:0000:0000:0000:0001':
-      case '0000:0000:0000:0000:0000:0000:0000:0003':
-        return { ipv6, type: 'Wiatrowa' }
-      case '0000:0000:0000:0000:0000:0000:0000:0002':
-        return { ipv6, type: 'Słoneczna' }
-      default:
-        return rejectWithValue({ response: { status: 404 } })
-    }
-    // return await axios.get('/power-stations/validate', { params: { ipv6 } }).then(response => {
-    //   return response.data
-    // }).catch(error => {
-    //   console.error(error)
-    //   return rejectWithValue(error)
-    // })
+    await new Promise(resolve => setTimeout(resolve, 500))
+    return await axios.get('/power-stations/validate',
+      { params: { ipv6 } }
+    ).then(response => {
+      return response.data
+    }).catch(error => {
+      console.error(error)
+      return rejectWithValue(error)
+    })
   }
 )
 
 export const connectPowerStations = createAsyncThunk(
   'powerStationsCreator/connect',
   async (ipv6Array: string[], { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 3000))
-    // return await axios.get('/power-stations/validate', { params: { ipv6 } }).then(response => {
-    //   return response.data
-    // }).catch(error => {
-    //   console.error(error)
-    //   return rejectWithValue(error)
-    // })
+    return await axios.post('/power-stations', { ipv6: ipv6Array })
+      .then(response => {
+        return response.data
+      }).catch(error => {
+        console.error(error)
+        return rejectWithValue(error)
+      })
   }
 )
 
@@ -63,11 +56,7 @@ interface PowerStationCreatorState {
 
 const initialState: PowerStationCreatorState = {
   newId: 0,
-  rows: [
-    // { id: 1, ipv6: '0000:0000:0000:0000:0000:0000:0000:0001', status: PowerStationStatus.Success, type: PowerStationType.WindTurbine },
-    // { id: 2, ipv6: '0000:0000:0000:0000:0000:0000:0000:0002', status: PowerStationStatus.Loading, type: undefined },
-    // { id: 3, ipv6: '0000:0000:0000:0000:0000:0000:0000:0003', status: PowerStationStatus.Error, type: PowerStationType.SolarPanel }
-  ],
+  rows: [],
   rowModesModel: {},
   isLoading: false
 }
@@ -81,7 +70,7 @@ const powerStationsCreatorSlice = createSlice({
   name: 'powerStationsCreator',
   initialState,
   reducers: {
-    clear: () => initialState,
+    reset: () => initialState,
     addRow: (state, action: PayloadAction<GridValidRowModel>) => {
       state.rows.unshift({ ...action.payload, id: state.newId })
       state.rowModesModel[state.newId++] = { mode: GridRowModes.Edit, fieldToFocus: 'ipv6' }
@@ -154,7 +143,7 @@ const setType = (row: GridValidRowModel | undefined, type: PowerStationType | un
 }
 
 export const {
-  clear,
+  reset,
   addRow,
   updateRow,
   deleteRowById,
@@ -163,5 +152,6 @@ export const {
 } = powerStationsCreatorSlice.actions
 export const selectIsLoading = (state: RootState): boolean => state.powerStationsCreator.isLoading
 export const selectRows = (state: RootState): GridValidRowModel[] => state.powerStationsCreator.rows
+export const selectRowsNumber = (state: RootState): number => state.powerStationsCreator.rows.length
 export const selectRowModesModel = (state: RootState): GridRowModesModel => state.powerStationsCreator.rowModesModel
 export default powerStationsCreatorSlice.reducer

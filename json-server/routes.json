@@ -1,3 +1,5 @@
 {
-  "/power-stations/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6"
+  "/power-stations/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6",
+  "/power-station?page=0&size=:size": "/power-stations-page-0",
+  "/power-station?page=1&size=:size": "/power-stations-page-1"
 }
