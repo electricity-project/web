@@ -6,54 +6,45 @@ import Box from '@mui/material/Box'
 import Tab from '@mui/material/Tab'
 import Tabs from '@mui/material/Tabs'
 import { LineChart } from '@mui/x-charts'
-import { type JSX } from 'react'
-import moment from 'moment'
+import { type JSX, useEffect } from 'react'
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import {
+  fetchPowerProduction, selectActualPowerProduction, selectAllPowerStations,
+  selectLast48HoursDataset, selectLast60DaysDataset,
+  selectLast60MinutesDataset, selectPowerStationsMaintenance, selectRunningPowerStations
+} from '../../redux/slices/powerProductionSlice'
 
-const testDataset1 = []
-
-moment.locale('pl')
-
-for (let i = 60; i > 0; i--) {
-  const newDate = moment().subtract(i, 'm').toDate()
-  newDate.setSeconds(0)
-  newDate.setMilliseconds(0)
-  testDataset1.push({ timestamp: newDate, aggregatedValue: Math.floor(Math.random() * (100 + 1)) })
-}
-
-const testDataset2 = []
-
-for (let i = 48; i > 0; i--) {
-  const newDate = moment().subtract(i, 'h').toDate()
-  newDate.setMinutes(0)
-  newDate.setSeconds(0)
-  newDate.setMilliseconds(0)
-  testDataset2.push({ timestamp: newDate, aggregatedValue: Math.floor(Math.random() * (100 + 1)) })
-}
-
-const testDataset3 = []
-
-for (let i = 59; i >= 0; i--) {
-  const newDate = moment().subtract(i, 'day').toDate()
-  newDate.setHours(0)
-  newDate.setMinutes(0)
-  newDate.setSeconds(0)
-  newDate.setMilliseconds(0)
-  testDataset3.push({ timestamp: newDate, aggregatedValue: Math.floor(Math.random() * (100 + 1)) })
-}
-
-const testDatasets = [testDataset1, testDataset2, testDataset3]
+const UPDATE_INTERVAL = 60000 // 1 minute
 
 const PowerProduction: React.FC = () => {
-  const [value, setValue] = React.useState(0)
+  const [tabIndex, setTabIndex] = React.useState(0)
+  const dispatch = useAppDispatch()
 
-  const handleChange = (_event: React.SyntheticEvent, newValue: number): void => {
-    setValue(newValue)
+  useEffect(() => {
+    void dispatch(fetchPowerProduction())
+    const interval = setInterval(() => {
+      void dispatch(fetchPowerProduction())
+    }, UPDATE_INTERVAL)
+    return () => { clearInterval(interval) }
+  }, [])
+
+  const handleChange = (_event: React.SyntheticEvent, newTabIndex: number): void => {
+    setTabIndex(newTabIndex)
   }
 
-  const chart: () => JSX.Element = () => {
-    const tickNumber = value === 1 ? 48 : 60
-    const tickLabelInterval = value === 0 ? (time: { getMinutes: () => number }) => time.getMinutes() % 5 === 0 : value === 1 ? (time: { getHours: () => number }) => time.getHours() % 4 === 0 : undefined
-    console.log(testDatasets[value])
+  const getChart: () => JSX.Element = () => {
+    const last60MinutesDataset = useAppSelector(selectLast60MinutesDataset)
+    const last48HoursDataset = useAppSelector(selectLast48HoursDataset)
+    const last60DaysDataset = useAppSelector(selectLast60DaysDataset)
+    const chartDatasets = [last60MinutesDataset, last48HoursDataset, last60DaysDataset]
+    const tickNumber = tabIndex === 1 ? 48 : 60
+    const tickLabelInterval =
+      tabIndex === 0
+        ? (time: { getMinutes: () => number }) => time.getMinutes() % 5 === 0
+        : tabIndex === 1
+          ? (time: { getHours: () => number }) => time.getHours() % 4 === 0
+          : undefined
+
     return (
       <LineChart
         // slotProps={{ axisContent: { axisValue: 'test' } }}
@@ -72,9 +63,27 @@ const PowerProduction: React.FC = () => {
             label: 'Produkcja prądu (kWh)'
           }
         ]}
-        dataset={testDatasets[value]}
+        dataset={chartDatasets[tabIndex] ?? []}
       />
     )
+  }
+
+  const getActualPowerProductionText = (): string => {
+    const actualPowerProduction = useAppSelector(selectActualPowerProduction)
+    return actualPowerProduction === undefined ? '-' : `${actualPowerProduction} kWh`
+  }
+
+  const getRunningPowerStationsText = (): string => {
+    const allPowerStations = useAppSelector(selectAllPowerStations)
+    const runningPowerStations = useAppSelector(selectRunningPowerStations)
+    return allPowerStations === undefined || runningPowerStations === undefined
+      ? '-'
+      : `${runningPowerStations} / ${allPowerStations}`
+  }
+
+  const getPowerStationsMaintenanceText = (): string => {
+    const powerStationsMaintenance = useAppSelector(selectPowerStationsMaintenance)
+    return (powerStationsMaintenance ?? '-').toString()
   }
 
   return (
@@ -95,7 +104,7 @@ const PowerProduction: React.FC = () => {
                 Sumaryczna produkcja prądu
               </Typography>
               <Typography variant={'h6'} mt={4} textAlign={'center'}>
-                500000 kWh
+                {getActualPowerProductionText()}
               </Typography>
             </CardContent>
           </Card>
@@ -107,7 +116,7 @@ const PowerProduction: React.FC = () => {
                 Liczba aktywnych elektrownii
               </Typography>
               <Typography variant={'h6'} mt={4} textAlign={'center'}>
-                1300 / 1500
+                {getRunningPowerStationsText()}
               </Typography>
             </CardContent>
           </Card>
@@ -119,7 +128,7 @@ const PowerProduction: React.FC = () => {
                 Liczba elektrowni w naprawie
               </Typography>
               <Typography variant={'h6'} mt={4} textAlign={'center'}>
-                10
+                {getPowerStationsMaintenanceText()}
               </Typography>
             </CardContent>
           </Card>
@@ -127,14 +136,14 @@ const PowerProduction: React.FC = () => {
       </Grid>
       <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3 }}>
         <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={value} onChange={handleChange}>
+          <Tabs value={tabIndex} onChange={handleChange}>
             <Tab label="Ostatnie 60 minut" sx={{ textTransform: 'none' }} />
             <Tab label="Ostatnie 48 godzin" sx={{ textTransform: 'none' }} />
             <Tab label="Ostatnie 60 dni" sx={{ textTransform: 'none' }} />
           </Tabs>
         </Box>
         <Box sx={{ width: '100%', minWidth: '700px', minHeight: '200px', flex: 1, padding: 0, border: 1, borderTop: 0, borderColor: 'divider' }}>
-          {chart()}
+          {getChart()}
         </Box>
       </Box>
     </>
