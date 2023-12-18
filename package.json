@@ -32,7 +32,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "start-json-server": "json-server -c json-server/json-server.json -w json-server/db.json -r json-server/routes.json",
+    "start-json-server": "json-server -c json-server/json-server.json -w json-server/db.json",
     "start-with-mock": "concurrently --kill-others \"npm run start-json-server\" \"npm start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
