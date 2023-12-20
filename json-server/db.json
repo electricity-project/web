@@ -341,6 +341,10 @@
     {
       "timestamp": "2023-12-16T23:48:00.000Z",
       "aggregatedValue": 150
+    },
+    {
+      "timestamp": "2023-12-16T23:49:00.000Z",
+      "aggregatedValue": 12
     }
   ],
   "power-production-last48Hours": [

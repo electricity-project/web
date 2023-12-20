@@ -18,31 +18,31 @@ export const fetchPowerStationsCount = createAsyncThunk(
 export const fetchLast60MinutesPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast60Minutes',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(61, PeriodType.Minute, rejectWithValue)
+    return await fetchPowerProduction(61, AggregationPeriodType.Minute, rejectWithValue)
   }
 )
 
 export const fetchLast48HoursPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast48Hours',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(49, PeriodType.Hour, rejectWithValue)
+    return await fetchPowerProduction(49, AggregationPeriodType.Hour, rejectWithValue)
   }
 )
 
 export const fetchLast60DaysPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast60Days',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(61, PeriodType.Day, rejectWithValue)
+    return await fetchPowerProduction(61, AggregationPeriodType.Day, rejectWithValue)
   }
 )
 
 const fetchPowerProduction = async (
   duration: number,
-  periodType: PeriodType,
+  aggregationPeriodType: AggregationPeriodType,
   rejectWithValue: any
 ): Promise<any> => {
   return await axios.get('/aggregated-power-production',
-    { params: { duration, periodType } })
+    { params: { duration, aggregationPeriodType } })
     .then(response => {
       return response.data
     }).catch(error => {
@@ -58,7 +58,7 @@ interface PowerStationsCount {
   MAINTENANCE: number
 }
 
-enum PeriodType {
+enum AggregationPeriodType {
   Minute = 'MINUTE',
   Hour = 'HOUR',
   Day = 'DAY'
@@ -96,7 +96,7 @@ const powerProductionSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchLast60MinutesPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
-        state.last60MinutesDataset = timestampToDate(action.payload)
+        state.last60MinutesDataset = fillWithValues(timestampToDate(action.payload.slice(0, 60)), 60, AggregationPeriodType.Minute)
         state.actualPowerProduction = state.last60MinutesDataset[state.last60MinutesDataset.length - 1]?.aggregatedValue
       })
       .addCase(fetchLast48HoursPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
@@ -117,6 +117,11 @@ const timestampToDate = (dataset: PowerProductionAggregation[]): PowerProduction
   return dataset.map((element) => {
     return { ...element, timestamp: new Date(element.timestamp) }
   })
+}
+
+const fillWithValues = (dataset: PowerProductionAggregation[], duration: number, aggregationPeriodType: AggregationPeriodType): PowerProductionAggregation[] => {
+
+  return dataset
 }
 
 export const selectActualPowerProduction = (state: RootState): number | undefined => state.powerProduction.actualPowerProduction

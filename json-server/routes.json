@@ -2,8 +2,8 @@
   "/power-stations/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6",
   "/power-station?page=0&size=:size": "/power-stations-page-0",
   "/power-station?page=1&size=:size": "/power-stations-page-1",
-  "/aggregated-power-production?duration=61&periodType=MINUTE": "/power-production-last60Minutes",
-  "/aggregated-power-production?duration=49&periodType=HOUR": "/power-production-last48Hours",
-  "/aggregated-power-production?duration=61&periodType=DAY": "/power-production-last60Days",
+  "/aggregated-power-production?duration=61&aggregationPeriodType=MINUTE": "/power-production-last60Minutes",
+  "/aggregated-power-production?duration=49&aggregationPeriodType=HOUR": "/power-production-last48Hours",
+  "/aggregated-power-production?duration=61&aggregationPeriodType=DAY": "/power-production-last60Days",
   "/power-station/count": "/power-station-count"
 }

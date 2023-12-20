@@ -1,5 +1,6 @@
 FROM node:alpine AS builder
 ENV NODE_ENV production
+ENV REACT_APP_API_BASE_URL http://localhost:8084/
 WORKDIR /app
 COPY ./package*.json ./
 RUN npm ci
