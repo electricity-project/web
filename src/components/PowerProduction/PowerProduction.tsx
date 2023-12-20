@@ -9,7 +9,8 @@ import { LineChart } from '@mui/x-charts'
 import { type JSX, useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  fetchPowerProduction, selectActualPowerProduction, selectAllPowerStations,
+  fetchLast48HoursPowerProduction, fetchLast60DaysPowerProduction,
+  fetchLast60MinutesPowerProduction, fetchPowerStationsCount, selectActualPowerProduction, selectAllPowerStations,
   selectLast48HoursDataset, selectLast60DaysDataset,
   selectLast60MinutesDataset, selectPowerStationsMaintenance, selectRunningPowerStations
 } from '../../redux/slices/powerProductionSlice'
@@ -21,9 +22,15 @@ const PowerProduction: React.FC = () => {
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    void dispatch(fetchPowerProduction())
+    void dispatch(fetchLast60MinutesPowerProduction())
+    void dispatch(fetchLast48HoursPowerProduction())
+    void dispatch(fetchLast60DaysPowerProduction())
+    void dispatch(fetchPowerStationsCount())
     const interval = setInterval(() => {
-      void dispatch(fetchPowerProduction())
+      void dispatch(fetchLast60MinutesPowerProduction())
+      void dispatch(fetchLast48HoursPowerProduction())
+      void dispatch(fetchLast60DaysPowerProduction())
+      void dispatch(fetchPowerStationsCount())
     }, UPDATE_INTERVAL)
     return () => { clearInterval(interval) }
   }, [])
@@ -36,7 +43,7 @@ const PowerProduction: React.FC = () => {
     const last60MinutesDataset = useAppSelector(selectLast60MinutesDataset)
     const last48HoursDataset = useAppSelector(selectLast48HoursDataset)
     const last60DaysDataset = useAppSelector(selectLast60DaysDataset)
-    const chartDatasets = [last60MinutesDataset, last48HoursDataset, last60DaysDataset]
+    const chartDatasets: Array<Array<{ timestamp: Date, aggregatedValue: number }>> = [last60MinutesDataset, last48HoursDataset, last60DaysDataset]
     const tickNumber = tabIndex === 1 ? 48 : 60
     const tickLabelInterval =
       tabIndex === 0
@@ -63,7 +70,7 @@ const PowerProduction: React.FC = () => {
             label: 'Produkcja prądu (kWh)'
           }
         ]}
-        dataset={chartDatasets[tabIndex] ?? []}
+        dataset={chartDatasets[tabIndex]}
       />
     )
   }

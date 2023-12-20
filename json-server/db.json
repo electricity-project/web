@@ -101,687 +101,688 @@
       "0000:0000:0000:0000:0000:0000:0000:0001"
     ]
   },
-  "power-production": {
-    "allPowerStations": 1500,
-    "runningPowerStations": 1300,
-    "powerStationsMaintenance": 10,
-    "last60Minutes": [
-      {
-        "timestamp": "2023-12-16T22:49:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-12-16T22:50:00.000Z",
-        "aggregatedValue": 8
-      },
-      {
-        "timestamp": "2023-12-16T22:51:00.000Z",
-        "aggregatedValue": 22
-      },
-      {
-        "timestamp": "2023-12-16T22:52:00.000Z",
-        "aggregatedValue": 28
-      },
-      {
-        "timestamp": "2023-12-16T22:53:00.000Z",
-        "aggregatedValue": 80
-      },
-      {
-        "timestamp": "2023-12-16T22:54:00.000Z",
-        "aggregatedValue": 30
-      },
-      {
-        "timestamp": "2023-12-16T22:55:00.000Z",
-        "aggregatedValue": 42
-      },
-      {
-        "timestamp": "2023-12-16T22:56:00.000Z",
-        "aggregatedValue": 20
-      },
-      {
-        "timestamp": "2023-12-16T22:57:00.000Z",
-        "aggregatedValue": 23
-      },
-      {
-        "timestamp": "2023-12-16T22:58:00.000Z",
-        "aggregatedValue": 58
-      },
-      {
-        "timestamp": "2023-12-16T22:59:00.000Z",
-        "aggregatedValue": 76
-      },
-      {
-        "timestamp": "2023-12-16T23:00:00.000Z",
-        "aggregatedValue": 20
-      },
-      {
-        "timestamp": "2023-12-16T23:01:00.000Z",
-        "aggregatedValue": 27
-      },
-      {
-        "timestamp": "2023-12-16T23:02:00.000Z",
-        "aggregatedValue": 71
-      },
-      {
-        "timestamp": "2023-12-16T23:03:00.000Z",
-        "aggregatedValue": 43
-      },
-      {
-        "timestamp": "2023-12-16T23:04:00.000Z",
-        "aggregatedValue": 28
-      },
-      {
-        "timestamp": "2023-12-16T23:05:00.000Z",
-        "aggregatedValue": 45
-      },
-      {
-        "timestamp": "2023-12-16T23:06:00.000Z",
-        "aggregatedValue": 42
-      },
-      {
-        "timestamp": "2023-12-16T23:07:00.000Z",
-        "aggregatedValue": 52
-      },
-      {
-        "timestamp": "2023-12-16T23:08:00.000Z",
-        "aggregatedValue": 34
-      },
-      {
-        "timestamp": "2023-12-16T23:09:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-12-16T23:10:00.000Z",
-        "aggregatedValue": 33
-      },
-      {
-        "timestamp": "2023-12-16T23:11:00.000Z",
-        "aggregatedValue": 66
-      },
-      {
-        "timestamp": "2023-12-16T23:12:00.000Z",
-        "aggregatedValue": 18
-      },
-      {
-        "timestamp": "2023-12-16T23:13:00.000Z",
-        "aggregatedValue": 3
-      },
-      {
-        "timestamp": "2023-12-16T23:14:00.000Z",
-        "aggregatedValue": 98
-      },
-      {
-        "timestamp": "2023-12-16T23:15:00.000Z",
-        "aggregatedValue": 41
-      },
-      {
-        "timestamp": "2023-12-16T23:16:00.000Z",
-        "aggregatedValue": 45
-      },
-      {
-        "timestamp": "2023-12-16T23:17:00.000Z",
-        "aggregatedValue": 68
-      },
-      {
-        "timestamp": "2023-12-16T23:18:00.000Z",
-        "aggregatedValue": 19
-      },
-      {
-        "timestamp": "2023-12-16T23:19:00.000Z",
-        "aggregatedValue": 74
-      },
-      {
-        "timestamp": "2023-12-16T23:20:00.000Z",
-        "aggregatedValue": 7
-      },
-      {
-        "timestamp": "2023-12-16T23:21:00.000Z",
-        "aggregatedValue": 28
-      },
-      {
-        "timestamp": "2023-12-16T23:22:00.000Z",
-        "aggregatedValue": 18
-      },
-      {
-        "timestamp": "2023-12-16T23:23:00.000Z",
-        "aggregatedValue": 41
-      },
-      {
-        "timestamp": "2023-12-16T23:24:00.000Z",
-        "aggregatedValue": 49
-      },
-      {
-        "timestamp": "2023-12-16T23:25:00.000Z",
-        "aggregatedValue": 91
-      },
-      {
-        "timestamp": "2023-12-16T23:26:00.000Z",
-        "aggregatedValue": 90
-      },
-      {
-        "timestamp": "2023-12-16T23:27:00.000Z",
-        "aggregatedValue": 94
-      },
-      {
-        "timestamp": "2023-12-16T23:28:00.000Z",
-        "aggregatedValue": 0
-      },
-      {
-        "timestamp": "2023-12-16T23:29:00.000Z",
-        "aggregatedValue": 43
-      },
-      {
-        "timestamp": "2023-12-16T23:30:00.000Z",
-        "aggregatedValue": 15
-      },
-      {
-        "timestamp": "2023-12-16T23:31:00.000Z",
-        "aggregatedValue": 14
-      },
-      {
-        "timestamp": "2023-12-16T23:32:00.000Z",
-        "aggregatedValue": 17
-      },
-      {
-        "timestamp": "2023-12-16T23:33:00.000Z",
-        "aggregatedValue": 45
-      },
-      {
-        "timestamp": "2023-12-16T23:34:00.000Z",
-        "aggregatedValue": 100
-      },
-      {
-        "timestamp": "2023-12-16T23:35:00.000Z",
-        "aggregatedValue": 93
-      },
-      {
-        "timestamp": "2023-12-16T23:36:00.000Z",
-        "aggregatedValue": 91
-      },
-      {
-        "timestamp": "2023-12-16T23:37:00.000Z",
-        "aggregatedValue": 3
-      },
-      {
-        "timestamp": "2023-12-16T23:38:00.000Z",
-        "aggregatedValue": 50
-      },
-      {
-        "timestamp": "2023-12-16T23:39:00.000Z",
-        "aggregatedValue": 65
-      },
-      {
-        "timestamp": "2023-12-16T23:40:00.000Z",
-        "aggregatedValue": 28
-      },
-      {
-        "timestamp": "2023-12-16T23:41:00.000Z",
-        "aggregatedValue": 21
-      },
-      {
-        "timestamp": "2023-12-16T23:42:00.000Z",
-        "aggregatedValue": 36
-      },
-      {
-        "timestamp": "2023-12-16T23:43:00.000Z",
-        "aggregatedValue": 22
-      },
-      {
-        "timestamp": "2023-12-16T23:44:00.000Z",
-        "aggregatedValue": 95
-      },
-      {
-        "timestamp": "2023-12-16T23:45:00.000Z",
-        "aggregatedValue": 59
-      },
-      {
-        "timestamp": "2023-12-16T23:46:00.000Z",
-        "aggregatedValue": 53
-      },
-      {
-        "timestamp": "2023-12-16T23:47:00.000Z",
-        "aggregatedValue": 14
-      },
-      {
-        "timestamp": "2023-12-16T23:48:00.000Z",
-        "aggregatedValue": 150
-      }
-    ],
-    "last48Hours": [
-      {
-        "timestamp": "2023-12-14T23:00:00.000Z",
-        "aggregatedValue": 40
-      },
-      {
-        "timestamp": "2023-12-15T00:00:00.000Z",
-        "aggregatedValue": 18
-      },
-      {
-        "timestamp": "2023-12-15T01:00:00.000Z",
-        "aggregatedValue": 56
-      },
-      {
-        "timestamp": "2023-12-15T02:00:00.000Z",
-        "aggregatedValue": 100
-      },
-      {
-        "timestamp": "2023-12-15T03:00:00.000Z",
-        "aggregatedValue": 41
-      },
-      {
-        "timestamp": "2023-12-15T04:00:00.000Z",
-        "aggregatedValue": 78
-      },
-      {
-        "timestamp": "2023-12-15T05:00:00.000Z",
-        "aggregatedValue": 42
-      },
-      {
-        "timestamp": "2023-12-15T06:00:00.000Z",
-        "aggregatedValue": 30
-      },
-      {
-        "timestamp": "2023-12-15T07:00:00.000Z",
-        "aggregatedValue": 51
-      },
-      {
-        "timestamp": "2023-12-15T08:00:00.000Z",
-        "aggregatedValue": 35
-      },
-      {
-        "timestamp": "2023-12-15T09:00:00.000Z",
-        "aggregatedValue": 96
-      },
-      {
-        "timestamp": "2023-12-15T10:00:00.000Z",
-        "aggregatedValue": 56
-      },
-      {
-        "timestamp": "2023-12-15T11:00:00.000Z",
-        "aggregatedValue": 36
-      },
-      {
-        "timestamp": "2023-12-15T12:00:00.000Z",
-        "aggregatedValue": 82
-      },
-      {
-        "timestamp": "2023-12-15T13:00:00.000Z",
-        "aggregatedValue": 100
-      },
-      {
-        "timestamp": "2023-12-15T14:00:00.000Z",
-        "aggregatedValue": 50
-      },
-      {
-        "timestamp": "2023-12-15T15:00:00.000Z",
-        "aggregatedValue": 91
-      },
-      {
-        "timestamp": "2023-12-15T16:00:00.000Z",
-        "aggregatedValue": 26
-      },
-      {
-        "timestamp": "2023-12-15T17:00:00.000Z",
-        "aggregatedValue": 8
-      },
-      {
-        "timestamp": "2023-12-15T18:00:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-12-15T19:00:00.000Z",
-        "aggregatedValue": 90
-      },
-      {
-        "timestamp": "2023-12-15T20:00:00.000Z",
-        "aggregatedValue": 45
-      },
-      {
-        "timestamp": "2023-12-15T21:00:00.000Z",
-        "aggregatedValue": 88
-      },
-      {
-        "timestamp": "2023-12-15T22:00:00.000Z",
-        "aggregatedValue": 47
-      },
-      {
-        "timestamp": "2023-12-15T23:00:00.000Z",
-        "aggregatedValue": 2
-      },
-      {
-        "timestamp": "2023-12-16T00:00:00.000Z",
-        "aggregatedValue": 67
-      },
-      {
-        "timestamp": "2023-12-16T01:00:00.000Z",
-        "aggregatedValue": 81
-      },
-      {
-        "timestamp": "2023-12-16T02:00:00.000Z",
-        "aggregatedValue": 66
-      },
-      {
-        "timestamp": "2023-12-16T03:00:00.000Z",
-        "aggregatedValue": 65
-      },
-      {
-        "timestamp": "2023-12-16T04:00:00.000Z",
-        "aggregatedValue": 67
-      },
-      {
-        "timestamp": "2023-12-16T05:00:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-12-16T06:00:00.000Z",
-        "aggregatedValue": 15
-      },
-      {
-        "timestamp": "2023-12-16T07:00:00.000Z",
-        "aggregatedValue": 12
-      },
-      {
-        "timestamp": "2023-12-16T08:00:00.000Z",
-        "aggregatedValue": 89
-      },
-      {
-        "timestamp": "2023-12-16T09:00:00.000Z",
-        "aggregatedValue": 14
-      },
-      {
-        "timestamp": "2023-12-16T10:00:00.000Z",
-        "aggregatedValue": 8
-      },
-      {
-        "timestamp": "2023-12-16T11:00:00.000Z",
-        "aggregatedValue": 67
-      },
-      {
-        "timestamp": "2023-12-16T12:00:00.000Z",
-        "aggregatedValue": 22
-      },
-      {
-        "timestamp": "2023-12-16T13:00:00.000Z",
-        "aggregatedValue": 45
-      },
-      {
-        "timestamp": "2023-12-16T14:00:00.000Z",
-        "aggregatedValue": 93
-      },
-      {
-        "timestamp": "2023-12-16T15:00:00.000Z",
-        "aggregatedValue": 49
-      },
-      {
-        "timestamp": "2023-12-16T16:00:00.000Z",
-        "aggregatedValue": 67
-      },
-      {
-        "timestamp": "2023-12-16T17:00:00.000Z",
-        "aggregatedValue": 80
-      },
-      {
-        "timestamp": "2023-12-16T18:00:00.000Z",
-        "aggregatedValue": 65
-      },
-      {
-        "timestamp": "2023-12-16T19:00:00.000Z",
-        "aggregatedValue": 46
-      },
-      {
-        "timestamp": "2023-12-16T20:00:00.000Z",
-        "aggregatedValue": 89
-      },
-      {
-        "timestamp": "2023-12-16T21:00:00.000Z",
-        "aggregatedValue": 75
-      },
-      {
-        "timestamp": "2023-12-16T22:00:00.000Z",
-        "aggregatedValue": 88
-      }
-    ],
-    "last60Days": [
-      {
-        "timestamp": "2023-10-18T22:00:00.000Z",
-        "aggregatedValue": 54
-      },
-      {
-        "timestamp": "2023-10-19T22:00:00.000Z",
-        "aggregatedValue": 31
-      },
-      {
-        "timestamp": "2023-10-20T22:00:00.000Z",
-        "aggregatedValue": 38
-      },
-      {
-        "timestamp": "2023-10-21T22:00:00.000Z",
-        "aggregatedValue": 92
-      },
-      {
-        "timestamp": "2023-10-22T22:00:00.000Z",
-        "aggregatedValue": 84
-      },
-      {
-        "timestamp": "2023-10-23T22:00:00.000Z",
-        "aggregatedValue": 50
-      },
-      {
-        "timestamp": "2023-10-24T22:00:00.000Z",
-        "aggregatedValue": 80
-      },
-      {
-        "timestamp": "2023-10-25T22:00:00.000Z",
-        "aggregatedValue": 89
-      },
-      {
-        "timestamp": "2023-10-26T22:00:00.000Z",
-        "aggregatedValue": 95
-      },
-      {
-        "timestamp": "2023-10-27T22:00:00.000Z",
-        "aggregatedValue": 28
-      },
-      {
-        "timestamp": "2023-10-28T22:00:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-10-29T23:00:00.000Z",
-        "aggregatedValue": 26
-      },
-      {
-        "timestamp": "2023-10-30T23:00:00.000Z",
-        "aggregatedValue": 38
-      },
-      {
-        "timestamp": "2023-10-31T23:00:00.000Z",
-        "aggregatedValue": 16
-      },
-      {
-        "timestamp": "2023-11-01T23:00:00.000Z",
-        "aggregatedValue": 63
-      },
-      {
-        "timestamp": "2023-11-02T23:00:00.000Z",
-        "aggregatedValue": 27
-      },
-      {
-        "timestamp": "2023-11-03T23:00:00.000Z",
-        "aggregatedValue": 83
-      },
-      {
-        "timestamp": "2023-11-04T23:00:00.000Z",
-        "aggregatedValue": 1
-      },
-      {
-        "timestamp": "2023-11-05T23:00:00.000Z",
-        "aggregatedValue": 40
-      },
-      {
-        "timestamp": "2023-11-06T23:00:00.000Z",
-        "aggregatedValue": 10
-      },
-      {
-        "timestamp": "2023-11-07T23:00:00.000Z",
-        "aggregatedValue": 33
-      },
-      {
-        "timestamp": "2023-11-08T23:00:00.000Z",
-        "aggregatedValue": 16
-      },
-      {
-        "timestamp": "2023-11-09T23:00:00.000Z",
-        "aggregatedValue": 99
-      },
-      {
-        "timestamp": "2023-11-10T23:00:00.000Z",
-        "aggregatedValue": 99
-      },
-      {
-        "timestamp": "2023-11-11T23:00:00.000Z",
-        "aggregatedValue": 91
-      },
-      {
-        "timestamp": "2023-11-12T23:00:00.000Z",
-        "aggregatedValue": 6
-      },
-      {
-        "timestamp": "2023-11-13T23:00:00.000Z",
-        "aggregatedValue": 64
-      },
-      {
-        "timestamp": "2023-11-14T23:00:00.000Z",
-        "aggregatedValue": 2
-      },
-      {
-        "timestamp": "2023-11-15T23:00:00.000Z",
-        "aggregatedValue": 72
-      },
-      {
-        "timestamp": "2023-11-16T23:00:00.000Z",
-        "aggregatedValue": 55
-      },
-      {
-        "timestamp": "2023-11-17T23:00:00.000Z",
-        "aggregatedValue": 52
-      },
-      {
-        "timestamp": "2023-11-18T23:00:00.000Z",
-        "aggregatedValue": 70
-      },
-      {
-        "timestamp": "2023-11-19T23:00:00.000Z",
-        "aggregatedValue": 59
-      },
-      {
-        "timestamp": "2023-11-20T23:00:00.000Z",
-        "aggregatedValue": 40
-      },
-      {
-        "timestamp": "2023-11-21T23:00:00.000Z",
-        "aggregatedValue": 20
-      },
-      {
-        "timestamp": "2023-11-22T23:00:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-11-23T23:00:00.000Z",
-        "aggregatedValue": 66
-      },
-      {
-        "timestamp": "2023-11-24T23:00:00.000Z",
-        "aggregatedValue": 20
-      },
-      {
-        "timestamp": "2023-11-25T23:00:00.000Z",
-        "aggregatedValue": 60
-      },
-      {
-        "timestamp": "2023-11-26T23:00:00.000Z",
-        "aggregatedValue": 52
-      },
-      {
-        "timestamp": "2023-11-27T23:00:00.000Z",
-        "aggregatedValue": 90
-      },
-      {
-        "timestamp": "2023-11-28T23:00:00.000Z",
-        "aggregatedValue": 65
-      },
-      {
-        "timestamp": "2023-11-29T23:00:00.000Z",
-        "aggregatedValue": 81
-      },
-      {
-        "timestamp": "2023-11-30T23:00:00.000Z",
-        "aggregatedValue": 97
-      },
-      {
-        "timestamp": "2023-12-01T23:00:00.000Z",
-        "aggregatedValue": 96
-      },
-      {
-        "timestamp": "2023-12-02T23:00:00.000Z",
-        "aggregatedValue": 84
-      },
-      {
-        "timestamp": "2023-12-03T23:00:00.000Z",
-        "aggregatedValue": 11
-      },
-      {
-        "timestamp": "2023-12-04T23:00:00.000Z",
-        "aggregatedValue": 16
-      },
-      {
-        "timestamp": "2023-12-05T23:00:00.000Z",
-        "aggregatedValue": 89
-      },
-      {
-        "timestamp": "2023-12-06T23:00:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-12-07T23:00:00.000Z",
-        "aggregatedValue": 8
-      },
-      {
-        "timestamp": "2023-12-08T23:00:00.000Z",
-        "aggregatedValue": 33
-      },
-      {
-        "timestamp": "2023-12-09T23:00:00.000Z",
-        "aggregatedValue": 52
-      },
-      {
-        "timestamp": "2023-12-10T23:00:00.000Z",
-        "aggregatedValue": 37
-      },
-      {
-        "timestamp": "2023-12-11T23:00:00.000Z",
-        "aggregatedValue": 90
-      },
-      {
-        "timestamp": "2023-12-12T23:00:00.000Z",
-        "aggregatedValue": 40
-      },
-      {
-        "timestamp": "2023-12-13T23:00:00.000Z",
-        "aggregatedValue": 33
-      },
-      {
-        "timestamp": "2023-12-14T23:00:00.000Z",
-        "aggregatedValue": 17
-      },
-      {
-        "timestamp": "2023-12-15T23:00:00.000Z",
-        "aggregatedValue": 74
-      },
-      {
-        "timestamp": "2023-12-16T23:00:00.000Z",
-        "aggregatedValue": 52
-      }
-    ]
+  "power-production-last60Minutes": [
+    {
+      "timestamp": "2023-12-16T22:49:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-12-16T22:50:00.000Z",
+      "aggregatedValue": 8
+    },
+    {
+      "timestamp": "2023-12-16T22:51:00.000Z",
+      "aggregatedValue": 22
+    },
+    {
+      "timestamp": "2023-12-16T22:52:00.000Z",
+      "aggregatedValue": 28
+    },
+    {
+      "timestamp": "2023-12-16T22:53:00.000Z",
+      "aggregatedValue": 80
+    },
+    {
+      "timestamp": "2023-12-16T22:54:00.000Z",
+      "aggregatedValue": 30
+    },
+    {
+      "timestamp": "2023-12-16T22:55:00.000Z",
+      "aggregatedValue": 42
+    },
+    {
+      "timestamp": "2023-12-16T22:56:00.000Z",
+      "aggregatedValue": 20
+    },
+    {
+      "timestamp": "2023-12-16T22:57:00.000Z",
+      "aggregatedValue": 23
+    },
+    {
+      "timestamp": "2023-12-16T22:58:00.000Z",
+      "aggregatedValue": 58
+    },
+    {
+      "timestamp": "2023-12-16T22:59:00.000Z",
+      "aggregatedValue": 76
+    },
+    {
+      "timestamp": "2023-12-16T23:00:00.000Z",
+      "aggregatedValue": 20
+    },
+    {
+      "timestamp": "2023-12-16T23:01:00.000Z",
+      "aggregatedValue": 27
+    },
+    {
+      "timestamp": "2023-12-16T23:02:00.000Z",
+      "aggregatedValue": 71
+    },
+    {
+      "timestamp": "2023-12-16T23:03:00.000Z",
+      "aggregatedValue": 43
+    },
+    {
+      "timestamp": "2023-12-16T23:04:00.000Z",
+      "aggregatedValue": 28
+    },
+    {
+      "timestamp": "2023-12-16T23:05:00.000Z",
+      "aggregatedValue": 45
+    },
+    {
+      "timestamp": "2023-12-16T23:06:00.000Z",
+      "aggregatedValue": 42
+    },
+    {
+      "timestamp": "2023-12-16T23:07:00.000Z",
+      "aggregatedValue": 52
+    },
+    {
+      "timestamp": "2023-12-16T23:08:00.000Z",
+      "aggregatedValue": 34
+    },
+    {
+      "timestamp": "2023-12-16T23:09:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-12-16T23:10:00.000Z",
+      "aggregatedValue": 33
+    },
+    {
+      "timestamp": "2023-12-16T23:11:00.000Z",
+      "aggregatedValue": 66
+    },
+    {
+      "timestamp": "2023-12-16T23:12:00.000Z",
+      "aggregatedValue": 18
+    },
+    {
+      "timestamp": "2023-12-16T23:13:00.000Z",
+      "aggregatedValue": 3
+    },
+    {
+      "timestamp": "2023-12-16T23:14:00.000Z",
+      "aggregatedValue": 98
+    },
+    {
+      "timestamp": "2023-12-16T23:15:00.000Z",
+      "aggregatedValue": 41
+    },
+    {
+      "timestamp": "2023-12-16T23:16:00.000Z",
+      "aggregatedValue": 45
+    },
+    {
+      "timestamp": "2023-12-16T23:17:00.000Z",
+      "aggregatedValue": 68
+    },
+    {
+      "timestamp": "2023-12-16T23:18:00.000Z",
+      "aggregatedValue": 19
+    },
+    {
+      "timestamp": "2023-12-16T23:19:00.000Z",
+      "aggregatedValue": 74
+    },
+    {
+      "timestamp": "2023-12-16T23:20:00.000Z",
+      "aggregatedValue": 7
+    },
+    {
+      "timestamp": "2023-12-16T23:21:00.000Z",
+      "aggregatedValue": 28
+    },
+    {
+      "timestamp": "2023-12-16T23:22:00.000Z",
+      "aggregatedValue": 18
+    },
+    {
+      "timestamp": "2023-12-16T23:23:00.000Z",
+      "aggregatedValue": 41
+    },
+    {
+      "timestamp": "2023-12-16T23:24:00.000Z",
+      "aggregatedValue": 49
+    },
+    {
+      "timestamp": "2023-12-16T23:25:00.000Z",
+      "aggregatedValue": 91
+    },
+    {
+      "timestamp": "2023-12-16T23:26:00.000Z",
+      "aggregatedValue": 90
+    },
+    {
+      "timestamp": "2023-12-16T23:27:00.000Z",
+      "aggregatedValue": 94
+    },
+    {
+      "timestamp": "2023-12-16T23:28:00.000Z",
+      "aggregatedValue": 0
+    },
+    {
+      "timestamp": "2023-12-16T23:29:00.000Z",
+      "aggregatedValue": 43
+    },
+    {
+      "timestamp": "2023-12-16T23:30:00.000Z",
+      "aggregatedValue": 15
+    },
+    {
+      "timestamp": "2023-12-16T23:31:00.000Z",
+      "aggregatedValue": 14
+    },
+    {
+      "timestamp": "2023-12-16T23:32:00.000Z",
+      "aggregatedValue": 17
+    },
+    {
+      "timestamp": "2023-12-16T23:33:00.000Z",
+      "aggregatedValue": 45
+    },
+    {
+      "timestamp": "2023-12-16T23:34:00.000Z",
+      "aggregatedValue": 100
+    },
+    {
+      "timestamp": "2023-12-16T23:35:00.000Z",
+      "aggregatedValue": 93
+    },
+    {
+      "timestamp": "2023-12-16T23:36:00.000Z",
+      "aggregatedValue": 91
+    },
+    {
+      "timestamp": "2023-12-16T23:37:00.000Z",
+      "aggregatedValue": 3
+    },
+    {
+      "timestamp": "2023-12-16T23:38:00.000Z",
+      "aggregatedValue": 50
+    },
+    {
+      "timestamp": "2023-12-16T23:39:00.000Z",
+      "aggregatedValue": 65
+    },
+    {
+      "timestamp": "2023-12-16T23:40:00.000Z",
+      "aggregatedValue": 28
+    },
+    {
+      "timestamp": "2023-12-16T23:41:00.000Z",
+      "aggregatedValue": 21
+    },
+    {
+      "timestamp": "2023-12-16T23:42:00.000Z",
+      "aggregatedValue": 36
+    },
+    {
+      "timestamp": "2023-12-16T23:43:00.000Z",
+      "aggregatedValue": 22
+    },
+    {
+      "timestamp": "2023-12-16T23:44:00.000Z",
+      "aggregatedValue": 95
+    },
+    {
+      "timestamp": "2023-12-16T23:45:00.000Z",
+      "aggregatedValue": 59
+    },
+    {
+      "timestamp": "2023-12-16T23:46:00.000Z",
+      "aggregatedValue": 53
+    },
+    {
+      "timestamp": "2023-12-16T23:47:00.000Z",
+      "aggregatedValue": 14
+    },
+    {
+      "timestamp": "2023-12-16T23:48:00.000Z",
+      "aggregatedValue": 150
+    }
+  ],
+  "power-production-last48Hours": [
+    {
+      "timestamp": "2023-12-14T23:00:00.000Z",
+      "aggregatedValue": 40
+    },
+    {
+      "timestamp": "2023-12-15T00:00:00.000Z",
+      "aggregatedValue": 18
+    },
+    {
+      "timestamp": "2023-12-15T01:00:00.000Z",
+      "aggregatedValue": 56
+    },
+    {
+      "timestamp": "2023-12-15T02:00:00.000Z",
+      "aggregatedValue": 100
+    },
+    {
+      "timestamp": "2023-12-15T03:00:00.000Z",
+      "aggregatedValue": 41
+    },
+    {
+      "timestamp": "2023-12-15T04:00:00.000Z",
+      "aggregatedValue": 78
+    },
+    {
+      "timestamp": "2023-12-15T05:00:00.000Z",
+      "aggregatedValue": 42
+    },
+    {
+      "timestamp": "2023-12-15T06:00:00.000Z",
+      "aggregatedValue": 30
+    },
+    {
+      "timestamp": "2023-12-15T07:00:00.000Z",
+      "aggregatedValue": 51
+    },
+    {
+      "timestamp": "2023-12-15T08:00:00.000Z",
+      "aggregatedValue": 35
+    },
+    {
+      "timestamp": "2023-12-15T09:00:00.000Z",
+      "aggregatedValue": 96
+    },
+    {
+      "timestamp": "2023-12-15T10:00:00.000Z",
+      "aggregatedValue": 56
+    },
+    {
+      "timestamp": "2023-12-15T11:00:00.000Z",
+      "aggregatedValue": 36
+    },
+    {
+      "timestamp": "2023-12-15T12:00:00.000Z",
+      "aggregatedValue": 82
+    },
+    {
+      "timestamp": "2023-12-15T13:00:00.000Z",
+      "aggregatedValue": 100
+    },
+    {
+      "timestamp": "2023-12-15T14:00:00.000Z",
+      "aggregatedValue": 50
+    },
+    {
+      "timestamp": "2023-12-15T15:00:00.000Z",
+      "aggregatedValue": 91
+    },
+    {
+      "timestamp": "2023-12-15T16:00:00.000Z",
+      "aggregatedValue": 26
+    },
+    {
+      "timestamp": "2023-12-15T17:00:00.000Z",
+      "aggregatedValue": 8
+    },
+    {
+      "timestamp": "2023-12-15T18:00:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-12-15T19:00:00.000Z",
+      "aggregatedValue": 90
+    },
+    {
+      "timestamp": "2023-12-15T20:00:00.000Z",
+      "aggregatedValue": 45
+    },
+    {
+      "timestamp": "2023-12-15T21:00:00.000Z",
+      "aggregatedValue": 88
+    },
+    {
+      "timestamp": "2023-12-15T22:00:00.000Z",
+      "aggregatedValue": 47
+    },
+    {
+      "timestamp": "2023-12-15T23:00:00.000Z",
+      "aggregatedValue": 2
+    },
+    {
+      "timestamp": "2023-12-16T00:00:00.000Z",
+      "aggregatedValue": 67
+    },
+    {
+      "timestamp": "2023-12-16T01:00:00.000Z",
+      "aggregatedValue": 81
+    },
+    {
+      "timestamp": "2023-12-16T02:00:00.000Z",
+      "aggregatedValue": 66
+    },
+    {
+      "timestamp": "2023-12-16T03:00:00.000Z",
+      "aggregatedValue": 65
+    },
+    {
+      "timestamp": "2023-12-16T04:00:00.000Z",
+      "aggregatedValue": 67
+    },
+    {
+      "timestamp": "2023-12-16T05:00:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-12-16T06:00:00.000Z",
+      "aggregatedValue": 15
+    },
+    {
+      "timestamp": "2023-12-16T07:00:00.000Z",
+      "aggregatedValue": 12
+    },
+    {
+      "timestamp": "2023-12-16T08:00:00.000Z",
+      "aggregatedValue": 89
+    },
+    {
+      "timestamp": "2023-12-16T09:00:00.000Z",
+      "aggregatedValue": 14
+    },
+    {
+      "timestamp": "2023-12-16T10:00:00.000Z",
+      "aggregatedValue": 8
+    },
+    {
+      "timestamp": "2023-12-16T11:00:00.000Z",
+      "aggregatedValue": 67
+    },
+    {
+      "timestamp": "2023-12-16T12:00:00.000Z",
+      "aggregatedValue": 22
+    },
+    {
+      "timestamp": "2023-12-16T13:00:00.000Z",
+      "aggregatedValue": 45
+    },
+    {
+      "timestamp": "2023-12-16T14:00:00.000Z",
+      "aggregatedValue": 93
+    },
+    {
+      "timestamp": "2023-12-16T15:00:00.000Z",
+      "aggregatedValue": 49
+    },
+    {
+      "timestamp": "2023-12-16T16:00:00.000Z",
+      "aggregatedValue": 67
+    },
+    {
+      "timestamp": "2023-12-16T17:00:00.000Z",
+      "aggregatedValue": 80
+    },
+    {
+      "timestamp": "2023-12-16T18:00:00.000Z",
+      "aggregatedValue": 65
+    },
+    {
+      "timestamp": "2023-12-16T19:00:00.000Z",
+      "aggregatedValue": 46
+    },
+    {
+      "timestamp": "2023-12-16T20:00:00.000Z",
+      "aggregatedValue": 89
+    },
+    {
+      "timestamp": "2023-12-16T21:00:00.000Z",
+      "aggregatedValue": 75
+    },
+    {
+      "timestamp": "2023-12-16T22:00:00.000Z",
+      "aggregatedValue": 88
+    }
+  ],
+  "power-production-last60Days": [
+    {
+      "timestamp": "2023-10-18T22:00:00.000Z",
+      "aggregatedValue": 54
+    },
+    {
+      "timestamp": "2023-10-19T22:00:00.000Z",
+      "aggregatedValue": 31
+    },
+    {
+      "timestamp": "2023-10-20T22:00:00.000Z",
+      "aggregatedValue": 38
+    },
+    {
+      "timestamp": "2023-10-21T22:00:00.000Z",
+      "aggregatedValue": 92
+    },
+    {
+      "timestamp": "2023-10-22T22:00:00.000Z",
+      "aggregatedValue": 84
+    },
+    {
+      "timestamp": "2023-10-23T22:00:00.000Z",
+      "aggregatedValue": 50
+    },
+    {
+      "timestamp": "2023-10-24T22:00:00.000Z",
+      "aggregatedValue": 80
+    },
+    {
+      "timestamp": "2023-10-25T22:00:00.000Z",
+      "aggregatedValue": 89
+    },
+    {
+      "timestamp": "2023-10-26T22:00:00.000Z",
+      "aggregatedValue": 95
+    },
+    {
+      "timestamp": "2023-10-27T22:00:00.000Z",
+      "aggregatedValue": 28
+    },
+    {
+      "timestamp": "2023-10-28T22:00:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-10-29T23:00:00.000Z",
+      "aggregatedValue": 26
+    },
+    {
+      "timestamp": "2023-10-30T23:00:00.000Z",
+      "aggregatedValue": 38
+    },
+    {
+      "timestamp": "2023-10-31T23:00:00.000Z",
+      "aggregatedValue": 16
+    },
+    {
+      "timestamp": "2023-11-01T23:00:00.000Z",
+      "aggregatedValue": 63
+    },
+    {
+      "timestamp": "2023-11-02T23:00:00.000Z",
+      "aggregatedValue": 27
+    },
+    {
+      "timestamp": "2023-11-03T23:00:00.000Z",
+      "aggregatedValue": 83
+    },
+    {
+      "timestamp": "2023-11-04T23:00:00.000Z",
+      "aggregatedValue": 1
+    },
+    {
+      "timestamp": "2023-11-05T23:00:00.000Z",
+      "aggregatedValue": 40
+    },
+    {
+      "timestamp": "2023-11-06T23:00:00.000Z",
+      "aggregatedValue": 10
+    },
+    {
+      "timestamp": "2023-11-07T23:00:00.000Z",
+      "aggregatedValue": 33
+    },
+    {
+      "timestamp": "2023-11-08T23:00:00.000Z",
+      "aggregatedValue": 16
+    },
+    {
+      "timestamp": "2023-11-09T23:00:00.000Z",
+      "aggregatedValue": 99
+    },
+    {
+      "timestamp": "2023-11-10T23:00:00.000Z",
+      "aggregatedValue": 99
+    },
+    {
+      "timestamp": "2023-11-11T23:00:00.000Z",
+      "aggregatedValue": 91
+    },
+    {
+      "timestamp": "2023-11-12T23:00:00.000Z",
+      "aggregatedValue": 6
+    },
+    {
+      "timestamp": "2023-11-13T23:00:00.000Z",
+      "aggregatedValue": 64
+    },
+    {
+      "timestamp": "2023-11-14T23:00:00.000Z",
+      "aggregatedValue": 2
+    },
+    {
+      "timestamp": "2023-11-15T23:00:00.000Z",
+      "aggregatedValue": 72
+    },
+    {
+      "timestamp": "2023-11-16T23:00:00.000Z",
+      "aggregatedValue": 55
+    },
+    {
+      "timestamp": "2023-11-17T23:00:00.000Z",
+      "aggregatedValue": 52
+    },
+    {
+      "timestamp": "2023-11-18T23:00:00.000Z",
+      "aggregatedValue": 70
+    },
+    {
+      "timestamp": "2023-11-19T23:00:00.000Z",
+      "aggregatedValue": 59
+    },
+    {
+      "timestamp": "2023-11-20T23:00:00.000Z",
+      "aggregatedValue": 40
+    },
+    {
+      "timestamp": "2023-11-21T23:00:00.000Z",
+      "aggregatedValue": 20
+    },
+    {
+      "timestamp": "2023-11-22T23:00:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-11-23T23:00:00.000Z",
+      "aggregatedValue": 66
+    },
+    {
+      "timestamp": "2023-11-24T23:00:00.000Z",
+      "aggregatedValue": 20
+    },
+    {
+      "timestamp": "2023-11-25T23:00:00.000Z",
+      "aggregatedValue": 60
+    },
+    {
+      "timestamp": "2023-11-26T23:00:00.000Z",
+      "aggregatedValue": 52
+    },
+    {
+      "timestamp": "2023-11-27T23:00:00.000Z",
+      "aggregatedValue": 90
+    },
+    {
+      "timestamp": "2023-11-28T23:00:00.000Z",
+      "aggregatedValue": 65
+    },
+    {
+      "timestamp": "2023-11-29T23:00:00.000Z",
+      "aggregatedValue": 81
+    },
+    {
+      "timestamp": "2023-11-30T23:00:00.000Z",
+      "aggregatedValue": 97
+    },
+    {
+      "timestamp": "2023-12-01T23:00:00.000Z",
+      "aggregatedValue": 96
+    },
+    {
+      "timestamp": "2023-12-02T23:00:00.000Z",
+      "aggregatedValue": 84
+    },
+    {
+      "timestamp": "2023-12-03T23:00:00.000Z",
+      "aggregatedValue": 11
+    },
+    {
+      "timestamp": "2023-12-04T23:00:00.000Z",
+      "aggregatedValue": 16
+    },
+    {
+      "timestamp": "2023-12-05T23:00:00.000Z",
+      "aggregatedValue": 89
+    },
+    {
+      "timestamp": "2023-12-06T23:00:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-12-07T23:00:00.000Z",
+      "aggregatedValue": 8
+    },
+    {
+      "timestamp": "2023-12-08T23:00:00.000Z",
+      "aggregatedValue": 33
+    },
+    {
+      "timestamp": "2023-12-09T23:00:00.000Z",
+      "aggregatedValue": 52
+    },
+    {
+      "timestamp": "2023-12-10T23:00:00.000Z",
+      "aggregatedValue": 37
+    },
+    {
+      "timestamp": "2023-12-11T23:00:00.000Z",
+      "aggregatedValue": 90
+    },
+    {
+      "timestamp": "2023-12-12T23:00:00.000Z",
+      "aggregatedValue": 40
+    },
+    {
+      "timestamp": "2023-12-13T23:00:00.000Z",
+      "aggregatedValue": 33
+    },
+    {
+      "timestamp": "2023-12-14T23:00:00.000Z",
+      "aggregatedValue": 17
+    },
+    {
+      "timestamp": "2023-12-15T23:00:00.000Z",
+      "aggregatedValue": 74
+    },
+    {
+      "timestamp": "2023-12-16T23:00:00.000Z",
+      "aggregatedValue": 52
+    }
+  ],
+  "power-station-count": {
+    "WORKING": 1300,
+    "STOPPED": 187,
+    "DAMAGED": 3,
+    "MAINTENANCE": 10
   }
 }
