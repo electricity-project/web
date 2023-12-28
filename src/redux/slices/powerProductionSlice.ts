@@ -45,7 +45,7 @@ const fetchPowerProduction = async (
   return await axios.get('/aggregated-power-production',
     { params: { duration, aggregationPeriodType } })
     .then(response => {
-      return response.data
+      return response.data.reverse().slice(0, duration - 1)
     }).catch(error => {
       console.error(error)
       return rejectWithValue(error)
@@ -97,14 +97,14 @@ const powerProductionSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchLast60MinutesPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
-        state.last60MinutesDataset = fillWithValues(timestampToDate(action.payload.reverse().slice(0, 60)), 60, AggregationPeriodType.Minute)
+        state.last60MinutesDataset = fillWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Minute)
         state.actualPowerProduction = state.last60MinutesDataset[state.last60MinutesDataset.length - 1]?.aggregatedValue
       })
       .addCase(fetchLast48HoursPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
-        state.last48HoursDataset = fillWithValues(timestampToDate(action.payload.reverse().slice(0, 48)), 48, AggregationPeriodType.Hour)
+        state.last48HoursDataset = fillWithValues(transformDataset(action.payload), 48, AggregationPeriodType.Hour)
       })
       .addCase(fetchLast60DaysPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
-        state.last60DaysDataset = fillWithValues(timestampToDate(action.payload.reverse().slice(0, 60)), 60, AggregationPeriodType.Day)
+        state.last60DaysDataset = fillWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Day)
       })
       .addCase(fetchPowerStationsCount.fulfilled, (state, action: PayloadAction<PowerStationsCount>) => {
         state.allPowerStations = action.payload.WORKING + action.payload.DAMAGED + action.payload.STOPPED + action.payload.MAINTENANCE
@@ -114,9 +114,9 @@ const powerProductionSlice = createSlice({
   }
 })
 
-const timestampToDate = (dataset: PowerProductionAggregation[]): PowerProductionAggregation[] => {
+const transformDataset = (dataset: PowerProductionAggregation[]): PowerProductionAggregation[] => {
   return dataset.map((element) => {
-    return { ...element, timestamp: new Date(element.timestamp) }
+    return { aggregatedValue: element.aggregatedValue ?? undefined, timestamp: new Date(element.timestamp) }
   })
 }
 

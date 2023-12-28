@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import {
   DataGrid,
@@ -20,7 +19,7 @@ import PowerStationsCreatorToolbar from './PowerStationsCreatorToolbar'
 import getColumns from './ColumnsDefinition'
 import PowerStationsCreatorFooter from './PowerStationsCreatorFooter'
 import { useEffect } from 'react'
-import UnsavedChangesPrompt from '../../routing/UnsavedChangesPrompt'
+import UnsavedChangesPrompt from '../common/UnsavedChangesPrompt'
 
 const PowerStationsCreator: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -54,13 +53,8 @@ const PowerStationsCreator: React.FC = () => {
 
   return (
     <>
-      <UnsavedChangesPrompt hasUnsavedChanges={rows.length !== 0}/>
-      <Typography variant='h4' mb={1}>
-        Nowe elektrownie
-      </Typography>
-      <Box sx={{
-        width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3
-      }}>
+      <UnsavedChangesPrompt hasUnsavedChanges={rows.length !== 0} />
+      <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1' }}>
         <DataGrid
           editMode="row"
           rowModesModel={rowModesModel}

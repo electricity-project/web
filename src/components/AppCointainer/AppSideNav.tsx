@@ -42,7 +42,7 @@ const navElements = [
   }
 ]
 
-const drawerWidth = 260
+const drawerWidth = 275
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
@@ -72,6 +72,7 @@ interface DrawerProps extends MuiDrawerProps {
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: (prop) => prop !== 'open'
 })<DrawerProps>(({ theme, isOpen }) => ({
+  position: 'fixed',
   width: drawerWidth,
   flexShrink: 0,
   zIndex: 1099,
@@ -93,34 +94,37 @@ interface AppSideNavProps {
 }
 
 const AppSideNav: React.FC<AppSideNavProps> = ({ isOpen }) => {
-  const location = useLocation()
+  const { pathname } = useLocation()
   return (
-    <Drawer
-      variant="permanent"
-      anchor="left"
-      isOpen={isOpen}
-    >
-      <Toolbar />
-      <List disablePadding>
-        {navElements.map((navElement) => (
-          <>
-            <ListItem key={navElement.key} disablePadding>
-              <ListItemButton
-                component={Link} to={navElement.linkTo}
-                selected={matchPath(navElement.isSelectedPattern, location.pathname) !== null}
-                sx={{ minHeight: 64.2, px: 2.5 }}
-              >
-                <ListItemIcon sx={{ minWidth: 0, mr: 2.5, justifyContent: 'center' }}>
-                  {navElement.icon}
-                </ListItemIcon>
-                <ListItemText primary={navElement.text} sx={{ opacity: isOpen ? 1 : 1 }}/>
-              </ListItemButton>
-            </ListItem>
-            <Divider/>
-          </>
-        ))}
-      </List>
-    </Drawer>
+    <>
+      <div style={{ width: '65px' }}></div>
+      <Drawer
+        variant="permanent"
+        anchor="left"
+        isOpen={isOpen}
+      >
+        <Toolbar />
+        <List disablePadding>
+          {navElements.map((navElement) => (
+            <>
+              <ListItem key={navElement.key} disablePadding>
+                <ListItemButton
+                  component={Link} to={navElement.linkTo}
+                  selected={matchPath(navElement.isSelectedPattern, pathname) !== null}
+                  sx={{ minHeight: 64.2, px: 2.5 }}
+                >
+                  <ListItemIcon sx={{ minWidth: 0, mr: 2.5, justifyContent: 'center' }}>
+                    {navElement.icon}
+                  </ListItemIcon>
+                  <ListItemText primary={navElement.text} sx={{ opacity: isOpen ? 1 : 1 }} />
+                </ListItemButton>
+              </ListItem>
+              <Divider />
+            </>
+          ))}
+        </List>
+      </Drawer>
+    </>
   )
 }
 

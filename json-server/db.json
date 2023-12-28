@@ -68,12 +68,6 @@
         "ipv6": "fac:0000:dddf:0000:132:0000:ff5:0008",
         "status": "W naprawie",
         "typ": "Wiatrowa"
-      },
-      {
-        "id": 9,
-        "ipv6": "ff4:f1:0000:231a:e24:0000:d2:0009",
-        "status": "Zatrzymana",
-        "typ": "Słoneczna"
       }
     ]
   },
@@ -82,6 +76,12 @@
       "totalElements": 11
     },
     "content": [
+      {
+        "id": 9,
+        "ipv6": "ff4:f1:0000:231a:e24:0000:d2:0009",
+        "status": "Zatrzymana",
+        "typ": "Słoneczna"
+      },
       {
         "id": 10,
         "ipv6": "865:0000:0000:0000:31da:f112:231:000a",

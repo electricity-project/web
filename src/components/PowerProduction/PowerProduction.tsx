@@ -55,6 +55,7 @@ const PowerProduction: React.FC = () => {
     return (
       <LineChart
         // slotProps={{ axisContent: { axisValue: 'test' } }}
+        leftAxis={null}
         xAxis={[
           {
             dataKey: 'timestamp',
@@ -95,14 +96,12 @@ const PowerProduction: React.FC = () => {
 
   return (
     <>
-      <Typography variant='h4' mb={4}>
-        Stan produkcji prądu
-      </Typography>
       <Grid
         container
         direction="row"
         justifyContent="space-around"
         alignItems="center"
+        mt={0.5}
       >
         <Grid item className={classes.gridItem}>
           <Card className={classes.card}>

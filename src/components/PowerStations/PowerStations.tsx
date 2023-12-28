@@ -1,5 +1,4 @@
 import * as React from 'react'
-import Typography from '@mui/material/Typography'
 import Box from '@mui/material/Box'
 import {
   DataGrid,
@@ -62,12 +61,7 @@ const PowerStations: React.FC = () => {
   return (
     <>
       <PowerStationDisconnectConfirmDialog afterConfirm={updateDataGrid} />
-      <Typography variant='h4' mb={1}>
-        Elektrownie
-      </Typography>
-      <Box sx={{
-        width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3
-      }}>
+      <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1' }}>
         <DataGrid
           apiRef={dataGridApiRef}
           slots={{
