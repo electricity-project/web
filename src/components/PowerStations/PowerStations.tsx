@@ -69,9 +69,6 @@ const PowerStations: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    console.log(alertsQueue)
-    console.log(alertProps)
-    console.log(isAlertVisible)
     if (alertsQueue.length > 0 && alertProps === undefined) {
       dispatch(updateAlert())
     } else if (alertsQueue.length > 0 && alertProps !== undefined && isAlertVisible) {
@@ -87,7 +84,7 @@ const PowerStations: React.FC = () => {
   ): void => {
     quickFilterValues = quickFilterValues === undefined || quickFilterValues.length === 0
       ? []
-      : [...new Set(quickFilterValues.join(' ').split(',').map((value) => value.trim().toLowerCase()))]
+      : Array.from(new Set(quickFilterValues.join(' ').split(',').map((value) => value.trim().toLowerCase())))
 
     quickFilterValues.forEach((value) => {
       if (value.length >= 3 && 'uruchomiona'.startsWith(value)) {
