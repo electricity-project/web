@@ -13,18 +13,27 @@ import { useEffect, useRef } from 'react'
 import getColumns from './ColumnsDefinition'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
+  clearAlert, clearAlertProps,
   fetchPowerStations,
-  reset,
-  selectAllRowsCount,
+  reset, selectAlertProps, selectAlertsQueue,
+  selectAllRowsCount, selectIsAlertVisible,
   selectIsLoading,
-  selectRows
+  selectRows, updateAlert
 } from '../../redux/slices/powerStationsSlice'
 import PowerStationsToolbar from './PowerStationsToolbar'
 import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
 import { useNavigate, useLocation } from 'react-router-dom'
 import ipaddr from 'ipaddr.js'
+import { Alert, Snackbar } from '@mui/material'
 
 const UPDATE_INTERVAL = 60000 // 1 minute
+
+enum PowerStationState {
+  WORKING = 'WORKING',
+  STOPPED = 'STOPPED',
+  DAMAGED = 'DAMAGED',
+  MAINTENANCE = 'MAINTENANCE'
+}
 
 const PowerStations: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -34,6 +43,9 @@ const PowerStations: React.FC = () => {
   const rows = useAppSelector(selectRows)
   const allRowsCount = useAppSelector(selectAllRowsCount)
   const isLoading = useAppSelector(selectIsLoading)
+  const isAlertVisible = useAppSelector(selectIsAlertVisible)
+  const alertProps = useAppSelector(selectAlertProps)
+  const alertsQueue = useAppSelector(selectAlertsQueue)
   const intervalIDRef = useRef<NodeJS.Timer | null>(null)
 
   useEffect(() => {
@@ -56,12 +68,16 @@ const PowerStations: React.FC = () => {
     }, UPDATE_INTERVAL)
   }, [])
 
-  enum PowerStationState {
-    WORKING = 'WORKING',
-    STOPPED = 'STOPPED',
-    DAMAGED = 'DAMAGED',
-    MAINTENANCE = 'MAINTENANCE'
-  }
+  useEffect(() => {
+    console.log(alertsQueue)
+    console.log(alertProps)
+    console.log(isAlertVisible)
+    if (alertsQueue.length > 0 && alertProps === undefined) {
+      dispatch(updateAlert())
+    } else if (alertsQueue.length > 0 && alertProps !== undefined && isAlertVisible) {
+      dispatch(clearAlert())
+    }
+  }, [alertsQueue, alertProps, isAlertVisible])
 
   const setPatterns = (
     quickFilterValues: any[] | undefined,
@@ -109,9 +125,33 @@ const PowerStations: React.FC = () => {
     restartTimer()
   }
 
+  const handleAlertClose = (_event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    dispatch(clearAlert())
+  }
+
+  const handleAlertTransitionExited = (): void => {
+    dispatch(clearAlertProps())
+  }
+
   return (
     <>
       <PowerStationDisconnectConfirmDialog afterConfirm={updateDataGrid} />
+      <Snackbar
+        key={alertProps?.key}
+        open={isAlertVisible}
+        autoHideDuration={5000}
+        style={{ zIndex: 1299 }}
+        onClose={handleAlertClose}
+        TransitionProps={{ onExited: handleAlertTransitionExited }}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert onClose={handleAlertClose} severity={alertProps?.severity} sx={{ width: '100%' }}>
+          {alertProps?.message}
+        </Alert>
+      </Snackbar>
       <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1' }}>
         <DataGrid
           apiRef={dataGridApiRef}

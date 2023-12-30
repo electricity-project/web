@@ -11,6 +11,7 @@ import {
 } from '../../redux/slices/powerStationsCreatorSlice'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom'
+import { addAlertToQueue } from '../../redux/slices/powerStationsSlice'
 
 const PowerStationsCreatorFooter: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -22,6 +23,7 @@ const PowerStationsCreatorFooter: React.FC = () => {
     dispatch(connectPowerStations(rows.map((row) => row.ipv6)))
       .then((result) => {
         if (result.type === connectPowerStations.fulfilled.type) {
+          dispatch(addAlertToQueue({ key: new Date().getTime(), severity: 'success', message: 'Pomyślnie dodano nowe elektrownie' }))
           navigate('/power-stations')
         }
       }).catch(() => {})

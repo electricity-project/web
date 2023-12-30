@@ -7,6 +7,7 @@ import {
 import ipaddr from 'ipaddr.js'
 import { Chip, CircularProgress, Tooltip } from '@mui/material'
 import {
+  Autorenew,
   Cancel,
   CheckCircleOutline, Delete,
   Edit,
@@ -20,7 +21,7 @@ import * as React from 'react'
 import {
   deleteRowById,
   PowerStationStatus,
-  PowerStationType, selectRowModesModel, selectRows, setRowMode
+  PowerStationType, selectRowModesModel, selectRows, setRowMode, validatePowerStationByIpv6
 } from '../../redux/slices/powerStationsCreatorSlice'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 
@@ -223,6 +224,18 @@ const getColumns = (): GridColDef[] => {
               label="Edit"
               className="textPrimary"
               onClick={() => { dispatch(setRowMode({ id, props: { mode: GridRowModes.Edit, fieldToFocus: 'ipv6' } })) }}
+              color="inherit" />
+          </span>
+          </Tooltip>,
+          <Tooltip
+            key="Revalidate"
+            disableInteractive
+            title='Testuj połączenie'>
+          <span>
+            <GridActionsCellItem
+              icon={<Autorenew />}
+              label="Revalidate"
+              onClick={() => { void dispatch(validatePowerStationByIpv6({ ipv6: params.row.ipv6, id })) }}
               color="inherit" />
           </span>
           </Tooltip>,

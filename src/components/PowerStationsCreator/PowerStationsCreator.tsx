@@ -12,7 +12,7 @@ import {
   reset,
   PowerStationStatus, selectIsLoading, selectRowModesModel,
   selectRows,
-  setNewRowModesModel, updateRow, validatePowerStationByIpv6
+  setNewRowModesModel, updateRow, validatePowerStationByIpv6, selectIsConnectionError, clearConnectionError
 } from '../../redux/slices/powerStationsCreatorSlice'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import PowerStationsCreatorToolbar from './PowerStationsCreatorToolbar'
@@ -20,12 +20,14 @@ import getColumns from './ColumnsDefinition'
 import PowerStationsCreatorFooter from './PowerStationsCreatorFooter'
 import { useEffect } from 'react'
 import UnsavedChangesPrompt from '../common/UnsavedChangesPrompt'
+import { Alert, Snackbar } from '@mui/material'
 
 const PowerStationsCreator: React.FC = () => {
   const dispatch = useAppDispatch()
   const rows = useAppSelector(selectRows)
   const rowModesModel = useAppSelector(selectRowModesModel)
   const isLoading = useAppSelector(selectIsLoading)
+  const isConnectionError = useAppSelector(selectIsConnectionError)
 
   useEffect(() => {
     return () => {
@@ -51,8 +53,24 @@ const PowerStationsCreator: React.FC = () => {
     dispatch(setNewRowModesModel(newRowModesModel))
   }
 
+  const handleErrorAlertClose = (_event?: React.SyntheticEvent | Event, reason?: string): void => {
+    if (reason === 'clickaway') {
+      return
+    }
+    dispatch(clearConnectionError())
+  }
+
   return (
     <>
+      <Snackbar
+        open={isConnectionError}
+        onClose={handleErrorAlertClose}
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+      >
+        <Alert onClose={handleErrorAlertClose} severity="error" sx={{ width: '100%' }}>
+          Nie udało się podłączyć niektórych elektrowni
+        </Alert>
+      </Snackbar>
       <UnsavedChangesPrompt hasUnsavedChanges={rows.length !== 0} />
       <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1' }}>
         <DataGrid

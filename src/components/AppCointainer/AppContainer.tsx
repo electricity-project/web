@@ -55,7 +55,7 @@ const AppContainer: React.FC = () => {
               position="static"
               style={{
                 height: 64.2,
-                backgroundColor: '#fcfcfc',
+                backgroundColor: '#ffffff',
                 color: '#000000',
                 justifyContent: 'center',
                 paddingLeft: 16

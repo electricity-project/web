@@ -26,6 +26,7 @@ export const validatePowerStationByIpv6 = createAsyncThunk(
 export const connectPowerStations = createAsyncThunk(
   'powerStationsCreator/connect',
   async (ipv6Array: string[], { rejectWithValue }) => {
+    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.post('/power-stations', { ipv6: ipv6Array })
       .then(response => {
         return response.data
@@ -52,13 +53,15 @@ interface PowerStationCreatorState {
   rows: GridValidRowModel[]
   rowModesModel: GridRowModesModel
   isLoading: boolean
+  isConnectionError: boolean
 }
 
 const initialState: PowerStationCreatorState = {
   newId: 0,
   rows: [],
   rowModesModel: {},
-  isLoading: false
+  isLoading: false,
+  isConnectionError: false
 }
 
 interface SetRowModeType {
@@ -71,6 +74,9 @@ const powerStationsCreatorSlice = createSlice({
   initialState,
   reducers: {
     reset: () => initialState,
+    clearConnectionError: (state) => {
+      state.isConnectionError = false
+    },
     addRow: (state, action: PayloadAction<GridValidRowModel>) => {
       state.rows.unshift({ ...action.payload, id: state.newId })
       state.rowModesModel[state.newId++] = { mode: GridRowModes.Edit, fieldToFocus: 'ipv6' }
@@ -118,10 +124,12 @@ const powerStationsCreatorSlice = createSlice({
       })
       .addCase(connectPowerStations.pending, (state) => {
         state.isLoading = true
+        state.isConnectionError = false
       })
       .addCase(connectPowerStations.fulfilled, () => initialState)
       .addCase(connectPowerStations.rejected, (state) => {
         state.isLoading = false
+        state.isConnectionError = true
       })
   }
 })
@@ -144,6 +152,7 @@ const setType = (row: GridValidRowModel | undefined, type: PowerStationType | un
 
 export const {
   reset,
+  clearConnectionError,
   addRow,
   updateRow,
   deleteRowById,
@@ -151,6 +160,7 @@ export const {
   setNewRowModesModel
 } = powerStationsCreatorSlice.actions
 export const selectIsLoading = (state: RootState): boolean => state.powerStationsCreator.isLoading
+export const selectIsConnectionError = (state: RootState): boolean => state.powerStationsCreator.isConnectionError
 export const selectRows = (state: RootState): GridValidRowModel[] => state.powerStationsCreator.rows
 export const selectRowsNumber = (state: RootState): number => state.powerStationsCreator.rows.length
 export const selectRowModesModel = (state: RootState): GridRowModesModel => state.powerStationsCreator.rowModesModel
