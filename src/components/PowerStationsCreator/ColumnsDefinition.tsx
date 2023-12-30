@@ -1,11 +1,15 @@
 import {
   GridActionsCellItem,
   type GridColDef,
-  type GridColumnHeaderParams,
-  type GridRenderCellParams, type GridRowId, GridRowModes, type GridRowParams
+  type GridColumnHeaderParams, type GridRenderCellParams,
+  type GridRenderEditCellParams,
+  type GridRowId,
+  GridRowModes,
+  type GridRowParams,
+  useGridApiContext
 } from '@mui/x-data-grid'
 import ipaddr from 'ipaddr.js'
-import { Chip, CircularProgress, Tooltip } from '@mui/material'
+import { Chip, CircularProgress, TextField, Tooltip } from '@mui/material'
 import {
   Autorenew,
   Cancel,
@@ -24,11 +28,68 @@ import {
   PowerStationType, selectRowModesModel, selectRows, setRowMode, validatePowerStationByIpv6
 } from '../../redux/slices/powerStationsCreatorSlice'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { IMaskInput } from 'react-imask'
+import { forwardRef } from 'react'
+
+interface CustomProps {
+  onChange: (event: { target: { name: string, value: string } }) => void
+  name: string
+}
+
+const Ipv6MaskInput = forwardRef<HTMLInputElement, CustomProps>(
+  function TextMaskCustom (props, ref) {
+    const { onChange, ...other } = props
+    return (
+      <IMaskInput
+        {...other}
+        mask="####:####:####:####:####:####:####:####"
+        definitions={{
+          '#': /[0-9a-f]/
+        }}
+        placeholderChar={'0'}
+        autofix={true}
+        lazy={false}
+        inputRef={ref}
+        onAccept={(value: any) => { onChange({ target: { name: props.name, value } }) }}
+        overwrite
+      />
+    )
+  }
+)
+
+const Ipv6Editor: React.FC<GridRenderEditCellParams> = (props) => {
+  const { id, value, field } = props
+  const apiRef = useGridApiContext()
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const newValue = event.target.value
+    if (ipaddr.isValid(newValue)) {
+      void apiRef.current.setEditCellValue({ id, field, value: newValue })
+    }
+  }
+
+  return (
+    <TextField
+      value={value}
+      onChange={handleChange}
+      InputProps={{
+        inputComponent: Ipv6MaskInput as any,
+        disableUnderline: true,
+        style: { fontSize: '0.875rem', padding: '1px 0' }
+      }}
+      variant="standard"
+      defaultValue={'0000:0000:0000:0000:0000:0000:0000:0000'}
+      placeholder={'0000:0000:0000:0000:0000:0000:0000:0000'}
+      fullWidth
+      sx={{ paddingX: 2 }}
+      autoFocus />
+  )
+}
 
 const getColumns = (): GridColDef[] => {
   const dispatch = useAppDispatch()
   const rows = useAppSelector(selectRows)
   const rowModesModel = useAppSelector(selectRowModesModel)
+
   return [
     {
       field: 'ipv6',
@@ -39,6 +100,7 @@ const getColumns = (): GridColDef[] => {
       hideable: false,
       editable: true,
       sortable: false,
+      renderEditCell: (params: GridRenderEditCellParams) => (<Ipv6Editor {...params} />),
       valueFormatter: (params) => ipaddr.parse(params.value).toString(),
       renderHeader: (params: GridColumnHeaderParams) => (
         <Tooltip disableInteractive title={params.colDef.description}>
