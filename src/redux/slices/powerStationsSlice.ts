@@ -1,11 +1,21 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import { type RootState } from '../store'
 import axios from '../../axiosConfig'
-import type { GridPaginationModel, GridRowId, GridSortItem, GridValidRowModel } from '@mui/x-data-grid'
+import type { GridRowId, GridSortDirection, GridValidRowModel } from '@mui/x-data-grid'
+
+interface FetchPowerStationsProps {
+  page: number
+  pageSize: number
+  sort: GridSortDirection
+  field: string
+  ipv6Patterns: Set<string>
+  statePatterns: Set<string>
+  typePatterns: Set<string>
+}
 
 export const fetchPowerStations = createAsyncThunk(
   'powerStations/fetch',
-  async (props: GridPaginationModel & GridSortItem, { rejectWithValue }) => {
+  async (props: FetchPowerStationsProps, { rejectWithValue }) => {
     let params: any = {
       page: props.page,
       size: props.pageSize

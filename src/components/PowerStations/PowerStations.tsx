@@ -3,7 +3,11 @@ import Box from '@mui/material/Box'
 import {
   DataGrid,
   gridClasses,
-  plPL, useGridApiRef, gridSortModelSelector, gridPaginationModelSelector
+  plPL,
+  useGridApiRef,
+  gridSortModelSelector,
+  gridPaginationModelSelector,
+  gridQuickFilterValuesSelector
 } from '@mui/x-data-grid'
 import { useEffect, useRef } from 'react'
 import getColumns from './ColumnsDefinition'
@@ -18,6 +22,7 @@ import {
 import PowerStationsToolbar from './PowerStationsToolbar'
 import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
 import { useNavigate, useLocation } from 'react-router-dom'
+import ipaddr from 'ipaddr.js'
 
 const UPDATE_INTERVAL = 60000 // 1 minute
 
@@ -51,10 +56,56 @@ const PowerStations: React.FC = () => {
     }, UPDATE_INTERVAL)
   }, [])
 
+  enum PowerStationState {
+    WORKING = 'WORKING',
+    STOPPED = 'STOPPED',
+    DAMAGED = 'DAMAGED',
+    MAINTENANCE = 'MAINTENANCE'
+  }
+
+  const setPatterns = (
+    quickFilterValues: any[] | undefined,
+    ipv6Patterns: Set<string>,
+    statePatterns: Set<string>,
+    typePatterns: Set<string>
+  ): void => {
+    quickFilterValues = quickFilterValues === undefined || quickFilterValues.length === 0
+      ? []
+      : [...new Set(quickFilterValues.join(' ').split(',').map((value) => value.trim().toLowerCase()))]
+
+    quickFilterValues.forEach((value) => {
+      if (value.length >= 3 && 'uruchomiona'.startsWith(value)) {
+        statePatterns.add(PowerStationState.WORKING)
+      } else if (value.length >= 3 && 'zatrzymana'.startsWith(value)) {
+        statePatterns.add(PowerStationState.STOPPED)
+      } else if (value.length >= 3 && 'uszkodzona'.startsWith(value)) {
+        statePatterns.add(PowerStationState.DAMAGED)
+      } else if (value.length >= 3 && 'w naprawie'.startsWith(value)) {
+        statePatterns.add(PowerStationState.MAINTENANCE)
+      } else if (value.length >= 3 && ('słoneczna'.startsWith(value) || 'sloneczna'.startsWith(value))) {
+        // TODO
+      } else if (value.length >= 3 && 'wiatrowa'.startsWith(value)) {
+        // TODO
+      } else {
+        if (ipaddr.isValid(value)) {
+          ipv6Patterns.add(ipaddr.parse(value).toString())
+        } else {
+          ipv6Patterns.add(value)
+        }
+      }
+    })
+  }
+
   const updateDataGrid = (): void => {
     const paginationModel = gridPaginationModelSelector(dataGridApiRef)
     const sortModel = gridSortModelSelector(dataGridApiRef)
-    void dispatch(fetchPowerStations({ ...paginationModel, ...sortModel[0] }))
+    const quickFilterValues = gridQuickFilterValuesSelector(dataGridApiRef)
+    const ipv6Patterns = new Set<string>()
+    const statePatterns = new Set<string>()
+    const typePatterns = new Set<string>()
+    setPatterns(quickFilterValues, ipv6Patterns, statePatterns, typePatterns)
+
+    void dispatch(fetchPowerStations({ ...paginationModel, ...sortModel[0], ipv6Patterns, statePatterns, typePatterns }))
     restartTimer()
   }
 
@@ -73,9 +124,12 @@ const PowerStations: React.FC = () => {
           disableRowSelectionOnClick
           autoPageSize
           paginationMode='server'
-          rowCount={allRowsCount}
           onPaginationModelChange={updateDataGrid}
+          rowCount={allRowsCount}
+          sortingMode='server'
           onSortModelChange={updateDataGrid}
+          filterMode='server'
+          onFilterModelChange={updateDataGrid}
           columns={getColumns(updateDataGrid)}
           rows={rows}
           sx={{

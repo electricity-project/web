@@ -7,7 +7,7 @@ import * as React from 'react'
 const PowerStationsToolbar: React.FC = () => {
   return (
     <GridToolbarContainer>
-      <GridToolbarQuickFilter placeholder={'IPv6, Status, Typ...'}/>
+      <GridToolbarQuickFilter placeholder={'IPv6, Typ, Status...'} debounceMs={500} />
       <div style={{ flex: 1, minWidth: 0 }}></div>
       <Button
         color="primary"
