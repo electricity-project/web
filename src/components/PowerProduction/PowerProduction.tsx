@@ -2,11 +2,7 @@ import * as React from 'react'
 import Typography from '@mui/material/Typography'
 import { Card, CardContent, Grid } from '@mui/material'
 import classes from './PowerProduction.module.css'
-import Box from '@mui/material/Box'
-import Tab from '@mui/material/Tab'
-import Tabs from '@mui/material/Tabs'
-import { LineChart } from '@mui/x-charts'
-import { type JSX, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   fetchLast48HoursPowerProduction, fetchLast60DaysPowerProduction,
@@ -14,12 +10,22 @@ import {
   selectLast48HoursDataset, selectLast60DaysDataset,
   selectLast60MinutesDataset, selectPowerStationsMaintenance, selectRunningPowerStations
 } from '../../redux/slices/powerProductionSlice'
+import PowerProductionCharts from '../common/PowerProductionCharts/PowerProductionCharts'
 
-const UPDATE_INTERVAL = 60000 // 1 minute
+// eslint-disable-next-line
+const UPDATE_INTERVAL = Number(process.env.REACT_APP_API_UPDATE_INTERVAL || 60000) // 1 minute
+
+interface CardProps {
+  key: string
+  header: string
+  text: string
+}
 
 const PowerProduction: React.FC = () => {
-  const [tabIndex, setTabIndex] = React.useState(0)
   const dispatch = useAppDispatch()
+  const last60MinutesDataset = useAppSelector(selectLast60MinutesDataset)
+  const last48HoursDataset = useAppSelector(selectLast48HoursDataset)
+  const last60DaysDataset = useAppSelector(selectLast60DaysDataset)
 
   useEffect(() => {
     void dispatch(fetchLast60MinutesPowerProduction())
@@ -34,47 +40,6 @@ const PowerProduction: React.FC = () => {
     }, UPDATE_INTERVAL)
     return () => { clearInterval(interval) }
   }, [])
-
-  const handleChange = (_event: React.SyntheticEvent, newTabIndex: number): void => {
-    setTabIndex(newTabIndex)
-  }
-
-  const getChart: () => JSX.Element = () => {
-    const last60MinutesDataset = useAppSelector(selectLast60MinutesDataset)
-    const last48HoursDataset = useAppSelector(selectLast48HoursDataset)
-    const last60DaysDataset = useAppSelector(selectLast60DaysDataset)
-    const chartDatasets: Array<Array<{ timestamp: Date, aggregatedValue: number }>> = [last60MinutesDataset, last48HoursDataset, last60DaysDataset]
-    const tickNumber = tabIndex === 1 ? 48 : 60
-    const tickLabelInterval =
-      tabIndex === 0
-        ? (time: { getMinutes: () => number }) => time.getMinutes() % 5 === 0
-        : tabIndex === 1
-          ? (time: { getHours: () => number }) => time.getHours() % 4 === 0
-          : undefined
-
-    return (
-      <LineChart
-        // slotProps={{ axisContent: { axisValue: 'test' } }}
-        leftAxis={null}
-        xAxis={[
-          {
-            dataKey: 'timestamp',
-            scaleType: 'time',
-            tickNumber,
-            tickLabelInterval
-          }
-        ]}
-        series={[
-          {
-            dataKey: 'aggregatedValue',
-            curve: 'linear',
-            label: 'Produkcja prądu (kWh)'
-          }
-        ]}
-        dataset={chartDatasets[tabIndex]}
-      />
-    )
-  }
 
   const getActualPowerProductionText = (): string => {
     const actualPowerProduction = useAppSelector(selectActualPowerProduction)
@@ -94,6 +59,24 @@ const PowerProduction: React.FC = () => {
     return (powerStationsMaintenance ?? '-').toString()
   }
 
+  const getCardsProps = (): CardProps[] => [
+    {
+      key: 'actual-power-production',
+      header: 'Sumaryczna produkcja prądu',
+      text: getActualPowerProductionText()
+    },
+    {
+      key: 'running-power-stations',
+      header: 'Liczba aktywnych elektrowni',
+      text: getRunningPowerStationsText()
+    },
+    {
+      key: 'maintenance-power-stations',
+      header: 'Liczba elektrowni w naprawie',
+      text: getPowerStationsMaintenanceText()
+    }
+  ]
+
   return (
     <>
       <Grid
@@ -103,55 +86,30 @@ const PowerProduction: React.FC = () => {
         alignItems="center"
         mt={0.5}
       >
-        <Grid item className={classes.gridItem}>
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography variant={'h5'} className={classes.cardName}>
-                Sumaryczna produkcja prądu
-              </Typography>
-              <Typography variant={'h6'} mt={4} textAlign={'center'}>
-                {getActualPowerProductionText()}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item className={classes.gridItem}>
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography variant={'h5'} className={classes.cardName}>
-                Liczba aktywnych elektrownii
-              </Typography>
-              <Typography variant={'h6'} mt={4} textAlign={'center'}>
-                {getRunningPowerStationsText()}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
-        <Grid item className={classes.gridItem}>
-          <Card className={classes.card}>
-            <CardContent className={classes.cardContent}>
-              <Typography variant={'h5'} className={classes.cardName}>
-                Liczba elektrowni w naprawie
-              </Typography>
-              <Typography variant={'h6'} mt={4} textAlign={'center'}>
-                {getPowerStationsMaintenanceText()}
-              </Typography>
-            </CardContent>
-          </Card>
-        </Grid>
+        {getCardsProps().map((props) => {
+          // eslint-disable-next-line react/prop-types
+          const { key, header, text } = props
+          return (
+            <Grid item className={classes.gridItem} key={key}>
+              <Card className={classes.card}>
+                <CardContent className={classes.cardContent}>
+                  <Typography variant={'h5'} className={classes.cardName}>
+                    {header}
+                  </Typography>
+                  <Typography variant={'h6'} mt={4} textAlign={'center'}>
+                    {text}
+                  </Typography>
+                </CardContent>
+              </Card>
+            </Grid>
+          )
+        })}
       </Grid>
-      <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3 }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-          <Tabs value={tabIndex} onChange={handleChange}>
-            <Tab label="Ostatnie 60 minut" sx={{ textTransform: 'none' }} />
-            <Tab label="Ostatnie 48 godzin" sx={{ textTransform: 'none' }} />
-            <Tab label="Ostatnie 60 dni" sx={{ textTransform: 'none' }} />
-          </Tabs>
-        </Box>
-        <Box sx={{ width: '100%', minWidth: '700px', minHeight: '200px', flex: 1, padding: 0, border: 1, borderTop: 0, borderColor: 'divider' }}>
-          {getChart()}
-        </Box>
-      </Box>
+      <PowerProductionCharts
+        dataKey={'aggregatedValue'}
+        last60MinutesDataset={last60MinutesDataset}
+        last48HoursDataset={last48HoursDataset}
+        last60DaysDataset={last60DaysDataset} />
     </>
   )
 }

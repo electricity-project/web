@@ -5,13 +5,13 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   reset,
   connectPowerStations,
-  PowerStationStatus,
   selectIsLoading,
   selectRows
 } from '../../redux/slices/powerStationsCreatorSlice'
 import Box from '@mui/material/Box'
 import { useNavigate } from 'react-router-dom'
 import { addAlertToQueue } from '../../redux/slices/powerStationsSlice'
+import { PowerStationCreationStatus } from '../common/types'
 
 const PowerStationsCreatorFooter: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -35,7 +35,7 @@ const PowerStationsCreatorFooter: React.FC = () => {
 
   const isSaveDisabled: boolean = isLoading ||
     rows.length === 0 ||
-    rows.some((row) => row.status !== PowerStationStatus.Success)
+    rows.some((row) => row.status !== PowerStationCreationStatus.Success)
 
   return (
     <GridFooterContainer>

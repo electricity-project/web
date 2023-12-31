@@ -1,39 +1,39 @@
 import * as React from 'react'
+import { useEffect, useRef } from 'react'
 import Box from '@mui/material/Box'
 import {
   DataGrid,
   gridClasses,
-  plPL,
-  useGridApiRef,
-  gridSortModelSelector,
   gridPaginationModelSelector,
-  gridQuickFilterValuesSelector
+  gridQuickFilterValuesSelector,
+  gridSortModelSelector,
+  plPL,
+  useGridApiRef
 } from '@mui/x-data-grid'
-import { useEffect, useRef } from 'react'
 import getColumns from './ColumnsDefinition'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  clearAlert, clearAlertProps,
+  clearAlert,
+  clearAlertProps,
   fetchPowerStations,
-  reset, selectAlertProps, selectAlertsQueue,
-  selectAllRowsCount, selectIsAlertVisible,
+  reset,
+  selectAlertProps,
+  selectAlertsQueue,
+  selectAllRowsCount,
+  selectIsAlertVisible,
   selectIsLoading,
-  selectRows, updateAlert
+  selectRows,
+  updateAlert
 } from '../../redux/slices/powerStationsSlice'
 import PowerStationsToolbar from './PowerStationsToolbar'
 import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import ipaddr from 'ipaddr.js'
 import { Alert, Snackbar } from '@mui/material'
+import { PowerStationState, PowerStationType } from '../common/types'
 
-const UPDATE_INTERVAL = 60000 // 1 minute
-
-enum PowerStationState {
-  WORKING = 'WORKING',
-  STOPPED = 'STOPPED',
-  DAMAGED = 'DAMAGED',
-  MAINTENANCE = 'MAINTENANCE'
-}
+// eslint-disable-next-line
+const UPDATE_INTERVAL = Number(process.env.REACT_APP_API_UPDATE_INTERVAL || 60000) // 1 minute
 
 const PowerStations: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -79,8 +79,8 @@ const PowerStations: React.FC = () => {
   const setPatterns = (
     quickFilterValues: any[] | undefined,
     ipv6Patterns: Set<string>,
-    statePatterns: Set<string>,
-    typePatterns: Set<string>
+    statePatterns: Set<PowerStationState>,
+    typePatterns: Set<PowerStationType>
   ): void => {
     quickFilterValues = quickFilterValues === undefined || quickFilterValues.length === 0
       ? []
@@ -88,17 +88,17 @@ const PowerStations: React.FC = () => {
 
     quickFilterValues.forEach((value) => {
       if (value.length >= 3 && 'uruchomiona'.startsWith(value)) {
-        statePatterns.add(PowerStationState.WORKING)
+        statePatterns.add(PowerStationState.Working)
       } else if (value.length >= 3 && 'zatrzymana'.startsWith(value)) {
-        statePatterns.add(PowerStationState.STOPPED)
+        statePatterns.add(PowerStationState.Stopped)
       } else if (value.length >= 3 && 'uszkodzona'.startsWith(value)) {
-        statePatterns.add(PowerStationState.DAMAGED)
+        statePatterns.add(PowerStationState.Damaged)
       } else if (value.length >= 3 && 'w naprawie'.startsWith(value)) {
-        statePatterns.add(PowerStationState.MAINTENANCE)
+        statePatterns.add(PowerStationState.Maintenance)
       } else if (value.length >= 3 && ('słoneczna'.startsWith(value) || 'sloneczna'.startsWith(value))) {
-        // TODO
+        typePatterns.add(PowerStationType.SolarPanel)
       } else if (value.length >= 3 && 'wiatrowa'.startsWith(value)) {
-        // TODO
+        typePatterns.add(PowerStationType.WindTurbine)
       } else {
         if (ipaddr.isValid(value)) {
           ipv6Patterns.add(ipaddr.parse(value).toString())
@@ -114,8 +114,8 @@ const PowerStations: React.FC = () => {
     const sortModel = gridSortModelSelector(dataGridApiRef)
     const quickFilterValues = gridQuickFilterValuesSelector(dataGridApiRef)
     const ipv6Patterns = new Set<string>()
-    const statePatterns = new Set<string>()
-    const typePatterns = new Set<string>()
+    const statePatterns = new Set<PowerStationState>()
+    const typePatterns = new Set<PowerStationType>()
     setPatterns(quickFilterValues, ipv6Patterns, statePatterns, typePatterns)
 
     void dispatch(fetchPowerStations({ ...paginationModel, ...sortModel[0], ipv6Patterns, statePatterns, typePatterns }))

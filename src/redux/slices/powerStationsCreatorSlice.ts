@@ -7,6 +7,7 @@ import {
   type GridValidRowModel
 } from '@mui/x-data-grid'
 import { type GridRowModesModelProps } from '@mui/x-data-grid/models/api/gridEditingApi'
+import { PowerStationCreationStatus, type PowerStationType } from '../../components/common/types'
 
 export const validatePowerStationByIpv6 = createAsyncThunk(
   'powerStationsCreator/validateByIpv6',
@@ -36,17 +37,6 @@ export const connectPowerStations = createAsyncThunk(
       })
   }
 )
-
-export enum PowerStationStatus {
-  Success = 'success',
-  Loading = 'loading',
-  Error = 'error',
-}
-
-export enum PowerStationType {
-  WindTurbine = 'Wiatrowa',
-  SolarPanel = 'Słoneczna'
-}
 
 interface PowerStationCreatorState {
   newId: number
@@ -101,21 +91,21 @@ const powerStationsCreatorSlice = createSlice({
     builder
       .addCase(validatePowerStationByIpv6.pending, (state, action) => {
         const row = getRowById(state, action.meta.arg.id)
-        setStatus(row, PowerStationStatus.Loading)
+        setStatus(row, PowerStationCreationStatus.Loading)
         setType(row, undefined)
       })
       .addCase(validatePowerStationByIpv6.fulfilled, (state, action: any) => {
         const row = getRowById(state, action.meta.arg.id)
-        setStatus(row, PowerStationStatus.Success)
+        setStatus(row, PowerStationCreationStatus.Success)
         setType(row, action.payload.type)
       })
       .addCase(validatePowerStationByIpv6.rejected, (state, action: any) => {
         const row = getRowById(state, action.meta.arg.id)
-        setStatus(row, PowerStationStatus.Error)
+        setStatus(row, PowerStationCreationStatus.Error)
         if (row !== undefined) {
           switch (action.payload.response.status) {
             case 404:
-              row.error = 'Nie znaleziono elektrowni o podanym IPv6'
+              row.error = 'Nie znaleziono elektrowni o podanym adresie IPv6'
               break
             default:
               row.error = 'Błąd weryfikacji elektrowni'
@@ -138,7 +128,7 @@ const getRowById = (state: PowerStationCreatorState, id: GridRowId): GridValidRo
   return state.rows.find((row) => row.id === id)
 }
 
-const setStatus = (row: GridValidRowModel | undefined, status: PowerStationStatus): void => {
+const setStatus = (row: GridValidRowModel | undefined, status: PowerStationCreationStatus): void => {
   if (row !== undefined) {
     row.status = status
   }

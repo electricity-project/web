@@ -3,6 +3,7 @@ import { type RootState } from '../store'
 import axios from '../../axiosConfig'
 import type { GridRowId, GridSortDirection, GridValidRowModel } from '@mui/x-data-grid'
 import { type AlertColor } from '@mui/material'
+import { type PowerStationType, type PowerStationState as PowerStationStateType } from '../../components/common/types'
 
 interface FetchPowerStationsProps {
   page: number
@@ -10,8 +11,8 @@ interface FetchPowerStationsProps {
   sort: GridSortDirection
   field: string
   ipv6Patterns: Set<string>
-  statePatterns: Set<string>
-  typePatterns: Set<string>
+  statePatterns: Set<PowerStationStateType>
+  typePatterns: Set<PowerStationType>
 }
 
 export const fetchPowerStations = createAsyncThunk(

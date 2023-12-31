@@ -23,18 +23,7 @@ import {
   openDisconnectConfirmDialog,
   startPowerStation, stopPowerStation
 } from '../../redux/slices/powerStationsSlice'
-
-enum PowerStationStatus {
-  Running = 'Uruchomiona',
-  Stopped = 'Zatrzymana',
-  Damaged = 'Uszkodzona',
-  Maintenance = 'W naprawie'
-}
-
-enum PowerStationType {
-  WindTurbine = 'Wiatrowa',
-  SolarPanel = 'Słoneczna'
-}
+import { PowerStationState, PowerStationType } from '../common/types'
 
 const getColumns = (afterAction: () => void): GridColDef[] => {
   const dispatch = useAppDispatch()
@@ -61,7 +50,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
       )
     },
     {
-      field: 'typ',
+      field: 'type',
       headerName: 'Typ',
       description: 'Typ elektrowni',
       flex: 3,
@@ -75,19 +64,19 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
         </Tooltip>
       ),
       renderCell: (params: GridRenderCellParams<any, PowerStationType>) => {
-        let icon
-        let color
-        let title
+        let icon, color, title, label
         switch (params.value) {
           case PowerStationType.WindTurbine:
             color = '#6a86d3'
             icon = <WindPower color='inherit' />
             title = 'Turbina wiatrowa'
+            label = 'Wiatrowa'
             break
           case PowerStationType.SolarPanel:
             color = '#e1b907'
             icon = <SolarPower color='inherit' />
             title = 'Panele solarne'
+            label = 'Słoneczna'
             break
           default:
             return null
@@ -99,49 +88,51 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
               variant="outlined"
               sx={{ color, borderColor: color }}
               icon={icon}
-              label={params.value} />
+              label={label} />
           </Tooltip>
         )
       }
     },
     {
-      field: 'status',
+      field: 'state',
       headerName: 'Status',
       description: 'Status elektrowni',
       flex: 4,
       minWidth: 145,
       hideable: false,
       type: 'singleSelect',
-      valueOptions: [PowerStationStatus.Running, PowerStationStatus.Stopped, PowerStationStatus.Damaged, PowerStationStatus.Maintenance],
+      valueOptions: [PowerStationState.Working, PowerStationState.Stopped, PowerStationState.Damaged, PowerStationState.Maintenance],
       renderHeader: (params: GridColumnHeaderParams) => (
         <Tooltip disableInteractive title={params.colDef.description}>
           <strong>{params.colDef.headerName}</strong>
         </Tooltip>
       ),
-      renderCell: (params: GridRenderCellParams<any, PowerStationStatus>) => {
-        let icon
-        let color
-        let title
+      renderCell: (params: GridRenderCellParams<any, PowerStationState>) => {
+        let icon, color, title, label
         switch (params.value) {
-          case PowerStationStatus.Running:
+          case PowerStationState.Working:
             color = 'success' as const
             icon = <CheckCircleOutline />
             title = 'Elektrownia produkuje prąd'
+            label = 'Uruchomiona'
             break
-          case PowerStationStatus.Stopped:
+          case PowerStationState.Stopped:
             color = undefined
             icon = <PauseCircleOutline />
             title = 'Elektrownia nie produkuje prądu'
+            label = 'Zatrzymana'
             break
-          case PowerStationStatus.Damaged:
+          case PowerStationState.Damaged:
             color = 'error' as const
             icon = <ErrorOutline />
             title = 'Elektrownia jest niesprawna'
+            label = 'Uszkodzona'
             break
-          case PowerStationStatus.Maintenance:
+          case PowerStationState.Maintenance:
             color = 'warning' as const
             icon = <Construction />
             title = 'Elektrownia jest naprawiana'
+            label = 'W naprawie'
             break
           default:
             return null
@@ -153,7 +144,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
               variant="outlined"
               color={color}
               icon={icon}
-              label={params.value} />
+              label={label} />
           </Tooltip>
         )
       }
@@ -203,7 +194,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
             }).catch(() => {})
         }
 
-        if (params.row.status === PowerStationStatus.Running) {
+        if (params.row.state === PowerStationState.Working) {
           actions.push(
             <Tooltip
               disableInteractive
@@ -217,11 +208,11 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
             </span>
             </Tooltip>)
         } else {
-          const isDisabled = params.row.status !== PowerStationStatus.Stopped
+          const isDisabled = params.row.state !== PowerStationState.Stopped
           actions.push(
             <Tooltip
               disableInteractive
-              title={isDisabled ? `Nie można uruchomić gdy jest ${params.row.status.toLowerCase()}` : 'Uruchom pracę elektrowni'}>
+              title={isDisabled ? `Nie można uruchomić gdy jest ${params.row.state.toLowerCase()}` : 'Uruchom pracę elektrowni'}>
             <span>
               <GridActionsCellItem
                 disabled={isDisabled}

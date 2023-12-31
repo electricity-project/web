@@ -24,12 +24,12 @@ import {
 import * as React from 'react'
 import {
   deleteRowById,
-  PowerStationStatus,
-  PowerStationType, selectRowModesModel, selectRows, setRowMode, validatePowerStationByIpv6
+  selectRowModesModel, selectRows, setRowMode, validatePowerStationByIpv6
 } from '../../redux/slices/powerStationsCreatorSlice'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMaskInput } from 'react-imask'
 import { forwardRef } from 'react'
+import { PowerStationCreationStatus, PowerStationType } from '../common/types'
 
 interface CustomProps {
   onChange: (event: { target: { name: string, value: string } }) => void
@@ -129,26 +129,26 @@ const getColumns = (): GridColDef[] => {
         </Tooltip>
       ),
       renderCell: (params: GridRenderCellParams<any, PowerStationType>) => {
-        let icon
-        let color
-        let title
-        let borderColor
+        let icon, color, title, borderColor, label
         switch (params.value) {
           case PowerStationType.WindTurbine:
             borderColor = color = '#6a86d3'
             icon = <WindPower color='inherit' />
             title = 'Turbina wiatrowa'
+            label = 'Wiatrowa'
             break
           case PowerStationType.SolarPanel:
             borderColor = color = '#e1b907'
             icon = <SolarPower color='inherit' />
             title = 'Panele solarne'
+            label = 'Słoneczna'
             break
           default:
             color = '#616161'
             borderColor = 'default'
             icon = <HelpOutline sx={{ color }} />
-            title = 'Nieznany'
+            title = 'Typ elektrowni nie jest znany'
+            label = 'Nieznany'
             break
         }
         return (
@@ -159,7 +159,7 @@ const getColumns = (): GridColDef[] => {
               color={'default'}
               sx={{ color, borderColor }}
               icon={icon}
-              label={params.value ?? 'Nieznany'} />
+              label={label} />
           </Tooltip>
         )
       }
@@ -173,25 +173,25 @@ const getColumns = (): GridColDef[] => {
       hideable: false,
       sortable: false,
       type: 'singleSelect',
-      valueOptions: [PowerStationStatus.Success, PowerStationStatus.Error, PowerStationStatus.Loading],
+      valueOptions: [PowerStationCreationStatus.Success, PowerStationCreationStatus.Error, PowerStationCreationStatus.Loading],
       renderHeader: (params: GridColumnHeaderParams) => (
         <Tooltip disableInteractive title={params.colDef.description}>
           <strong>{params.colDef.headerName}</strong>
         </Tooltip>
       ),
-      renderCell: (params: GridRenderCellParams<any, PowerStationStatus>) => {
+      renderCell: (params: GridRenderCellParams<any, PowerStationCreationStatus>) => {
         let icon
         let color
         let label
         let title
         switch (params.value) {
-          case PowerStationStatus.Success:
+          case PowerStationCreationStatus.Success:
             color = 'success' as const
             icon = <CheckCircleOutline />
             label = 'Gotowa'
             title = 'Elektrownia gotowa do podłączenia'
             break
-          case PowerStationStatus.Error:
+          case PowerStationCreationStatus.Error:
             color = 'error' as const
             icon = <ErrorOutline />
             label = 'Błąd'
@@ -227,7 +227,7 @@ const getColumns = (): GridColDef[] => {
       type: 'actions',
       getActions: (params: GridRowParams) => {
         const id = params.id
-        if (params.row.status === PowerStationStatus.Loading) {
+        if (params.row.status === PowerStationCreationStatus.Loading) {
           return [<CircularProgress key={params.id} size={24}/>]
         }
 

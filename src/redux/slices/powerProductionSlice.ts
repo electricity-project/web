@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/tool
 import { type RootState } from '../store'
 import axios from '../../axiosConfig'
 import moment from 'moment'
+import { AggregationPeriodType } from '../../components/common/types'
 
 export const fetchPowerStationsCount = createAsyncThunk(
   'powerProduction/fetchPowerStationsCount',
@@ -59,13 +60,7 @@ interface PowerStationsCount {
   MAINTENANCE: number
 }
 
-enum AggregationPeriodType {
-  Minute = 'MINUTE',
-  Hour = 'HOUR',
-  Day = 'DAY'
-}
-
-interface PowerProductionAggregation {
+export interface PowerProductionAggregation {
   aggregatedValue: number
   timestamp: Date
 }
@@ -97,14 +92,14 @@ const powerProductionSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchLast60MinutesPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
-        state.last60MinutesDataset = fillWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Minute)
+        state.last60MinutesDataset = fillDatasetWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Minute)
         state.actualPowerProduction = state.last60MinutesDataset[state.last60MinutesDataset.length - 1]?.aggregatedValue
       })
       .addCase(fetchLast48HoursPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
-        state.last48HoursDataset = fillWithValues(transformDataset(action.payload), 48, AggregationPeriodType.Hour)
+        state.last48HoursDataset = fillDatasetWithValues(transformDataset(action.payload), 48, AggregationPeriodType.Hour)
       })
       .addCase(fetchLast60DaysPowerProduction.fulfilled, (state, action: PayloadAction<PowerProductionAggregation[]>) => {
-        state.last60DaysDataset = fillWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Day)
+        state.last60DaysDataset = fillDatasetWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Day)
       })
       .addCase(fetchPowerStationsCount.fulfilled, (state, action: PayloadAction<PowerStationsCount>) => {
         state.allPowerStations = action.payload.WORKING + action.payload.DAMAGED + action.payload.STOPPED + action.payload.MAINTENANCE
@@ -114,13 +109,13 @@ const powerProductionSlice = createSlice({
   }
 })
 
-const transformDataset = (dataset: PowerProductionAggregation[]): PowerProductionAggregation[] => {
+export const transformDataset = (dataset: PowerProductionAggregation[]): PowerProductionAggregation[] => {
   return dataset.map((element) => {
     return { aggregatedValue: element.aggregatedValue ?? undefined, timestamp: new Date(element.timestamp) }
   })
 }
 
-const fillWithValues = (dataset: PowerProductionAggregation[], duration: number, aggregationPeriodType: AggregationPeriodType): PowerProductionAggregation[] => {
+export const fillDatasetWithValues = (dataset: PowerProductionAggregation[], duration: number, aggregationPeriodType: AggregationPeriodType): PowerProductionAggregation[] => {
   const result = [...dataset]
   let nextDate = new Date(dataset.at(0)?.timestamp ?? getFirstDate(aggregationPeriodType))
   if (dataset.length < duration) {
@@ -132,11 +127,10 @@ const fillWithValues = (dataset: PowerProductionAggregation[], duration: number,
       result.unshift({ timestamp: nextDate, aggregatedValue: undefined })
     }
   }
-
   return result
 }
 
-const toUnit = (aggregationPeriodType: AggregationPeriodType): 'day' | 'hour' | 'minute' => {
+export const toUnit = (aggregationPeriodType: AggregationPeriodType): 'day' | 'hour' | 'minute' => {
   switch (aggregationPeriodType) {
     case AggregationPeriodType.Day:
       return 'day'
@@ -147,7 +141,7 @@ const toUnit = (aggregationPeriodType: AggregationPeriodType): 'day' | 'hour' | 
   }
 }
 
-const getFirstDate = (aggregationPeriodType: AggregationPeriodType): Date => {
+export const getFirstDate = (aggregationPeriodType: AggregationPeriodType): Date => {
   const firstDate = new Date()
   switch (aggregationPeriodType) {
     case AggregationPeriodType.Minute:

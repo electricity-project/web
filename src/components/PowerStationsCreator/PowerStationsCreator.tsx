@@ -10,7 +10,7 @@ import {
 } from '@mui/x-data-grid'
 import {
   reset,
-  PowerStationStatus, selectIsLoading, selectRowModesModel,
+  selectIsLoading, selectRowModesModel,
   selectRows,
   setNewRowModesModel, updateRow, validatePowerStationByIpv6, selectIsConnectionError, clearConnectionError
 } from '../../redux/slices/powerStationsCreatorSlice'
@@ -21,6 +21,7 @@ import PowerStationsCreatorFooter from './PowerStationsCreatorFooter'
 import { useEffect } from 'react'
 import UnsavedChangesPrompt from '../common/UnsavedChangesPrompt'
 import { Alert, Snackbar } from '@mui/material'
+import { PowerStationCreationStatus } from '../common/types'
 
 const PowerStationsCreator: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -43,7 +44,7 @@ const PowerStationsCreator: React.FC = () => {
   }
 
   const handleProcessRowUpdate = (newRow: GridRowModel): GridRowModel => {
-    const loadingRow = { ...newRow, isNew: false, status: PowerStationStatus.Loading, type: undefined }
+    const loadingRow = { ...newRow, isNew: false, status: PowerStationCreationStatus.Loading, type: undefined }
     dispatch(updateRow(loadingRow))
     void dispatch(validatePowerStationByIpv6({ ipv6: newRow.ipv6, id: newRow.id }))
     return loadingRow
