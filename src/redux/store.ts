@@ -3,13 +3,15 @@ import powerStationsCreatorSlice from './slices/powerStationsCreatorSlice'
 import powerStationsSlice from './slices/powerStationsSlice'
 import powerStationDetailsSlice from './slices/powerStationDetailsSlice'
 import powerProductionSlice from './slices/powerProductionSlice'
+import adminPanelSlice from './slices/adminPanelSlice'
 
 const store = configureStore({
   reducer: {
     powerProduction: powerProductionSlice,
     powerStations: powerStationsSlice,
     powerStationDetails: powerStationDetailsSlice,
-    powerStationsCreator: powerStationsCreatorSlice
+    powerStationsCreator: powerStationsCreatorSlice,
+    adminPanel: adminPanelSlice
   }
 })
 

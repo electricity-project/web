@@ -11,5 +11,6 @@
   "/aggregated-power-production?duration=61&aggregationPeriodType=DAY": "/aggregated-power-production-last60Days",
   "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=MINUTE": "/power-production-last60Minutes",
   "/power-production?ipv6=:ipv6&duration=49&aggregationPeriodType=HOUR": "/power-production-last48Hours",
-  "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=DAY": "/power-production-last60Days"
+  "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=DAY": "/power-production-last60Days",
+  "/users?page=0&size=:size": "/users-page-0"
 }

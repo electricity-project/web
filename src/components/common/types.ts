@@ -43,3 +43,17 @@ export enum PowerStationCreationStatus {
   Loading = 'loading',
   Error = 'error',
 }
+
+export enum UserRole {
+  Admin = 'ADMIN',
+  User = 'USER'
+}
+
+export const userRoleToString = (userRole: UserRole, capitalize?: boolean): string => {
+  switch (userRole) {
+    case UserRole.Admin:
+      return capitalize === true ? 'Administrator' : 'administrator'
+    case UserRole.User:
+      return capitalize === true ? 'Pracownik' : 'pracownik'
+  }
+}

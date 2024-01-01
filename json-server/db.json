@@ -23,7 +23,7 @@
       "state": "WORKING",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "optimalTemperature": 30.2
     },
     {
@@ -32,7 +32,7 @@
       "state": "STOPPED",
       "type": "WIND_TURBINE",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "bladeLength": 15
     },
     {
@@ -41,7 +41,7 @@
       "state": "DAMAGED",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "optimalTemperature": 30.2
     },
     {
@@ -50,7 +50,7 @@
       "state": "MAINTENANCE",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "optimalTemperature": 30.2
     },
     {
@@ -59,7 +59,7 @@
       "state": "WORKING",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "optimalTemperature": 30.2
     },
     {
@@ -68,7 +68,7 @@
       "state": "WORKING",
       "type": "WIND_TURBINE",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "bladeLength": 15
     },
     {
@@ -77,7 +77,7 @@
       "state": "STOPPED",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "optimalTemperature": 30.2
     },
     {
@@ -86,7 +86,7 @@
       "state": "MAINTENANCE",
       "type": "WIND_TURBINE",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "bladeLength": 15
     },
     {
@@ -95,7 +95,7 @@
       "state": "STOPPED",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "optimalTemperature": 30.2
     },
     {
@@ -104,7 +104,7 @@
       "state": "DAMAGED",
       "type": "WIND_TURBINE",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "bladeLength": 15
     },
     {
@@ -113,7 +113,7 @@
       "state": "MAINTENANCE",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
-      "maxPower": 23592.0,
+      "maxPower": 23592,
       "optimalTemperature": 30.2
     }
   ],
@@ -128,7 +128,7 @@
         "state": "WORKING",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "optimalTemperature": 30.2
       },
       {
@@ -137,7 +137,7 @@
         "state": "STOPPED",
         "type": "WIND_TURBINE",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "bladeLength": 15
       },
       {
@@ -146,7 +146,7 @@
         "state": "DAMAGED",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "optimalTemperature": 30.2
       },
       {
@@ -155,7 +155,7 @@
         "state": "MAINTENANCE",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "optimalTemperature": 30.2
       },
       {
@@ -164,7 +164,7 @@
         "state": "WORKING",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "optimalTemperature": 30.2
       },
       {
@@ -173,7 +173,7 @@
         "state": "WORKING",
         "type": "WIND_TURBINE",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "bladeLength": 15
       },
       {
@@ -182,7 +182,7 @@
         "state": "STOPPED",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "optimalTemperature": 30.2
       },
       {
@@ -191,7 +191,7 @@
         "state": "MAINTENANCE",
         "type": "WIND_TURBINE",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "bladeLength": 15
       }
     ]
@@ -207,7 +207,7 @@
         "state": "STOPPED",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "optimalTemperature": 30.2
       },
       {
@@ -216,7 +216,7 @@
         "state": "DAMAGED",
         "type": "WIND_TURBINE",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "bladeLength": 15
       },
       {
@@ -225,7 +225,7 @@
         "state": "MAINTENANCE",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
-        "maxPower": 23592.0,
+        "maxPower": 23592,
         "optimalTemperature": 30.2
       }
     ]
@@ -1366,5 +1366,22 @@
       "power": 986398,
       "timestamp": "2023-12-14T00:00:00"
     }
-  ]
+  ],
+  "users-page-0": {
+    "pageMetadata": {
+      "totalElements": 2
+    },
+    "content": [
+      {
+        "id": 1,
+        "username": "Wojciech Bednarz",
+        "role": "ADMIN"
+      },
+      {
+        "id": 2,
+        "username": "Jan Kowalski",
+        "role": "USER"
+      }
+    ]
+  }
 }

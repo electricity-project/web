@@ -213,31 +213,31 @@ const getColumns = (): GridColDef[] => {
               key="Save"
               disableInteractive
               title='Zapisz'>
-            <span>
-              <GridActionsCellItem
-                icon={<Save />}
-                label="Save"
-                sx={{
-                  color: 'primary.main'
-                }}
-                onClick={() => { dispatch(setRowMode({ id, props: { mode: GridRowModes.View } })) }} />
-            </span>
+              <span>
+                <GridActionsCellItem
+                  icon={<Save />}
+                  label="Save"
+                  sx={{
+                    color: 'primary.main'
+                  }}
+                  onClick={() => { dispatch(setRowMode({ id, props: { mode: GridRowModes.View } })) }} />
+              </span>
             </Tooltip>,
             <Tooltip
               key="Cancel"
               disableInteractive
               title='Anuluj'>
-            <span>
-              <GridActionsCellItem
-                icon={<Cancel />}
-                label="Cancel"
-                className="textPrimary"
-                onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
-                  e.stopPropagation()
-                  handleCancelClick(id)
-                }}
-                color="inherit" />
-            </span>
+              <span>
+                <GridActionsCellItem
+                  icon={<Cancel />}
+                  label="Cancel"
+                  className="textPrimary"
+                  onClick={(e: React.MouseEvent<HTMLButtonElement>) => {
+                    e.stopPropagation()
+                    handleCancelClick(id)
+                  }}
+                  color="inherit" />
+              </span>
             </Tooltip>
           ]
         }
@@ -246,38 +246,38 @@ const getColumns = (): GridColDef[] => {
             key="Edit"
             disableInteractive
             title='Edytuj'>
-          <span>
-            <GridActionsCellItem
-              icon={<Edit />}
-              label="Edit"
-              className="textPrimary"
-              onClick={() => { dispatch(setRowMode({ id, props: { mode: GridRowModes.Edit, fieldToFocus: 'ipv6' } })) }}
-              color="inherit" />
-          </span>
+            <span>
+              <GridActionsCellItem
+                icon={<Edit />}
+                label="Edit"
+                className="textPrimary"
+                onClick={() => { dispatch(setRowMode({ id, props: { mode: GridRowModes.Edit, fieldToFocus: 'ipv6' } })) }}
+                color="inherit" />
+            </span>
           </Tooltip>,
           <Tooltip
             key="Revalidate"
             disableInteractive
             title='Testuj połączenie'>
-          <span>
-            <GridActionsCellItem
-              icon={<Autorenew />}
-              label="Revalidate"
-              onClick={() => { void dispatch(validatePowerStationByIpv6({ ipv6: params.row.ipv6, id })) }}
-              color="inherit" />
-          </span>
+            <span>
+              <GridActionsCellItem
+                icon={<Autorenew />}
+                label="Revalidate"
+                onClick={() => { void dispatch(validatePowerStationByIpv6({ ipv6: params.row.ipv6, id })) }}
+                color="inherit" />
+            </span>
           </Tooltip>,
           <Tooltip
             key="Delete"
             disableInteractive
             title='Usuń'>
-          <span>
-            <GridActionsCellItem
-              icon={<Delete />}
-              label="Delete"
-              onClick={() => { dispatch(deleteRowById(id)) }}
-              color="inherit" />
-          </span>
+            <span>
+              <GridActionsCellItem
+                icon={<Delete />}
+                label="Delete"
+                onClick={() => { dispatch(deleteRowById(id)) }}
+                color="inherit" />
+            </span>
           </Tooltip>
         ]
       },
