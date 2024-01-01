@@ -12,7 +12,7 @@ import {
   fetchLast60MinutesPowerProduction,
   fetchPowerStationDetails,
   openDisconnectConfirmDialog,
-  selectDetails
+  selectDetails, selectIsDetailsError
 } from '../../redux/slices/powerStationDetailsSlice'
 import { PowerStationState, powerStationStateToString } from '../common/types'
 import type { JSX } from 'react'
@@ -46,7 +46,10 @@ const ViewBar: React.FC = () => {
   }
 
   const createButtons = (): JSX.Element | null => {
-    if (matchPath('/power-stations/:id', pathname) === null || powerStationDetails === undefined) {
+    const isDetailsError = useAppSelector(selectIsDetailsError)
+
+    if (matchPath('/power-stations/:id', pathname) === null ||
+      powerStationDetails === undefined || isDetailsError) {
       return null
     }
 
