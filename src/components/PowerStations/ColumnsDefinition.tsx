@@ -19,7 +19,7 @@ import {
   openDisconnectConfirmDialog,
   startPowerStation, stopPowerStation
 } from '../../redux/slices/powerStationsSlice'
-import { PowerStationState, PowerStationType } from '../common/types'
+import { PowerStationState, powerStationStateToString, PowerStationType } from '../common/types'
 import PowerStationTypeChip from '../common/PowerStationTypeChip'
 import PowerStationStateChip from '../common/PowerStationStateChip'
 
@@ -93,7 +93,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
       type: 'actions',
       getActions: (params: GridRowParams) => {
         if (Object.prototype.hasOwnProperty.call(pendingRows, params.id)) {
-          return [<CircularProgress key={params.id} size={24}/>]
+          return [<CircularProgress key={params.id} size={24} />]
         }
 
         const actions: any[] = []
@@ -133,41 +133,41 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
             <Tooltip
               disableInteractive
               title='Zatrzymaj pracę elektrowni'>
-            <span>
-              <GridActionsCellItem
-                icon={<Pause sx={{ fontSize: 25 }} />}
-                onClick={onStop}
-                label="Stop"
-                key={'stop'} />
-            </span>
+              <span>
+                <GridActionsCellItem
+                  icon={<Pause sx={{ fontSize: 25 }} />}
+                  onClick={onStop}
+                  label="Stop"
+                  key={'stop'} />
+              </span>
             </Tooltip>)
         } else {
           const isDisabled = params.row.state !== PowerStationState.Stopped
           actions.push(
             <Tooltip
               disableInteractive
-              title={isDisabled ? `Nie można uruchomić gdy jest ${params.row.state.toLowerCase()}` : 'Uruchom pracę elektrowni'}>
-            <span>
-              <GridActionsCellItem
-                disabled={isDisabled}
-                icon={<PlayArrow sx={{ fontSize: 25 }} />}
-                onClick={onStart}
-                label="Start"
-                key={'start'} />
-            </span>
+              title={isDisabled ? `Nie można uruchomić gdy jest ${powerStationStateToString(params.row.state)}` : 'Uruchom pracę elektrowni'}>
+              <span>
+                <GridActionsCellItem
+                  disabled={isDisabled}
+                  icon={<PlayArrow sx={{ fontSize: 25 }} />}
+                  onClick={onStart}
+                  label="Start"
+                  key={'start'} />
+              </span>
             </Tooltip>)
         }
         actions.push(
           <Tooltip
             disableInteractive
             title='Odłącz elektrownię od systemu'>
-          <span>
-            <GridActionsCellItem
-              icon={<HighlightOff color={'error'} sx={{ fontSize: 25 }} />}
-              onClick={() => { dispatch(openDisconnectConfirmDialog(params.id)) }}
-              label="Disconnect"
-              key={'disconnect'} />
-          </span>
+            <span>
+              <GridActionsCellItem
+                icon={<HighlightOff color={'error'} sx={{ fontSize: 25 }} />}
+                onClick={() => { dispatch(openDisconnectConfirmDialog(params.id)) }}
+                label="Disconnect"
+                key={'disconnect'} />
+            </span>
           </Tooltip>)
         return actions
       },

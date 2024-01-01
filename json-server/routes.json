@@ -1,11 +1,14 @@
 {
-  "/power-stations/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6",
+  "/power-station/count": "/power-station-count",
   "/power-station?page=0&size=:size": "/power-stations-page-0",
   "/power-station?page=1&size=:size": "/power-stations-page-1",
+  "/power-stations/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6",
+  "/power-station/start?id=:id": "/power-station/:id",
+  "/power-station/stop?id=:id": "/power-station/:id",
+  "/power-station/disconnect?id=:id": "/power-station/:id",
   "/aggregated-power-production?duration=61&aggregationPeriodType=MINUTE": "/aggregated-power-production-last60Minutes",
   "/aggregated-power-production?duration=49&aggregationPeriodType=HOUR": "/aggregated-power-production-last48Hours",
   "/aggregated-power-production?duration=61&aggregationPeriodType=DAY": "/aggregated-power-production-last60Days",
-  "/power-station/count": "/power-station-count",
   "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=MINUTE": "/power-production-last60Minutes",
   "/power-production?ipv6=:ipv6&duration=49&aggregationPeriodType=HOUR": "/power-production-last48Hours",
   "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=DAY": "/power-production-last60Days"

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PowerStationType } from './types'
+import { PowerStationType, powerStationTypeToString } from './types'
 import { HelpOutline, SolarPower, WindPower } from '@mui/icons-material'
 import { Chip, Tooltip } from '@mui/material'
 
@@ -10,13 +10,13 @@ const PowerStationTypeChip: React.FC<{ powerStationType: PowerStationType | unde
       borderColor = color = '#6a86d3'
       icon = <WindPower color='inherit' />
       title = 'Turbina wiatrowa'
-      label = 'Wiatrowa'
+      label = powerStationTypeToString(PowerStationType.WindTurbine, true)
       break
     case PowerStationType.SolarPanel:
       borderColor = color = '#e1b907'
       icon = <SolarPower color='inherit' />
       title = 'Panele solarne'
-      label = 'Słoneczna'
+      label = powerStationTypeToString(PowerStationType.SolarPanel, true)
       break
     default:
       color = '#616161'

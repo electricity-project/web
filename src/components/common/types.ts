@@ -5,9 +5,31 @@ export enum PowerStationState {
   Maintenance = 'MAINTENANCE'
 }
 
+export const powerStationStateToString = (powerStationState: PowerStationState, capitalize?: boolean): string => {
+  switch (powerStationState) {
+    case PowerStationState.Working:
+      return capitalize === true ? 'Uruchomiona' : 'uruchomiona'
+    case PowerStationState.Stopped:
+      return capitalize === true ? 'Zatrzymana' : 'zatrzymana'
+    case PowerStationState.Damaged:
+      return capitalize === true ? 'Uszkodzona' : 'uszkodzona'
+    case PowerStationState.Maintenance:
+      return capitalize === true ? 'W naprawie' : 'w naprawie'
+  }
+}
+
 export enum PowerStationType {
   WindTurbine = 'WIND_TURBINE',
   SolarPanel = 'SOLAR_PANEL'
+}
+
+export const powerStationTypeToString = (powerStationType: PowerStationType, capitalize?: boolean): string => {
+  switch (powerStationType) {
+    case PowerStationType.WindTurbine:
+      return capitalize === true ? 'wiatrowa' : 'Wiatrowa'
+    case PowerStationType.SolarPanel:
+      return capitalize === true ? 'Słoneczna' : 'słoneczna'
+  }
 }
 
 export enum AggregationPeriodType {

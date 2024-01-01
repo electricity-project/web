@@ -97,7 +97,7 @@ const PowerStationSpecificationTable: React.FC<{ powerStationDetails: PowerStati
             <StyledTableRow>
               <StyledTableCell align="left" className={'th'}>Data utworzenia</StyledTableCell>
               <StyledTableCell align="left">
-                {powerStationDetails.creationTime.toLocaleString('pl-PL', { day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false })}
+                {powerStationDetails.creationTime.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' })}
               </StyledTableCell>
             </StyledTableRow>
             {createOtherRows()}

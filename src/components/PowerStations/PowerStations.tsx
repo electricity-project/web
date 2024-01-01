@@ -13,24 +13,18 @@ import {
 import getColumns from './ColumnsDefinition'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  clearAlert,
-  clearAlertProps,
   fetchPowerStations,
   reset,
-  selectAlertProps,
-  selectAlertsQueue,
   selectAllRowsCount,
-  selectIsAlertVisible,
   selectIsLoading,
-  selectRows,
-  updateAlert
+  selectRows
 } from '../../redux/slices/powerStationsSlice'
 import PowerStationsToolbar from './PowerStationsToolbar'
 import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
 import { useLocation, useNavigate } from 'react-router-dom'
 import ipaddr from 'ipaddr.js'
-import { Alert, Snackbar } from '@mui/material'
-import { PowerStationState, PowerStationType } from '../common/types'
+import { PowerStationState, powerStationStateToString, PowerStationType, powerStationTypeToString } from '../common/types'
+import PowerStationAlerts from '../common/PowerStationAlerts'
 
 // eslint-disable-next-line
 const UPDATE_INTERVAL = Number(process.env.REACT_APP_API_UPDATE_INTERVAL || 60000) // 1 minute
@@ -43,9 +37,6 @@ const PowerStations: React.FC = () => {
   const rows = useAppSelector(selectRows)
   const allRowsCount = useAppSelector(selectAllRowsCount)
   const isLoading = useAppSelector(selectIsLoading)
-  const isAlertVisible = useAppSelector(selectIsAlertVisible)
-  const alertProps = useAppSelector(selectAlertProps)
-  const alertsQueue = useAppSelector(selectAlertsQueue)
   const intervalIDRef = useRef<NodeJS.Timer | null>(null)
 
   useEffect(() => {
@@ -68,14 +59,6 @@ const PowerStations: React.FC = () => {
     }, UPDATE_INTERVAL)
   }, [])
 
-  useEffect(() => {
-    if (alertsQueue.length > 0 && alertProps === undefined) {
-      dispatch(updateAlert())
-    } else if (alertsQueue.length > 0 && alertProps !== undefined && isAlertVisible) {
-      dispatch(clearAlert())
-    }
-  }, [alertsQueue, alertProps, isAlertVisible])
-
   const setPatterns = (
     quickFilterValues: any[] | undefined,
     ipv6Patterns: Set<string>,
@@ -87,17 +70,17 @@ const PowerStations: React.FC = () => {
       : Array.from(new Set(quickFilterValues.join(' ').split(',').map((value) => value.trim().toLowerCase())))
 
     quickFilterValues.forEach((value) => {
-      if (value.length >= 3 && 'uruchomiona'.startsWith(value)) {
+      if (value.length >= 3 && powerStationStateToString(PowerStationState.Working).startsWith(value)) {
         statePatterns.add(PowerStationState.Working)
-      } else if (value.length >= 3 && 'zatrzymana'.startsWith(value)) {
+      } else if (value.length >= 3 && powerStationStateToString(PowerStationState.Stopped).startsWith(value)) {
         statePatterns.add(PowerStationState.Stopped)
-      } else if (value.length >= 3 && 'uszkodzona'.startsWith(value)) {
+      } else if (value.length >= 3 && powerStationStateToString(PowerStationState.Damaged).startsWith(value)) {
         statePatterns.add(PowerStationState.Damaged)
-      } else if (value.length >= 3 && 'w naprawie'.startsWith(value)) {
+      } else if (value.length >= 3 && powerStationStateToString(PowerStationState.Maintenance).startsWith(value)) {
         statePatterns.add(PowerStationState.Maintenance)
-      } else if (value.length >= 3 && ('słoneczna'.startsWith(value) || 'sloneczna'.startsWith(value))) {
+      } else if (value.length >= 3 && (powerStationTypeToString(PowerStationType.SolarPanel).startsWith(value) || 'sloneczna'.startsWith(value))) {
         typePatterns.add(PowerStationType.SolarPanel)
-      } else if (value.length >= 3 && 'wiatrowa'.startsWith(value)) {
+      } else if (value.length >= 3 && powerStationTypeToString(PowerStationType.WindTurbine).startsWith(value)) {
         typePatterns.add(PowerStationType.WindTurbine)
       } else {
         if (ipaddr.isValid(value)) {
@@ -122,33 +105,10 @@ const PowerStations: React.FC = () => {
     restartTimer()
   }
 
-  const handleAlertClose = (_event?: React.SyntheticEvent | Event, reason?: string): void => {
-    if (reason === 'clickaway') {
-      return
-    }
-    dispatch(clearAlert())
-  }
-
-  const handleAlertTransitionExited = (): void => {
-    dispatch(clearAlertProps())
-  }
-
   return (
     <>
       <PowerStationDisconnectConfirmDialog afterConfirm={updateDataGrid} />
-      <Snackbar
-        key={alertProps?.key}
-        open={isAlertVisible}
-        autoHideDuration={5000}
-        style={{ zIndex: 1299 }}
-        onClose={handleAlertClose}
-        TransitionProps={{ onExited: handleAlertTransitionExited }}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-      >
-        <Alert onClose={handleAlertClose} severity={alertProps?.severity} sx={{ width: '100%' }}>
-          {alertProps?.message}
-        </Alert>
-      </Snackbar>
+      <PowerStationAlerts />
       <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1' }}>
         <DataGrid
           apiRef={dataGridApiRef}

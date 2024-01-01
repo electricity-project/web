@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { PowerStationState } from './types'
+import { PowerStationState, powerStationStateToString } from './types'
 import { CheckCircleOutline, Construction, ErrorOutline, HelpOutline, PauseCircleOutline } from '@mui/icons-material'
 import { Chip, Tooltip } from '@mui/material'
 
@@ -10,25 +10,25 @@ const PowerStationStateChip: React.FC<{ powerStationState: PowerStationState | u
       color = 'success' as const
       icon = <CheckCircleOutline />
       title = 'Elektrownia produkuje prąd'
-      label = 'Uruchomiona'
+      label = powerStationStateToString(PowerStationState.Working, true)
       break
     case PowerStationState.Stopped:
       color = undefined
       icon = <PauseCircleOutline />
       title = 'Elektrownia nie produkuje prądu'
-      label = 'Zatrzymana'
+      label = powerStationStateToString(PowerStationState.Stopped, true)
       break
     case PowerStationState.Damaged:
       color = 'error' as const
       icon = <ErrorOutline />
       title = 'Elektrownia jest niesprawna'
-      label = 'Uszkodzona'
+      label = powerStationStateToString(PowerStationState.Damaged, true)
       break
     case PowerStationState.Maintenance:
       color = 'warning' as const
       icon = <Construction />
       title = 'Elektrownia jest naprawiana'
-      label = 'W naprawie'
+      label = powerStationStateToString(PowerStationState.Maintenance, true)
       break
     default:
       color = 'default' as const

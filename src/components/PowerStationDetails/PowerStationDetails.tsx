@@ -1,29 +1,30 @@
 import * as React from 'react'
+import { type JSX, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { type JSX, useEffect } from 'react'
 import {
   fetchLast48HoursPowerProduction,
   fetchLast60DaysPowerProduction,
   fetchLast60MinutesPowerProduction,
   fetchPowerStationDetails,
+  reset,
   selectDetails,
   selectIsDetailsError,
   selectIsLoadingDetails,
   selectLast48HoursDataset,
   selectLast60DaysDataset,
-  selectLast60MinutesDataset, reset
+  selectLast60MinutesDataset
 } from '../../redux/slices/powerStationDetailsSlice'
 import PowerProductionCharts from '../common/PowerProductionCharts/PowerProductionCharts'
-import {
-  CircularProgress
-} from '@mui/material'
+import { CircularProgress } from '@mui/material'
 import Box from '@mui/material/Box'
 import PowerStationErrorPage from './PowerStationErrorPage'
 import { LineChart } from '@mui/x-charts'
-import { PowerStationState } from '../common/types'
+import { PowerStationState, powerStationStateToString } from '../common/types'
 import { CustomAxisContentWithTime } from '../common/PowerProductionCharts/CustomAxisContent'
 import PowerStationSpecificationTable from './PowerStationSpecificationTable'
+import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
+import PowerStationAlerts from '../common/PowerStationAlerts'
 
 // eslint-disable-next-line
 const UPDATE_INTERVAL = Number(process.env.REACT_APP_API_UPDATE_INTERVAL || 60000) // 1 minute
@@ -67,13 +68,13 @@ const PowerStationDetails: React.FC = () => {
     const valueFormatter = (value: any): string => {
       switch (value) {
         case 4:
-          return 'Uruchomiona'
+          return powerStationStateToString(PowerStationState.Working, true)
         case 3:
-          return 'Zatrzymana'
+          return powerStationStateToString(PowerStationState.Stopped, true)
         case 2:
-          return 'Uszkodzona'
+          return powerStationStateToString(PowerStationState.Damaged, true)
         case 1:
-          return 'W naprawie'
+          return powerStationStateToString(PowerStationState.Maintenance, true)
         default:
           return ''
       }
@@ -152,6 +153,8 @@ const PowerStationDetails: React.FC = () => {
 
   return (
     <>
+      <PowerStationDisconnectConfirmDialog />
+      <PowerStationAlerts />
       <PowerStationSpecificationTable powerStationDetails={powerStationDetails}/>
       <PowerProductionCharts
         dataKey={'power'}
