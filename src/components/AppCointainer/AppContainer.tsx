@@ -58,14 +58,25 @@ const AppContainer: React.FC = () => {
                 backgroundColor: '#ffffff',
                 color: '#000000',
                 justifyContent: 'center',
-                paddingLeft: 16
+                paddingLeft: 16,
+                zIndex: 1097
               }}
             >
               <Typography variant='h4'>
                 {viewHeaderText}
               </Typography>
             </AppBar>
-            <Box sx={{ display: 'flex', flexDirection: 'column', flex: 1, p: 2, minHeight: 0 }}>
+
+            <Box sx={{
+              display: 'flex',
+              flexDirection: 'column',
+              flex: 1,
+              p: 2,
+              minHeight: 0,
+              overflow: 'hidden',
+              overflowY: 'auto',
+              overflowX: 'auto'
+            }}>
               <Outlet/>
             </Box>
           </Box>

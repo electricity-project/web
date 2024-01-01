@@ -30,7 +30,7 @@ const PowerProductionCharts: React.FC<PowerProductionChartsProps> =
       setTabIndex(newTabIndex)
     }
 
-    const getChart: () => JSX.Element = () => {
+    const createPowerProductionChart: () => JSX.Element = () => {
       const chartDatasets: Array<Array<{ timestamp: Date, aggregatedValue: number } | { timestamp: Date, power: number }>> = [last60MinutesDataset, last48HoursDataset, last60DaysDataset]
       const tickNumber = tabIndex === 1 ? 48 : 60
       const tickLabelInterval =
@@ -76,7 +76,7 @@ const PowerProductionCharts: React.FC<PowerProductionChartsProps> =
     }
 
     return (
-    <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3 }}>
+    <Box sx={{ width: '100%', minHeight: '350px', flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1', mt: 3 }}>
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tabIndex} onChange={handleTabChange}>
           <Tab label="Ostatnie 60 minut" sx={{ textTransform: 'none' }} />
@@ -85,7 +85,7 @@ const PowerProductionCharts: React.FC<PowerProductionChartsProps> =
         </Tabs>
       </Box>
       <Box sx={{ width: '100%', minWidth: '700px', minHeight: '200px', flex: 1, padding: 0, border: 1, borderTop: 0, borderColor: 'divider' }}>
-        {getChart()}
+        {createPowerProductionChart()}
       </Box>
     </Box>
     )

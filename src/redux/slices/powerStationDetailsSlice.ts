@@ -1,11 +1,11 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { type RootState } from '../store'
 import axios from '../../axiosConfig'
-import type { GridRowId, GridValidRowModel } from '@mui/x-data-grid'
+import type { GridRowId } from '@mui/x-data-grid'
 import {
   getFirstDate, toUnit
 } from './powerProductionSlice'
-import { AggregationPeriodType, type PowerStationState } from '../../components/common/types'
+import { AggregationPeriodType, type PowerStationState, type PowerStationType } from '../../components/common/types'
 import moment from 'moment/moment'
 
 export const fetchPowerStationDetails = createAsyncThunk(
@@ -64,10 +64,28 @@ export interface PowerProduction {
   timestamp: Date
 }
 
+export interface PowerStationDetails {
+  id: number
+  ipv6: string
+  state: PowerStationState
+  type: PowerStationType
+  creationTime: Date
+  maxPower: number
+  actualPowerProduction: number
+}
+
+export interface WindTurbineDetails extends PowerStationDetails {
+  bladeLength: number
+}
+
+export interface SolarPanelDetails extends PowerStationDetails {
+  optimalTemperature: number
+}
+
 interface powerStationDetailsState {
   isLoadingDetails: boolean
   isDetailsError: boolean
-  details: any | undefined
+  details: PowerStationDetails | undefined
   isDisconnectConfirmDialogOpen: boolean
   disconnectConfirmDialogId: GridRowId | undefined
   last60MinutesDataset: PowerProduction[]
@@ -76,7 +94,7 @@ interface powerStationDetailsState {
 }
 
 const initialState: powerStationDetailsState = {
-  isLoadingDetails: false,
+  isLoadingDetails: true,
   isDetailsError: false,
   details: undefined,
   isDisconnectConfirmDialogOpen: false,
@@ -103,11 +121,10 @@ const powerStationDetailsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(fetchPowerStationDetails.pending, (state) => {
-        state.isLoadingDetails = true
+        state.isLoadingDetails = state.details === undefined
       })
-      .addCase(fetchPowerStationDetails.fulfilled, (state, action: PayloadAction<GridValidRowModel[]>) => {
-        state.details = action.payload
-        state.isLoadingDetails = false
+      .addCase(fetchPowerStationDetails.fulfilled, (state, action: PayloadAction<any>) => {
+        state.details = { ...action.payload, creationTime: new Date(action.payload.creationTime) }
         state.isDetailsError = false
       })
       .addCase(fetchPowerStationDetails.rejected, (state, action: any) => {
@@ -116,13 +133,16 @@ const powerStationDetailsSlice = createSlice({
       })
       .addCase(fetchLast60MinutesPowerProduction.fulfilled, (state, action: PayloadAction<PowerProduction[]>) => {
         state.last60MinutesDataset = fillDatasetWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Minute)
-        state.details.actualPowerProduction = state.last60MinutesDataset[state.last60MinutesDataset.length - 1]?.power
+        if (state.details !== undefined) {
+          state.details.actualPowerProduction = state.last60MinutesDataset[state.last60MinutesDataset.length - 1]?.power
+        }
       })
       .addCase(fetchLast48HoursPowerProduction.fulfilled, (state, action: PayloadAction<PowerProduction[]>) => {
         state.last48HoursDataset = fillDatasetWithValues(transformDataset(action.payload), 48, AggregationPeriodType.Hour)
       })
       .addCase(fetchLast60DaysPowerProduction.fulfilled, (state, action: PayloadAction<PowerProduction[]>) => {
         state.last60DaysDataset = fillDatasetWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Day)
+        state.isLoadingDetails = false
       })
   }
 })
@@ -155,7 +175,7 @@ export const {
 } = powerStationDetailsSlice.actions
 export const selectIsLoadingDetails = (state: RootState): boolean => state.powerStationDetails.isLoadingDetails
 export const selectIsDetailsError = (state: RootState): boolean => state.powerStationDetails.isDetailsError
-export const selectDetails = (state: RootState): any | undefined => state.powerStationDetails.details
+export const selectDetails = (state: RootState): PowerStationDetails | undefined => state.powerStationDetails.details
 export const selectIsDisconnectConfirmDialogOpen = (state: RootState): boolean => state.powerStationDetails.isDisconnectConfirmDialogOpen
 export const selectDisconnectConfirmDialogId = (state: RootState): GridRowId | undefined => state.powerStationDetails.disconnectConfirmDialogId
 export const selectLast60MinutesDataset = (state: RootState): PowerProduction[] => state.powerStationDetails.last60MinutesDataset

@@ -6,14 +6,10 @@ import {
   type GridRowParams
 } from '@mui/x-data-grid'
 import ipaddr from 'ipaddr.js'
-import { Chip, CircularProgress, Tooltip } from '@mui/material'
+import { CircularProgress, Tooltip } from '@mui/material'
 import {
-  CheckCircleOutline,
-  Construction,
-  ErrorOutline, HighlightOff, Info, Pause,
-  PauseCircleOutline, PlayArrow,
-  SolarPower,
-  WindPower
+  HighlightOff, Info, Pause,
+  PlayArrow
 } from '@mui/icons-material'
 import { useNavigate } from 'react-router-dom'
 import * as React from 'react'
@@ -24,6 +20,8 @@ import {
   startPowerStation, stopPowerStation
 } from '../../redux/slices/powerStationsSlice'
 import { PowerStationState, PowerStationType } from '../common/types'
+import PowerStationTypeChip from '../common/PowerStationTypeChip'
+import PowerStationStateChip from '../common/PowerStationStateChip'
 
 const getColumns = (afterAction: () => void): GridColDef[] => {
   const dispatch = useAppDispatch()
@@ -63,35 +61,9 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
           <strong>{params.colDef.headerName}</strong>
         </Tooltip>
       ),
-      renderCell: (params: GridRenderCellParams<any, PowerStationType>) => {
-        let icon, color, title, label
-        switch (params.value) {
-          case PowerStationType.WindTurbine:
-            color = '#6a86d3'
-            icon = <WindPower color='inherit' />
-            title = 'Turbina wiatrowa'
-            label = 'Wiatrowa'
-            break
-          case PowerStationType.SolarPanel:
-            color = '#e1b907'
-            icon = <SolarPower color='inherit' />
-            title = 'Panele solarne'
-            label = 'Słoneczna'
-            break
-          default:
-            return null
-        }
-        return (
-          <Tooltip disableInteractive title={title} >
-            <Chip
-              size="medium"
-              variant="outlined"
-              sx={{ color, borderColor: color }}
-              icon={icon}
-              label={label} />
-          </Tooltip>
-        )
-      }
+      renderCell: (params: GridRenderCellParams<any, PowerStationType>) => (
+        <PowerStationTypeChip powerStationType={params.value} />
+      )
     },
     {
       field: 'state',
@@ -107,47 +79,9 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
           <strong>{params.colDef.headerName}</strong>
         </Tooltip>
       ),
-      renderCell: (params: GridRenderCellParams<any, PowerStationState>) => {
-        let icon, color, title, label
-        switch (params.value) {
-          case PowerStationState.Working:
-            color = 'success' as const
-            icon = <CheckCircleOutline />
-            title = 'Elektrownia produkuje prąd'
-            label = 'Uruchomiona'
-            break
-          case PowerStationState.Stopped:
-            color = undefined
-            icon = <PauseCircleOutline />
-            title = 'Elektrownia nie produkuje prądu'
-            label = 'Zatrzymana'
-            break
-          case PowerStationState.Damaged:
-            color = 'error' as const
-            icon = <ErrorOutline />
-            title = 'Elektrownia jest niesprawna'
-            label = 'Uszkodzona'
-            break
-          case PowerStationState.Maintenance:
-            color = 'warning' as const
-            icon = <Construction />
-            title = 'Elektrownia jest naprawiana'
-            label = 'W naprawie'
-            break
-          default:
-            return null
-        }
-        return (
-          <Tooltip disableInteractive title={title} >
-            <Chip
-              size="medium"
-              variant="outlined"
-              color={color}
-              icon={icon}
-              label={label} />
-          </Tooltip>
-        )
-      }
+      renderCell: (params: GridRenderCellParams<any, PowerStationState>) => (
+        <PowerStationStateChip powerStationState={params.value} />
+      )
     },
     {
       field: 'actions',

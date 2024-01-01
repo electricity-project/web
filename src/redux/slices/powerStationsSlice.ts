@@ -192,6 +192,7 @@ const powerStationsSlice = createSlice({
       })
       .addCase(disconnectPowerStation.fulfilled, (state, action) => {
         removeFromPendingRows(state, action.meta.arg)
+        state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Pomyślnie odłączono elektrownię od systemu', severity: 'success' }]
       })
       .addCase(disconnectPowerStation.rejected, (state, action) => {
         removeFromPendingRows(state, action.meta.arg)

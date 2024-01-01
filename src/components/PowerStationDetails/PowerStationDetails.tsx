@@ -12,15 +12,18 @@ import {
   selectIsLoadingDetails,
   selectLast48HoursDataset,
   selectLast60DaysDataset,
-  selectLast60MinutesDataset
+  selectLast60MinutesDataset, reset
 } from '../../redux/slices/powerStationDetailsSlice'
 import PowerProductionCharts from '../common/PowerProductionCharts/PowerProductionCharts'
-import { CircularProgress } from '@mui/material'
+import {
+  CircularProgress
+} from '@mui/material'
 import Box from '@mui/material/Box'
 import PowerStationErrorPage from './PowerStationErrorPage'
 import { LineChart } from '@mui/x-charts'
 import { PowerStationState } from '../common/types'
 import { CustomAxisContentWithTime } from '../common/PowerProductionCharts/CustomAxisContent'
+import PowerStationSpecificationTable from './PowerStationSpecificationTable'
 
 // eslint-disable-next-line
 const UPDATE_INTERVAL = Number(process.env.REACT_APP_API_UPDATE_INTERVAL || 60000) // 1 minute
@@ -36,34 +39,29 @@ const PowerStationDetails: React.FC = () => {
   const last60DaysDataset = useAppSelector(selectLast60DaysDataset)
 
   useEffect(() => {
+    const fetchData = (id: string): void => {
+      void dispatch(fetchPowerStationDetails(id)).then((result) => {
+        if (result.type === fetchPowerStationDetails.fulfilled.type) {
+          void dispatch(fetchLast60MinutesPowerProduction(result.payload.ipv6))
+          void dispatch(fetchLast48HoursPowerProduction(result.payload.ipv6))
+          void dispatch(fetchLast60DaysPowerProduction(result.payload.ipv6))
+        }
+      }).catch(() => {})
+    }
+
     if (id !== undefined) {
-      void dispatch(fetchPowerStationDetails(id))
+      fetchData(id)
       const interval = setInterval(() => {
-        void dispatch(fetchPowerStationDetails(id))
+        fetchData(id)
       }, UPDATE_INTERVAL)
       return () => {
+        dispatch(reset())
         clearInterval(interval)
       }
     }
   }, [])
 
-  useEffect(() => {
-    if (powerStationDetails !== undefined) {
-      void dispatch(fetchLast60MinutesPowerProduction(powerStationDetails.ipv6))
-      void dispatch(fetchLast48HoursPowerProduction(powerStationDetails.ipv6))
-      void dispatch(fetchLast60DaysPowerProduction(powerStationDetails.ipv6))
-      const interval = setInterval(() => {
-        void dispatch(fetchLast60MinutesPowerProduction(powerStationDetails.ipv6))
-        void dispatch(fetchLast48HoursPowerProduction(powerStationDetails.ipv6))
-        void dispatch(fetchLast60DaysPowerProduction(powerStationDetails.ipv6))
-      }, UPDATE_INTERVAL)
-      return () => {
-        clearInterval(interval)
-      }
-    }
-  }, [powerStationDetails])
-
-  const getStateChart: () => JSX.Element = () => {
+  const createStateChart: () => JSX.Element = () => {
     const tickNumber = 60
     const tickLabelInterval = (time: { getMinutes: () => number }): boolean => time.getMinutes() % 5 === 0
     const valueFormatter = (value: any): string => {
@@ -99,9 +97,10 @@ const PowerStationDetails: React.FC = () => {
         ]}
         yAxis={[
           {
-            max: 5,
+            tickMinStep: 1,
+            max: 4.6,
             min: 0,
-            tickNumber: 6,
+            tickNumber: 4,
             valueFormatter
           }
         ]}
@@ -143,7 +142,7 @@ const PowerStationDetails: React.FC = () => {
     )
   }
 
-  if (isLoadingDetails && powerStationDetails === undefined) {
+  if (isLoadingDetails || powerStationDetails === undefined) {
     return (
       <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', flex: 1, minWidth: 0 }}>
         <CircularProgress size={70} />
@@ -153,14 +152,14 @@ const PowerStationDetails: React.FC = () => {
 
   return (
     <>
-      <div>{`Power Station Details: ${id}, ${powerStationDetails?.type}`}</div>
+      <PowerStationSpecificationTable powerStationDetails={powerStationDetails}/>
       <PowerProductionCharts
         dataKey={'power'}
         last60MinutesDataset={last60MinutesDataset}
         last48HoursDataset={last48HoursDataset}
-        last60DaysDataset={last60DaysDataset} />
-      <Box sx={{ width: '100%', minWidth: '700px', minHeight: '200px', flex: 1, padding: 0, border: 1, borderTop: 0, borderColor: 'divider' }}>
-        {getStateChart()}
+        last60DaysDataset={last60DaysDataset}/>
+      <Box sx={{ width: '100%', minWidth: '700px', minHeight: '300px', flex: 1, padding: 0, border: 1, borderTop: 0, borderColor: 'divider' }}>
+        {createStateChart()}
       </Box>
     </>
   )

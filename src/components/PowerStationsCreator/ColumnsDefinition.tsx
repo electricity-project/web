@@ -17,9 +17,7 @@ import {
   Edit,
   ErrorOutline,
   HelpOutline,
-  Save,
-  SolarPower,
-  WindPower
+  Save
 } from '@mui/icons-material'
 import * as React from 'react'
 import {
@@ -30,6 +28,7 @@ import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import { IMaskInput } from 'react-imask'
 import { forwardRef } from 'react'
 import { PowerStationCreationStatus, PowerStationType } from '../common/types'
+import PowerStationTypeChip from '../common/PowerStationTypeChip'
 
 interface CustomProps {
   onChange: (event: { target: { name: string, value: string } }) => void
@@ -128,41 +127,9 @@ const getColumns = (): GridColDef[] => {
           <strong>{params.colDef.headerName}</strong>
         </Tooltip>
       ),
-      renderCell: (params: GridRenderCellParams<any, PowerStationType>) => {
-        let icon, color, title, borderColor, label
-        switch (params.value) {
-          case PowerStationType.WindTurbine:
-            borderColor = color = '#6a86d3'
-            icon = <WindPower color='inherit' />
-            title = 'Turbina wiatrowa'
-            label = 'Wiatrowa'
-            break
-          case PowerStationType.SolarPanel:
-            borderColor = color = '#e1b907'
-            icon = <SolarPower color='inherit' />
-            title = 'Panele solarne'
-            label = 'Słoneczna'
-            break
-          default:
-            color = '#616161'
-            borderColor = 'default'
-            icon = <HelpOutline sx={{ color }} />
-            title = 'Typ elektrowni nie jest znany'
-            label = 'Nieznany'
-            break
-        }
-        return (
-          <Tooltip disableInteractive title={title} >
-            <Chip
-              size="medium"
-              variant="outlined"
-              color={'default'}
-              sx={{ color, borderColor }}
-              icon={icon}
-              label={label} />
-          </Tooltip>
-        )
-      }
+      renderCell: (params: GridRenderCellParams<any, PowerStationType>) => (
+        <PowerStationTypeChip powerStationType={params.value} />
+      )
     },
     {
       field: 'status',
@@ -202,7 +169,6 @@ const getColumns = (): GridColDef[] => {
             icon = <HelpOutline />
             label = 'Nieznany'
             title = 'Sprawdzanie statusu elektrowni'
-            break
         }
         return (
           <Tooltip disableInteractive title={title} >
