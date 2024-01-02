@@ -1,14 +1,19 @@
 import * as React from 'react'
 import { type ChangeEvent, useState } from 'react'
 import {
-  Button, CircularProgress,
+  Button,
+  CircularProgress,
   Dialog,
   DialogActions,
-  DialogContent, DialogContentText,
+  DialogContent,
+  DialogContentText,
   DialogTitle,
-  FormControl, IconButton, InputAdornment,
+  FormControl,
+  IconButton,
+  InputAdornment,
   InputLabel,
-  MenuItem, OutlinedInput,
+  MenuItem,
+  OutlinedInput,
   Select,
   type SelectChangeEvent,
   Stack,
@@ -16,46 +21,61 @@ import {
 } from '@mui/material'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  closeCreateUserDialog, createUser,
-  selectIsCreateUserDialogOpen, selectIsCreateUserError, selectIsCreateUserPending,
-  selectIsUsernameValidationError, selectIsUsernameValidationPending, selectOneTimePassword, validateUsername
+  clearOneTimePassword,
+  closeEditUserDialog,
+  resetPassword,
+  selectEditedUserData,
+  selectIsEditUserDialogOpen,
+  selectIsEditUserError,
+  selectIsEditUserPending,
+  selectIsUsernameValidationError,
+  selectIsUsernameValidationPending,
+  selectOneTimePassword, updateUser,
+  validateUsername
 } from '../../redux/slices/adminPanelSlice'
 import { UserRole, userRoleToString } from '../common/types'
 import Box from '@mui/material/Box'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 
-const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ afterCreateAction }) => {
+const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afterEditAction }) => {
   const dispatch = useAppDispatch()
   const isUsernameValidationPending: boolean = useAppSelector(selectIsUsernameValidationPending)
   const isUsernameValidationError: boolean = useAppSelector(selectIsUsernameValidationError)
-  const isCreateUserPending = useAppSelector(selectIsCreateUserPending)
-  const isCreateUserError = useAppSelector(selectIsCreateUserError)
+  const editedUserData = useAppSelector(selectEditedUserData)
+  const isEditUserPending = useAppSelector(selectIsEditUserPending)
+  const isEditUserError = useAppSelector(selectIsEditUserError)
   const oneTimePassword = useAppSelector(selectOneTimePassword)
-  const [username, setUsername] = useState<string>('')
-  const [role, setRole] = useState<UserRole>(UserRole.User)
+  const [newUsername, setNewUsername] = useState<string>(editedUserData?.username as string)
+  const [newRole, setNewRole] = useState<UserRole>(editedUserData?.role as UserRole)
   const [showOneTimePassword, setShowOneTimePassword] = useState(false)
 
-  const isCreateButtonDisabled = username === '' || isUsernameValidationError || isUsernameValidationPending
+  const isNotDifferent = newUsername === editedUserData?.username && newRole === editedUserData?.role
+  const isSaveButtonDisabled = isNotDifferent || newUsername === '' || isUsernameValidationError || isUsernameValidationPending
 
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value
     void dispatch(validateUsername(value))
-    setUsername(value)
+    setNewUsername(value)
   }
 
   const handleRoleChange = (event: SelectChangeEvent<UserRole>): void => {
-    setRole(event.target.value as UserRole)
+    setNewRole(event.target.value as UserRole)
+  }
+
+  const handlePasswordReset = (): void => {
+    void dispatch(resetPassword(editedUserData?.username as string))
   }
 
   const handleDialogClose = (): void => {
-    dispatch(closeCreateUserDialog())
+    dispatch(closeEditUserDialog())
   }
 
-  const handleCreate = (): void => {
-    dispatch(createUser({ username, role }))
+  const handleSave = (): void => {
+    dispatch(updateUser({ username: newUsername, role: newRole }))
       .then((result) => {
-        if (result.type === createUser.fulfilled.type) {
-          afterCreateAction()
+        if (result.type === updateUser.fulfilled.type) {
+          afterEditAction()
+          handleDialogClose()
         }
       }).catch(() => {})
   }
@@ -68,10 +88,14 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
     event.preventDefault()
   }
 
-  if (isCreateUserPending) {
+  const handleBackToEdit = (): void => {
+    dispatch(clearOneTimePassword())
+  }
+
+  if (isEditUserPending || !(isEditUserPending || isEditUserError || editedUserData !== undefined)) {
     return (
       <>
-        <DialogTitle>Kreator użytkownika</DialogTitle>
+        <DialogTitle>Edycja użytkownika</DialogTitle>
         <DialogContent sx={{ minWidth: 620, minHeight: 264.5 }}>
           <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 206.5 }}>
             <CircularProgress size={32} />
@@ -81,19 +105,19 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
     )
   }
 
-  if (!isCreateUserPending && !isCreateUserError && oneTimePassword !== undefined) {
+  if (!isEditUserError && oneTimePassword !== undefined) {
     return (
       <>
-        <DialogTitle>Kreator użytkownika</DialogTitle>
-        <DialogContent sx={{ maxWidth: 620, minHeight: 210 }}>
+        <DialogTitle>Edycja użytkownika</DialogTitle>
+        <DialogContent sx={{ maxWidth: 620, minHeight: 212 }}>
           <DialogContentText>
-            Użytkownik <b>{username}</b> został utworzony pomyślnie!
+            Hasło zostało zresetowane pomyślnie!
           </DialogContentText>
           <DialogContentText mt={1}>
-            Poniżej znajduje się hasło jednorazowe, którego należy użyć przy pierwszym logowaniu.
+            Poniżej znajduje się hasło jednorazowe, którego należy użyć przy następnym logowaniu.
             Po zamknięciu tego okna hasła nie da się wyświetlić ponownie.
           </DialogContentText>
-          <FormControl sx={{ mt: 4 }} variant="outlined" fullWidth>
+          <FormControl sx={{ mt: 4.25 }} variant="outlined" fullWidth>
             <InputLabel htmlFor="outlined-adornment-password">Hasło jednorazowe</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -117,7 +141,8 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
           </FormControl>
         </DialogContent>
         <DialogActions sx={{ px: 3 }}>
-          <Button onClick={handleDialogClose}>Zakończ</Button>
+          <Button onClick={handleBackToEdit}>Wróć do edycji</Button>
+          <Button onClick={handleDialogClose}>Zamknij</Button>
         </DialogActions>
       </>
     )
@@ -125,10 +150,10 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
 
   return (
     <>
-      <DialogTitle>Kreator użytkownika</DialogTitle>
+      <DialogTitle>Edycja użytkownika</DialogTitle>
       <DialogContent sx={{ minWidth: 620 }}>
-        <Stack spacing={isCreateUserError ? 3.5 : 5.75} pt={isCreateUserError ? 0 : 2.25} pb={isCreateUserError ? 0 : 2}>
-          {isCreateUserError && (
+        <Stack spacing={isEditUserError ? 3.5 : 5.75} pt={isEditUserError ? 0 : 2.25} pb={isEditUserError ? 0 : 2}>
+          {isEditUserError && (
             <DialogContentText color={'error'}>
               Wystąpił błąd. Spróbuj ponownie.
             </DialogContentText>
@@ -140,17 +165,17 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
             label="Nazwa użytkownika"
             type="text"
             variant="outlined"
-            value={username}
+            value={newUsername}
             onChange={handleUsernameChange}
             color={isUsernameValidationError
               ? 'error'
-              : isUsernameValidationPending || username === '' ? 'primary' : 'success'}/>
+              : isUsernameValidationPending || newUsername === '' || newUsername === editedUserData?.username ? 'primary' : 'success'}/>
           <FormControl>
             <InputLabel id="role-select-label">Rola</InputLabel>
             <Select
               labelId="role-select-label"
               id="role-select"
-              value={role}
+              value={newRole}
               label="Rola"
               onChange={handleRoleChange}
             >
@@ -161,21 +186,23 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
         </Stack>
       </DialogContent>
       <DialogActions sx={{ px: 3 }}>
+        <Button onClick={handlePasswordReset}>Zresetuj hasło</Button>
+        <div style={{ flex: 1 }}></div>
         <Button onClick={handleDialogClose}>Anuluj</Button>
-        <Button disabled={isCreateButtonDisabled} onClick={handleCreate}>Utwórz</Button>
+        <Button disabled={isSaveButtonDisabled} onClick={handleSave}>Zapisz</Button>
       </DialogActions>
     </>
   )
 }
 
-const CreateUserDialog: React.FC<{ afterCreateAction: () => void }> = ({ afterCreateAction }) => {
-  const isCreateUserDialogOpen = useAppSelector(selectIsCreateUserDialogOpen)
+const EditUserDialog: React.FC<{ afterEditAction: () => void }> = ({ afterEditAction }) => {
+  const isEditUserDialogOpen = useAppSelector(selectIsEditUserDialogOpen)
 
   return (
-    <Dialog open={isCreateUserDialogOpen} maxWidth={'md'}>
-      <CreateUserDialogContent afterCreateAction={afterCreateAction} />
+    <Dialog open={isEditUserDialogOpen} maxWidth={'md'}>
+      <EditUserDialogContent afterEditAction={afterEditAction} />
     </Dialog>
   )
 }
 
-export default CreateUserDialog
+export default EditUserDialog

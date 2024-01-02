@@ -15,9 +15,9 @@ import {
   UserRole,
   userRoleToString
 } from '../common/types'
-import { openDeleteUserConfirmDialog, selectPendingRows } from '../../redux/slices/adminPanelSlice'
+import { openDeleteUserConfirmDialog, openEditUserDialog, selectPendingRows } from '../../redux/slices/adminPanelSlice'
 
-const getColumns = (afterAction: () => void): GridColDef[] => {
+const getColumns = (): GridColDef[] => {
   const dispatch = useAppDispatch()
   const pendingRows = useAppSelector(selectPendingRows)
   return [
@@ -74,7 +74,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
               icon={<Edit />}
               label="Edit"
               className="textPrimary"
-              onClick={() => { /* TODO */ }}
+              onClick={() => { dispatch(openEditUserDialog(params.id)) }}
               color="inherit" />
           </span>
           </Tooltip>,
