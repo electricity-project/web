@@ -108,7 +108,6 @@ export const resetPassword = createAsyncThunk(
 export const fetchWeatherApiKey = createAsyncThunk(
   'adminPanel/fetchWeatherApiKey',
   async (_, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.get('/weather-api-key')
       .then(response => {
         return response.data
