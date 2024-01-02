@@ -231,10 +231,10 @@ const adminPanelSlice = createSlice({
     openCreateUserDialog: (state) => {
       state.isCreateUserError = false
       state.isCreateUserDialogOpen = true
+      state.oneTimePassword = undefined
     },
     closeCreateUserDialog: (state) => {
       state.isCreateUserDialogOpen = false
-      state.oneTimePassword = undefined
     },
     clearOneTimePassword: (state) => {
       state.oneTimePassword = undefined
@@ -243,6 +243,7 @@ const adminPanelSlice = createSlice({
       const rowIndex = state.rows.findIndex((row) => row.id === action.payload)
       if (rowIndex !== -1) {
         state.isEditUserError = false
+        state.oneTimePassword = undefined
         state.isEditUserDialogOpen = true
         state.editedUserData = state.rows[rowIndex] as UserProps
       }

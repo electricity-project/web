@@ -96,8 +96,8 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
     return (
       <>
         <DialogTitle>Edycja użytkownika</DialogTitle>
-        <DialogContent sx={{ minWidth: 620, minHeight: 264.5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 206.5 }}>
+        <DialogContent sx={{ minWidth: 620, minHeight: 278.1 }} dividers>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 220.1 }}>
             <CircularProgress size={32} />
           </Box>
         </DialogContent>
@@ -109,7 +109,7 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
     return (
       <>
         <DialogTitle>Edycja użytkownika</DialogTitle>
-        <DialogContent sx={{ maxWidth: 620, minHeight: 212 }}>
+        <DialogContent sx={{ maxWidth: 620, minHeight: 225.6 }} dividers>
           <DialogContentText>
             Hasło zostało zresetowane pomyślnie!
           </DialogContentText>
@@ -151,7 +151,7 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
   return (
     <>
       <DialogTitle>Edycja użytkownika</DialogTitle>
-      <DialogContent sx={{ minWidth: 620 }}>
+      <DialogContent sx={{ minWidth: 620 }} dividers>
         <Stack spacing={isEditUserError ? 3.5 : 5.75} pt={isEditUserError ? 0 : 2.25} pb={isEditUserError ? 0 : 2}>
           {isEditUserError && (
             <DialogContentText color={'error'}>

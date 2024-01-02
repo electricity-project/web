@@ -72,8 +72,8 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
     return (
       <>
         <DialogTitle>Kreator użytkownika</DialogTitle>
-        <DialogContent sx={{ minWidth: 620, minHeight: 264.5 }}>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 206.5 }}>
+        <DialogContent sx={{ minWidth: 620, minHeight: 278.1 }} dividers>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 220.1 }}>
             <CircularProgress size={32} />
           </Box>
         </DialogContent>
@@ -85,7 +85,7 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
     return (
       <>
         <DialogTitle>Kreator użytkownika</DialogTitle>
-        <DialogContent sx={{ maxWidth: 620, minHeight: 210 }}>
+        <DialogContent sx={{ maxWidth: 620, minHeight: 225.6 }} dividers>
           <DialogContentText>
             Użytkownik <b>{username}</b> został utworzony pomyślnie!
           </DialogContentText>
@@ -126,7 +126,7 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
   return (
     <>
       <DialogTitle>Kreator użytkownika</DialogTitle>
-      <DialogContent sx={{ minWidth: 620 }}>
+      <DialogContent sx={{ minWidth: 620 }} dividers>
         <Stack spacing={isCreateUserError ? 3.5 : 5.75} pt={isCreateUserError ? 0 : 2.25} pb={isCreateUserError ? 0 : 2}>
           {isCreateUserError && (
             <DialogContentText color={'error'}>
