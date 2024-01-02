@@ -8,6 +8,7 @@ import type {
   GridValidRowModel
 } from '@mui/x-data-grid'
 import { type AlertColor } from '@mui/material'
+import { type UserRole } from '../../components/common/types'
 
 export const fetchUsers = createAsyncThunk(
   'adminPanel/fetchUsers',
@@ -32,11 +33,47 @@ export const fetchUsers = createAsyncThunk(
   }
 )
 
+interface CreateUserProps {
+  username: string
+  role: UserRole
+}
+
+export const createUser = createAsyncThunk(
+  'adminPanel/createUser',
+  async (props: CreateUserProps, { rejectWithValue }) => {
+    await new Promise(resolve => setTimeout(resolve, 500))
+    return await axios.post('/users', props)
+      .then(response => {
+        return response.data
+      }).catch(error => {
+        console.error(error)
+        return rejectWithValue(error)
+      })
+  }
+)
+
 export const deleteUser = createAsyncThunk(
   'adminPanel/deleteUser',
   async (id: GridRowId, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.delete(`/users/${id}`)
+      .then(response => {
+        return response.data
+      }).catch(error => {
+        console.error(error)
+        return rejectWithValue(error)
+      })
+  }
+)
+
+export const validateUsername = createAsyncThunk(
+  'adminPanel/validateUsername',
+  async (username: string, { rejectWithValue }) => {
+    await new Promise(resolve => setTimeout(resolve, 500))
+    if (username === '') {
+      return
+    }
+    return await axios.get('/users/validate', { params: { username } })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -99,6 +136,12 @@ interface AdminPanelState {
   isLoadingWeatherApiKey: boolean
   isWeatherApiKeyError: boolean
   weatherApiKey: string
+  isCreateUserDialogOpen: boolean
+  isUsernameValidationPending: boolean
+  isUsernameValidationError: boolean
+  isCreateUserPending: boolean
+  isCreateUserError: boolean
+  oneTimePassword: string | undefined
 }
 
 const initialState: AdminPanelState = {
@@ -113,7 +156,13 @@ const initialState: AdminPanelState = {
   deleteUserConfirmDialogId: undefined,
   isLoadingWeatherApiKey: false,
   isWeatherApiKeyError: false,
-  weatherApiKey: ''
+  weatherApiKey: '',
+  isCreateUserDialogOpen: false,
+  isUsernameValidationPending: false,
+  isUsernameValidationError: false,
+  isCreateUserPending: false,
+  isCreateUserError: false,
+  oneTimePassword: undefined
 }
 
 const adminPanelSlice = createSlice({
@@ -144,6 +193,15 @@ const adminPanelSlice = createSlice({
     },
     clearWeatherApiError: (state) => {
       state.isWeatherApiKeyError = false
+    },
+    openCreateUserDialog: (state) => {
+      state.isCreateUserDialogOpen = true
+    },
+    closeCreateUserDialog: (state) => {
+      state.isCreateUserDialogOpen = false
+    },
+    clearOneTimePassword: (state) => {
+      state.oneTimePassword = undefined
     }
   },
   extraReducers: (builder) => {
@@ -159,6 +217,19 @@ const adminPanelSlice = createSlice({
       .addCase(fetchUsers.rejected, (state) => {
         state.isLoading = false
       })
+      .addCase(createUser.pending, (state) => {
+        state.isCreateUserPending = true
+        state.isCreateUserError = false
+        state.oneTimePassword = undefined
+      })
+      .addCase(createUser.fulfilled, (state, action) => {
+        state.isCreateUserPending = false
+        state.oneTimePassword = action.payload
+      })
+      .addCase(createUser.rejected, (state) => {
+        state.isCreateUserPending = false
+        state.isCreateUserError = true
+      })
       .addCase(deleteUser.pending, (state, action) => {
         state.pendingRows[action.meta.arg] = PendingRowReason.Delete
       })
@@ -169,6 +240,18 @@ const adminPanelSlice = createSlice({
       .addCase(deleteUser.rejected, (state, action) => {
         removeFromPendingRows(state, action.meta.arg)
         state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Nie udało się usunąć użytkownika', severity: 'error' }]
+      })
+      .addCase(validateUsername.pending, (state) => {
+        state.isUsernameValidationError = false
+        state.isUsernameValidationPending = true
+      })
+      .addCase(validateUsername.fulfilled, (state) => {
+        state.isUsernameValidationError = false
+        state.isUsernameValidationPending = false
+      })
+      .addCase(validateUsername.rejected, (state) => {
+        state.isUsernameValidationError = true
+        state.isUsernameValidationPending = false
       })
       .addCase(fetchWeatherApiKey.pending, (state) => {
         state.isLoadingWeatherApiKey = true
@@ -208,7 +291,10 @@ export const {
   updateAlert,
   openDeleteUserConfirmDialog,
   closeDeleteUserConfirmDialog,
-  clearWeatherApiError
+  clearWeatherApiError,
+  openCreateUserDialog,
+  closeCreateUserDialog,
+  clearOneTimePassword
 } = adminPanelSlice.actions
 export const selectRows = (state: RootState): GridValidRowModel[] => state.adminPanel.rows
 export const selectAllRowsCount = (state: RootState): number => state.adminPanel.allRowsCount
@@ -222,4 +308,10 @@ export const selectDeleteUserConfirmDialogId = (state: RootState): GridRowId | u
 export const selectIsLoadingWeatherApiKey = (state: RootState): boolean => state.adminPanel.isLoadingWeatherApiKey
 export const selectIsWeatherApiKeyError = (state: RootState): boolean => state.adminPanel.isWeatherApiKeyError
 export const selectWeatherApiKey = (state: RootState): string => state.adminPanel.weatherApiKey
+export const selectIsCreateUserDialogOpen = (state: RootState): boolean => state.adminPanel.isCreateUserDialogOpen
+export const selectIsUsernameValidationPending = (state: RootState): boolean => state.adminPanel.isUsernameValidationPending
+export const selectIsUsernameValidationError = (state: RootState): boolean => state.adminPanel.isUsernameValidationError
+export const selectIsCreateUserPending = (state: RootState): boolean => state.adminPanel.isCreateUserPending
+export const selectIsCreateUserError = (state: RootState): boolean => state.adminPanel.isCreateUserError
+export const selectOneTimePassword = (state: RootState): string | undefined => state.adminPanel.oneTimePassword
 export default adminPanelSlice.reducer

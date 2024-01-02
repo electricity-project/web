@@ -3,8 +3,12 @@ import { Button } from '@mui/material'
 import { Add } from '@mui/icons-material'
 import * as React from 'react'
 import Typography from '@mui/material/Typography'
+import { useAppDispatch } from '../../redux/hooks'
+import { openCreateUserDialog } from '../../redux/slices/adminPanelSlice'
 
 const AdminPanelToolbar: React.FC = () => {
+  const dispatch = useAppDispatch()
+
   return (
     <GridToolbarContainer>
       <Typography variant={'h5'} sx={{ whiteSpace: 'nowrap', paddingLeft: 1 }}>
@@ -14,7 +18,7 @@ const AdminPanelToolbar: React.FC = () => {
       <Button
         color="primary"
         startIcon={<Add />}
-        onClick={() => { /* TODO */ }}
+        onClick={() => { dispatch(openCreateUserDialog()) }}
       >
         Dodaj nowego użytkownika
       </Button>

@@ -21,6 +21,7 @@ import AdminPanelAlerts from './AdminPanelAlerts'
 import DeleteUserConfirmDialog from './DeleteUserConfirmDialog'
 import WeatherApiKey from './WeatherApiKey'
 import { useEffect } from 'react'
+import CreateUserDialog from './CreateUserDialog'
 
 const AdminPanel: React.FC = () => {
   const dispatch = useAppDispatch()
@@ -45,8 +46,9 @@ const AdminPanel: React.FC = () => {
 
   return (
     <>
-      <DeleteUserConfirmDialog afterConfirm={updateDataGrid} />
       <AdminPanelAlerts />
+      <DeleteUserConfirmDialog afterConfirm={updateDataGrid} />
+      <CreateUserDialog afterCreateAction={updateDataGrid} />
       <WeatherApiKey />
       <Box sx={{ width: '100%', minHeight: 0, flex: 1, display: 'flex', flexFlow: 'column', typography: 'body1' }}>
         <DataGrid
