@@ -1,8 +1,9 @@
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { type RootState } from '../store'
-import axios from '../../axiosConfig'
 import moment from 'moment'
+
+import axios from '../../axiosConfig'
 import { AggregationPeriodType } from '../../components/common/types'
+import { type RootState } from '../store'
 
 export const fetchPowerStationsCount = createAsyncThunk(
   'powerProduction/fetchPowerStationsCount',

@@ -1374,14 +1374,23 @@
     "content": [
       {
         "id": 1,
-        "username": "Wojciech Bednarz",
+        "username": "wbednarz",
         "role": "ADMIN"
       },
       {
         "id": 2,
-        "username": "Jan Kowalski",
+        "username": "jan_kowalski",
         "role": "USER"
       }
     ]
+  },
+  "auth-login": {
+    "token": "token",
+    "username": "wbednarz",
+    "role": "ADMIN"
+  },
+  "user-info": {
+    "username": "wbednarz",
+    "role": "ADMIN"
   }
 }

@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { type ChangeEvent, useState } from 'react'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Button,
   CircularProgress,
@@ -19,6 +18,10 @@ import {
   Stack,
   TextField
 } from '@mui/material'
+import Box from '@mui/material/Box'
+import * as React from 'react'
+import { type ChangeEvent, useState } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   clearOneTimePassword,
@@ -33,9 +36,8 @@ import {
   selectOneTimePassword, updateUser,
   validateUsername
 } from '../../redux/slices/adminPanelSlice'
+import { selectUser } from '../../redux/slices/userAuthSlice'
 import { UserRole, userRoleToString } from '../common/types'
-import Box from '@mui/material/Box'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afterEditAction }) => {
   const dispatch = useAppDispatch()
@@ -45,6 +47,7 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
   const isEditUserPending = useAppSelector(selectIsEditUserPending)
   const isEditUserError = useAppSelector(selectIsEditUserError)
   const oneTimePassword = useAppSelector(selectOneTimePassword)
+  const loggedUsed = useAppSelector(selectUser)
   const [newUsername, setNewUsername] = useState<string>(editedUserData?.username as string)
   const [newRole, setNewRole] = useState<UserRole>(editedUserData?.role as UserRole)
   const [showOneTimePassword, setShowOneTimePassword] = useState(false)
@@ -176,6 +179,7 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
               labelId="role-select-label"
               id="role-select"
               value={newRole}
+              disabled={loggedUsed?.username === editedUserData?.username}
               label="Rola"
               onChange={handleRoleChange}
             >

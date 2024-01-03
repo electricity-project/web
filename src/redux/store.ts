@@ -1,9 +1,11 @@
 import { configureStore } from '@reduxjs/toolkit'
+
+import adminPanelSlice from './slices/adminPanelSlice'
+import powerProductionSlice from './slices/powerProductionSlice'
+import powerStationDetailsSlice from './slices/powerStationDetailsSlice'
 import powerStationsCreatorSlice from './slices/powerStationsCreatorSlice'
 import powerStationsSlice from './slices/powerStationsSlice'
-import powerStationDetailsSlice from './slices/powerStationDetailsSlice'
-import powerProductionSlice from './slices/powerProductionSlice'
-import adminPanelSlice from './slices/adminPanelSlice'
+import userAuthSlice from './slices/userAuthSlice'
 
 const store = configureStore({
   reducer: {
@@ -11,7 +13,8 @@ const store = configureStore({
     powerStations: powerStationsSlice,
     powerStationDetails: powerStationDetailsSlice,
     powerStationsCreator: powerStationsCreatorSlice,
-    adminPanel: adminPanelSlice
+    adminPanel: adminPanelSlice,
+    userAuth: userAuthSlice
   }
 })
 

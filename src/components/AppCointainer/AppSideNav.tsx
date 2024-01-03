@@ -1,46 +1,70 @@
-import * as React from 'react'
-import Toolbar from '@mui/material/Toolbar'
-import MuiDrawer, { type DrawerProps as MuiDrawerProps } from '@mui/material/Drawer'
+import { ElectricBolt, ManageAccounts, QueryStats, WindPower } from '@mui/icons-material'
+import { type CSSObject, styled, type Theme } from '@mui/material'
 import Divider from '@mui/material/Divider'
+import MuiDrawer, { type DrawerProps as MuiDrawerProps } from '@mui/material/Drawer'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
-import { Link, matchPath, useLocation } from 'react-router-dom'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import { ElectricBolt, QueryStats, WindPower, ManageAccounts } from '@mui/icons-material'
-import { type CSSObject, styled, type Theme } from '@mui/material'
+import Toolbar from '@mui/material/Toolbar'
+import type { JSX } from 'react'
+import * as React from 'react'
+import { Link, matchPath, useLocation } from 'react-router-dom'
 
-const navElements = [
-  {
-    key: 'power-production',
-    linkTo: '/power-production',
-    icon: <ElectricBolt />,
-    text: 'Stan produkcji prądu',
-    isSelectedPattern: '/power-production'
-  },
-  {
-    key: 'power-stations',
-    linkTo: '/power-stations',
-    icon: <WindPower/>,
-    text: 'Elektrownie',
-    isSelectedPattern: { path: '/power-stations', end: false }
-  },
-  {
-    key: 'power-prediction',
-    linkTo: '/power-prediction',
-    icon: <QueryStats />,
-    text: 'Predykcja produkcji prądu',
-    isSelectedPattern: '/power-prediction'
-  },
-  {
-    key: 'admin',
-    linkTo: '/admin',
-    icon: <ManageAccounts />,
-    text: 'Panel administratora',
-    isSelectedPattern: '/admin'
+import { useAppSelector } from '../../redux/hooks'
+import { selectUser } from '../../redux/slices/userAuthSlice'
+import { UserRole } from '../common/types'
+
+interface PathPattern {
+  path: string
+  end: boolean
+}
+
+interface NavElement {
+  key: string
+  linkTo: string
+  icon: JSX.Element
+  text: string
+  isSelectedPattern: string | PathPattern
+}
+
+const getNavElements = (isAdmin: boolean): NavElement[] => {
+  const navElements = [
+    {
+      key: 'power-production',
+      linkTo: '/power-production',
+      icon: <ElectricBolt />,
+      text: 'Stan produkcji prądu',
+      isSelectedPattern: '/power-production'
+    },
+    {
+      key: 'power-stations',
+      linkTo: '/power-stations',
+      icon: <WindPower/>,
+      text: 'Elektrownie',
+      isSelectedPattern: { path: '/power-stations', end: false }
+    },
+    {
+      key: 'power-prediction',
+      linkTo: '/power-prediction',
+      icon: <QueryStats />,
+      text: 'Predykcja produkcji prądu',
+      isSelectedPattern: '/power-prediction'
+    }
+  ]
+
+  if (isAdmin) {
+    navElements.push({
+      key: 'admin',
+      linkTo: '/admin',
+      icon: <ManageAccounts />,
+      text: 'Panel administratora',
+      isSelectedPattern: '/admin'
+    })
   }
-]
+  return navElements
+}
 
 const drawerWidth = 275
 
@@ -95,6 +119,9 @@ interface AppSideNavProps {
 
 const AppSideNav: React.FC<AppSideNavProps> = ({ isOpen }) => {
   const { pathname } = useLocation()
+  const user = useAppSelector(selectUser)
+  const isAdmin = user?.role === UserRole.Admin
+
   return (
     <>
       <div style={{ width: '65px' }}></div>
@@ -105,7 +132,7 @@ const AppSideNav: React.FC<AppSideNavProps> = ({ isOpen }) => {
       >
         <Toolbar />
         <List disablePadding>
-          {navElements.map((navElement) => (
+          {getNavElements(isAdmin).map((navElement) => (
             <>
               <ListItem key={navElement.key} disablePadding>
                 <ListItemButton

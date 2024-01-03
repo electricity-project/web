@@ -1,12 +1,13 @@
-import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { type RootState } from '../store'
-import axios from '../../axiosConfig'
 import type { GridRowId } from '@mui/x-data-grid'
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
+import moment from 'moment/moment'
+
+import axios from '../../axiosConfig'
+import { AggregationPeriodType, type PowerStationState, type PowerStationType } from '../../components/common/types'
+import { type RootState } from '../store'
 import {
   getFirstDate, toUnit
 } from './powerProductionSlice'
-import { AggregationPeriodType, type PowerStationState, type PowerStationType } from '../../components/common/types'
-import moment from 'moment/moment'
 
 export const fetchPowerStationDetails = createAsyncThunk(
   'powerStationDetails/fetch',
@@ -127,7 +128,7 @@ const powerStationDetailsSlice = createSlice({
         state.details = { ...action.payload, creationTime: new Date(action.payload.creationTime) }
         state.isDetailsError = false
       })
-      .addCase(fetchPowerStationDetails.rejected, (state, action: any) => {
+      .addCase(fetchPowerStationDetails.rejected, (state) => {
         state.isLoadingDetails = false
         state.isDetailsError = true
       })

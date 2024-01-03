@@ -1,25 +1,28 @@
 import {
+  Delete,
+  Edit
+} from '@mui/icons-material'
+import { CircularProgress, Tooltip } from '@mui/material'
+import {
   GridActionsCellItem,
   type GridColDef,
   type GridColumnHeaderParams,
   type GridRenderCellParams, type GridRowParams
 } from '@mui/x-data-grid'
-import { CircularProgress, Tooltip } from '@mui/material'
-import {
-  Delete,
-  Edit
-} from '@mui/icons-material'
 import * as React from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { openDeleteUserConfirmDialog, openEditUserDialog, selectPendingRows } from '../../redux/slices/adminPanelSlice'
+import { selectUser } from '../../redux/slices/userAuthSlice'
 import {
   UserRole,
   userRoleToString
 } from '../common/types'
-import { openDeleteUserConfirmDialog, openEditUserDialog, selectPendingRows } from '../../redux/slices/adminPanelSlice'
 
 const getColumns = (): GridColDef[] => {
   const dispatch = useAppDispatch()
   const pendingRows = useAppSelector(selectPendingRows)
+  const user = useAppSelector(selectUser)
   return [
     {
       field: 'username',
@@ -81,10 +84,11 @@ const getColumns = (): GridColDef[] => {
           <Tooltip
             key="Delete"
             disableInteractive
-            title='Usuń'>
+            title={user?.username === params.row.username ? 'Nie można usunąć swojego profilu' : 'Usuń'}>
           <span>
             <GridActionsCellItem
               icon={<Delete />}
+              disabled={user?.username === params.row.username}
               label="Delete"
               onClick={() => { dispatch(openDeleteUserConfirmDialog(params.id)) }}
               color="inherit" />

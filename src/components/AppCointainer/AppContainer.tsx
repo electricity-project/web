@@ -1,17 +1,36 @@
-import * as React from 'react'
+import { Backdrop, CssBaseline } from '@mui/material'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
-import { Outlet } from 'react-router-dom'
+import * as React from 'react'
+import { useEffect } from 'react'
+import { matchPath, Navigate, Outlet, useLocation } from 'react-router-dom'
+
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import { getUserInfo, selectUser } from '../../redux/slices/userAuthSlice'
+import { UserRole } from '../common/types'
 import AppHeader from './AppBar'
 import AppSideNav from './AppSideNav'
-import { Backdrop, CssBaseline } from '@mui/material'
 import ViewBar from './ViewBar'
 
 const AppContainer: React.FC = () => {
+  const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = React.useState(false)
+  const user = useAppSelector(selectUser)
+  const isAdmin = user?.role === UserRole.Admin
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    void (async () => {
+      await dispatch(getUserInfo())
+    })()
+  }, [])
 
   const toggleDrawer = (): void => {
     setIsOpen(!isOpen)
+  }
+
+  if (!isAdmin && matchPath('/admin', pathname) !== null) {
+    return <Navigate to={'/power-production'} replace />
   }
 
   return (

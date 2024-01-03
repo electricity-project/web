@@ -1,13 +1,14 @@
-import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
-import { type RootState } from '../store'
-import axios from '../../axiosConfig'
 import {
   type GridRowId, type GridRowModel, GridRowModes,
   type GridRowModesModel,
   type GridValidRowModel
 } from '@mui/x-data-grid'
 import { type GridRowModesModelProps } from '@mui/x-data-grid/models/api/gridEditingApi'
+import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
+
+import axios from '../../axiosConfig'
 import { PowerStationCreationStatus, type PowerStationType } from '../../components/common/types'
+import { type RootState } from '../store'
 
 export const validatePowerStationByIpv6 = createAsyncThunk(
   'powerStationsCreator/validateByIpv6',

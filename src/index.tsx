@@ -1,13 +1,15 @@
+import './index.css'
+
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css'
-import {
-  createRoutesFromElements,
-  createBrowserRouter, RouterProvider
-} from 'react-router-dom'
-import getRouting from './routing/routing'
 import { Provider } from 'react-redux'
+import {
+  createBrowserRouter, createRoutesFromElements,
+  RouterProvider
+} from 'react-router-dom'
+
 import store from './redux/store'
+import getRouting from './routing/routing'
 
 const router = createBrowserRouter(createRoutesFromElements(getRouting()))
 

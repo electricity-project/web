@@ -1,14 +1,15 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
-import { type RootState } from '../store'
-import axios from '../../axiosConfig'
+import { type AlertColor } from '@mui/material'
 import type {
   GridPaginationModel,
   GridRowId,
   GridSortItem,
   GridValidRowModel
 } from '@mui/x-data-grid'
-import { type AlertColor } from '@mui/material'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+
+import axios from '../../axiosConfig'
 import { type UserRole } from '../../components/common/types'
+import { type RootState } from '../store'
 
 export const fetchUsers = createAsyncThunk(
   'adminPanel/fetchUsers',
@@ -229,6 +230,7 @@ const adminPanelSlice = createSlice({
       state.isWeatherApiKeyError = false
     },
     openCreateUserDialog: (state) => {
+      state.isUsernameValidationError = false
       state.isCreateUserError = false
       state.isCreateUserDialogOpen = true
       state.oneTimePassword = undefined
@@ -243,6 +245,7 @@ const adminPanelSlice = createSlice({
       const rowIndex = state.rows.findIndex((row) => row.id === action.payload)
       if (rowIndex !== -1) {
         state.isEditUserError = false
+        state.isUsernameValidationError = false
         state.oneTimePassword = undefined
         state.isEditUserDialogOpen = true
         state.editedUserData = state.rows[rowIndex] as UserProps
