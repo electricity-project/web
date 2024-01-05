@@ -3,7 +3,7 @@ import { Navigate, Route } from 'react-router-dom'
 
 import AdminPanel from '../components/AdminPanel/AdminPanel'
 import AppContainer from '../components/AppCointainer/AppContainer'
-import LoginPanel from '../components/LoginPanel/LoginPanel'
+import AuthPanel from '../components/LoginPanel/AuthPanel'
 import PowerProduction from '../components/PowerProduction/PowerProduction'
 import PowerProductionPrediction from '../components/PowerProductionPrediction/PowerProductionPrediction'
 import PowerStationDetails from '../components/PowerStationDetails/PowerStationDetails'
@@ -13,7 +13,7 @@ import ProtectedRoute from './ProtectedRoute'
 
 const getRouting: () => JSX.Element = () =>
   <>
-    <Route path="/login" element={<LoginPanel/>}/>
+    <Route path="/login" element={<AuthPanel/>}/>
     <Route path="/" element={<ProtectedRoute/>}>
       <Route path="/" element={<AppContainer/>}>
         <Route path="/" element={<Navigate replace to="/power-production"/>}/>

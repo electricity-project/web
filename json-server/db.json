@@ -1387,6 +1387,11 @@
   "auth-login": {
     "token": "token",
     "username": "wbednarz",
+    "role": "USER_SET_PASSWORD"
+  },
+  "auth-password": {
+    "token": "token",
+    "username": "wbednarz",
     "role": "ADMIN"
   },
   "user-info": {

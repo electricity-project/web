@@ -55,6 +55,19 @@ export const logout = createAsyncThunk(
   }
 )
 
+export const changePassword = createAsyncThunk(
+  'userAuth/changePassword',
+  async (newPassword: string, { rejectWithValue }) => {
+    return await axios.post('/auth/password', { newPassword })
+      .then(response => {
+        return response.data
+      }).catch(error => {
+        console.error(error)
+        return rejectWithValue(error)
+      })
+  }
+)
+
 interface UserProps {
   username: string
   role: UserRole
@@ -65,19 +78,30 @@ interface UserAuthState {
   token: string | undefined
   isLoginPending: boolean
   isLoginError: boolean
+  isPasswordChangePending: boolean
+  isPasswordChangeError: boolean
 }
 
 const initialState: UserAuthState = {
   user: userData,
   token,
   isLoginPending: false,
-  isLoginError: false
+  isLoginError: false,
+  isPasswordChangePending: false,
+  isPasswordChangeError: false
 }
 
 const userAuthSlice = createSlice({
   name: 'userAuth',
   initialState,
-  reducers: {},
+  reducers: {
+    clearLoginError: (state) => {
+      state.isLoginError = false
+    },
+    clearPasswordChangeError: (state) => {
+      state.isPasswordChangeError = false
+    }
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getUserInfo.pending, (state) => {
@@ -118,10 +142,34 @@ const userAuthSlice = createSlice({
         state.token = undefined
         state.user = undefined
       })
+      .addCase(changePassword.pending, (state) => {
+        state.isPasswordChangePending = true
+        state.isPasswordChangeError = false
+      })
+      .addCase(changePassword.fulfilled, (state, action) => {
+        state.isPasswordChangePending = false
+        state.token = action.payload.token
+        window.localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, action.payload.token)
+        const userData = { username: action.payload.username, role: action.payload.role }
+        window.localStorage.setItem(LOCAL_STORAGE_USER_DATA_KEY, JSON.stringify(userData))
+        state.user = userData
+      })
+      .addCase(changePassword.rejected, (state) => {
+        state.isPasswordChangePending = false
+        state.isPasswordChangeError = true
+      })
   }
 })
 
+export const {
+  clearLoginError,
+  clearPasswordChangeError
+} = userAuthSlice.actions
+
 export const selectIsLoginPending = (state: RootState): boolean => state.userAuth.isLoginPending
+export const selectIsLoginError = (state: RootState): boolean => state.userAuth.isLoginError
+export const selectIsPasswordChangePending = (state: RootState): boolean => state.userAuth.isPasswordChangePending
+export const selectIsPasswordChangeError = (state: RootState): boolean => state.userAuth.isPasswordChangeError
 export const selectToken = (state: RootState): string | undefined => state.userAuth.token
 export const selectUser = (state: RootState): UserProps | undefined => state.userAuth.user
 export default userAuthSlice.reducer

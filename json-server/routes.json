@@ -14,5 +14,6 @@
   "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=DAY": "/power-production-last60Days",
   "/users?page=0&size=:size": "/users-page-0",
   "/auth/login": "/auth-login",
+  "/auth/password": "/auth-password",
   "/user/info": "/user-info"
 }
