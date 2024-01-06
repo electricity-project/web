@@ -4,11 +4,11 @@ import axios from '../../axiosConfig'
 import { type UserRole } from '../../components/common/types'
 import { type RootState } from '../store'
 
-const LOCAL_STORAGE_AUTH_KEY = 'authToken'
-const LOCAL_STORAGE_USER_DATA_KEY = 'userData'
+const SESSION_STORAGE_AUTH_KEY = 'authToken'
+const SESSION_STORAGE_USER_DATA_KEY = 'userData'
 
-const token = localStorage.getItem(LOCAL_STORAGE_AUTH_KEY) ?? undefined
-const stringUserData = localStorage.getItem(LOCAL_STORAGE_USER_DATA_KEY)
+const token = sessionStorage.getItem(SESSION_STORAGE_AUTH_KEY) ?? undefined
+const stringUserData = sessionStorage.getItem(SESSION_STORAGE_USER_DATA_KEY)
 const userData: UserProps | undefined = stringUserData === null ? undefined : JSON.parse(stringUserData)
 
 export const getUserInfo = createAsyncThunk(
@@ -110,13 +110,13 @@ const userAuthSlice = createSlice({
       .addCase(getUserInfo.fulfilled, (state, action) => {
         state.isLoginPending = false
         const userData = { username: action.payload.username, role: action.payload.role }
-        window.localStorage.setItem(LOCAL_STORAGE_USER_DATA_KEY, JSON.stringify(userData))
+        window.sessionStorage.setItem(SESSION_STORAGE_USER_DATA_KEY, JSON.stringify(userData))
         state.user = userData
       })
       .addCase(getUserInfo.rejected, (state) => {
         state.isLoginPending = false
-        window.localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY)
-        window.localStorage.removeItem(LOCAL_STORAGE_USER_DATA_KEY)
+        window.sessionStorage.removeItem(SESSION_STORAGE_AUTH_KEY)
+        window.sessionStorage.removeItem(SESSION_STORAGE_USER_DATA_KEY)
         state.token = undefined
         state.user = undefined
       })
@@ -127,9 +127,9 @@ const userAuthSlice = createSlice({
       .addCase(login.fulfilled, (state, action) => {
         state.isLoginPending = false
         state.token = action.payload.token
-        window.localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, action.payload.token)
+        window.sessionStorage.setItem(SESSION_STORAGE_AUTH_KEY, action.payload.token)
         const userData = { username: action.payload.username, role: action.payload.role }
-        window.localStorage.setItem(LOCAL_STORAGE_USER_DATA_KEY, JSON.stringify(userData))
+        window.sessionStorage.setItem(SESSION_STORAGE_USER_DATA_KEY, JSON.stringify(userData))
         state.user = userData
       })
       .addCase(login.rejected, (state) => {
@@ -137,8 +137,8 @@ const userAuthSlice = createSlice({
         state.isLoginError = true
       })
       .addCase(logout.pending, (state) => {
-        window.localStorage.removeItem(LOCAL_STORAGE_AUTH_KEY)
-        window.localStorage.removeItem(LOCAL_STORAGE_USER_DATA_KEY)
+        window.sessionStorage.removeItem(SESSION_STORAGE_AUTH_KEY)
+        window.sessionStorage.removeItem(SESSION_STORAGE_USER_DATA_KEY)
         state.token = undefined
         state.user = undefined
       })
@@ -149,9 +149,9 @@ const userAuthSlice = createSlice({
       .addCase(changePassword.fulfilled, (state, action) => {
         state.isPasswordChangePending = false
         state.token = action.payload.token
-        window.localStorage.setItem(LOCAL_STORAGE_AUTH_KEY, action.payload.token)
+        window.sessionStorage.setItem(SESSION_STORAGE_AUTH_KEY, action.payload.token)
         const userData = { username: action.payload.username, role: action.payload.role }
-        window.localStorage.setItem(LOCAL_STORAGE_USER_DATA_KEY, JSON.stringify(userData))
+        window.sessionStorage.setItem(SESSION_STORAGE_USER_DATA_KEY, JSON.stringify(userData))
         state.user = userData
       })
       .addCase(changePassword.rejected, (state) => {

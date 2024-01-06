@@ -22,7 +22,7 @@ instance.interceptors.response.use((response) => response,
       console.error(`${error.response.status === 401 ? 'Unauthorized' : 'Forbidden'}! You will be log out`)
       await store.dispatch(logout())
     }
-    return error
+    throw error
   })
 
 export default instance

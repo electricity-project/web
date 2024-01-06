@@ -1,5 +1,4 @@
-import * as React from 'react'
-import { type ChangeEvent, useState } from 'react'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Button, CircularProgress,
   Dialog,
@@ -14,6 +13,10 @@ import {
   Stack,
   TextField
 } from '@mui/material'
+import Box from '@mui/material/Box'
+import * as React from 'react'
+import { type ChangeEvent, useState } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   closeCreateUserDialog, createUser,
@@ -21,8 +24,6 @@ import {
   selectIsUsernameValidationError, selectIsUsernameValidationPending, selectOneTimePassword, validateUsername
 } from '../../redux/slices/adminPanelSlice'
 import { UserRole, userRoleToString } from '../common/types'
-import Box from '@mui/material/Box'
-import { Visibility, VisibilityOff } from '@mui/icons-material'
 
 const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ afterCreateAction }) => {
   const dispatch = useAppDispatch()
