@@ -1,11 +1,12 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import * as React from 'react'
-import {
-  disconnectPowerStation,
-  selectIsDisconnectConfirmDialogOpen,
-  closeDisconnectConfirmDialog, selectDisconnectConfirmDialogId
-} from '../../redux/slices/powerStationsSlice'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import {
+  closeDisconnectConfirmDialog, disconnectPowerStation,
+  selectDisconnectConfirmDialogId,
+  selectIsDisconnectConfirmDialogOpen
+} from '../../redux/slices/powerStationsSlice'
 
 const PowerStationDisconnectConfirmDialog: React.FC<{ afterConfirm: () => void }> = ({ afterConfirm }) => {
   const dispatch = useAppDispatch()

@@ -1,4 +1,14 @@
 import {
+  Autorenew,
+  Cancel,
+  CheckCircleOutline, Delete,
+  Edit,
+  ErrorOutline,
+  HelpOutline,
+  Save
+} from '@mui/icons-material'
+import { Chip, CircularProgress, TextField, Tooltip } from '@mui/material'
+import {
   GridActionsCellItem,
   type GridColDef,
   type GridColumnHeaderParams, type GridRenderCellParams,
@@ -9,26 +19,17 @@ import {
   useGridApiContext
 } from '@mui/x-data-grid'
 import ipaddr from 'ipaddr.js'
-import { Chip, CircularProgress, TextField, Tooltip } from '@mui/material'
-import {
-  Autorenew,
-  Cancel,
-  CheckCircleOutline, Delete,
-  Edit,
-  ErrorOutline,
-  HelpOutline,
-  Save
-} from '@mui/icons-material'
 import * as React from 'react'
+import { forwardRef } from 'react'
+import { IMaskInput } from 'react-imask'
+
+import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   deleteRowById,
   selectRowModesModel, selectRows, setRowMode, validatePowerStationByIpv6
 } from '../../redux/slices/powerStationsCreatorSlice'
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { IMaskInput } from 'react-imask'
-import { forwardRef } from 'react'
-import { PowerStationCreationStatus, PowerStationType } from '../common/types'
 import PowerStationTypeChip from '../common/PowerStationTypeChip'
+import { PowerStationCreationStatus, PowerStationType } from '../common/types'
 
 interface CustomProps {
   onChange: (event: { target: { name: string, value: string } }) => void

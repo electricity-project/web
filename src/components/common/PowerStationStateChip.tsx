@@ -1,7 +1,8 @@
-import * as React from 'react'
-import { PowerStationState, powerStationStateToString } from './types'
 import { CheckCircleOutline, Construction, ErrorOutline, HelpOutline, PauseCircleOutline } from '@mui/icons-material'
 import { Chip, Tooltip } from '@mui/material'
+import * as React from 'react'
+
+import { PowerStationState, powerStationStateToString } from './types'
 
 const PowerStationStateChip: React.FC<{ powerStationState: PowerStationState | undefined }> = ({ powerStationState }) => {
   let icon, color, title, label

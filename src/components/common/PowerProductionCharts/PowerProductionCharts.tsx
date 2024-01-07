@@ -1,14 +1,15 @@
+import Box from '@mui/material/Box'
+import Tab from '@mui/material/Tab'
+import Tabs from '@mui/material/Tabs'
+import { LineChart } from '@mui/x-charts'
+import type { JSX } from 'react'
 import * as React from 'react'
+
 import {
   type PowerProductionAggregation
 } from '../../../redux/slices/powerProductionSlice'
-import { LineChart } from '@mui/x-charts'
-import Box from '@mui/material/Box'
-import Tabs from '@mui/material/Tabs'
-import Tab from '@mui/material/Tab'
-import type { JSX } from 'react'
 import { type PowerProduction } from '../../../redux/slices/powerStationDetailsSlice'
-import { CustomAxisContentWithTime, CustomAxisContentWithoutTime } from './CustomAxisContent'
+import { CustomAxisContentWithoutTime, CustomAxisContentWithTime } from './CustomAxisContent'
 
 interface PowerProductionChartsProps {
   dataKey: string

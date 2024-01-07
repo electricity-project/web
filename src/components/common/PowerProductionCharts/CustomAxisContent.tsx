@@ -1,5 +1,5 @@
-import * as React from 'react'
 import { type ChartsAxisContentProps, ChartsAxisTooltipContent } from '@mui/x-charts'
+import * as React from 'react'
 
 const CustomAxisContent: React.FC<{ chartsAxisContentProps: ChartsAxisContentProps, isTime: boolean }> = (
   {

@@ -1,6 +1,10 @@
+import { CircularProgress } from '@mui/material'
+import Box from '@mui/material/Box'
+import { LineChart } from '@mui/x-charts'
 import * as React from 'react'
 import { type JSX, useEffect } from 'react'
 import { useParams } from 'react-router-dom'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   fetchLast48HoursPowerProduction,
@@ -15,16 +19,13 @@ import {
   selectLast60DaysDataset,
   selectLast60MinutesDataset
 } from '../../redux/slices/powerStationDetailsSlice'
-import PowerProductionCharts from '../common/PowerProductionCharts/PowerProductionCharts'
-import { CircularProgress } from '@mui/material'
-import Box from '@mui/material/Box'
-import PowerStationErrorPage from './PowerStationErrorPage'
-import { LineChart } from '@mui/x-charts'
-import { PowerStationState, powerStationStateToString } from '../common/types'
 import { CustomAxisContentWithTime } from '../common/PowerProductionCharts/CustomAxisContent'
-import PowerStationSpecificationTable from './PowerStationSpecificationTable'
-import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
+import PowerProductionCharts from '../common/PowerProductionCharts/PowerProductionCharts'
 import PowerStationAlerts from '../common/PowerStationAlerts'
+import { PowerStationState, powerStationStateToString } from '../common/types'
+import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
+import PowerStationErrorPage from './PowerStationErrorPage'
+import PowerStationSpecificationTable from './PowerStationSpecificationTable'
 
 // eslint-disable-next-line
 const UPDATE_INTERVAL = Number(process.env.REACT_APP_API_UPDATE_INTERVAL || 60000) // 1 minute

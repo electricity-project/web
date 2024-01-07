@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { jwtDecode } from 'jwt-decode'
 
 import axios from '../../axiosConfig'
-import { type UserRole } from '../../components/common/types'
+import { UserRole } from '../../components/common/types'
 import { type RootState } from '../store'
 
 const SESSION_STORAGE_AUTH_KEY = 'authToken'
@@ -11,12 +12,21 @@ const token = sessionStorage.getItem(SESSION_STORAGE_AUTH_KEY) ?? undefined
 const stringUserData = sessionStorage.getItem(SESSION_STORAGE_USER_DATA_KEY)
 const userData: UserProps | undefined = stringUserData === null ? undefined : JSON.parse(stringUserData)
 
-export const getUserInfo = createAsyncThunk(
+interface UserInfoResult {
+  username: string
+  role: UserRole
+}
+
+export const getUserInfo = createAsyncThunk<UserInfoResult>(
   'userAuth/getUserInfo',
   async (_, { rejectWithValue }) => {
-    return await axios.get('/user/info')
+    return await axios.get('/user/info/me')
       .then(response => {
-        return response.data
+        const role = findRole(response.data.roles.map((role: any) => role.name))
+        if (role === undefined) {
+          return rejectWithValue(response)
+        }
+        return { username: response.data.username, role }
       }).catch(error => {
         console.error(error)
         return rejectWithValue(error)
@@ -24,17 +34,50 @@ export const getUserInfo = createAsyncThunk(
   }
 )
 
+export const findRole = (roles: string[]): UserRole | undefined => {
+  let role
+  if (roles.includes(UserRole.UserChangePassword)) {
+    role = UserRole.UserChangePassword
+  } else if (roles.includes(UserRole.Admin)) {
+    role = UserRole.Admin
+  } else if (roles.includes(UserRole.User)) {
+    role = UserRole.User
+  }
+  return role
+}
+
 interface LoginProps {
   username: string
   password: string
 }
 
-export const login = createAsyncThunk(
+interface LoginResult {
+  username: string
+  token: string
+  role: UserRole
+}
+
+interface RealmAccess {
+  roles: string[]
+}
+
+interface JwtPayload {
+  realm_access: RealmAccess
+}
+
+export const login = createAsyncThunk<LoginResult, LoginProps>(
   'userAuth/login',
-  async (props: LoginProps, { rejectWithValue }) => {
-    return await axios.post('/auth/login', props)
+  async (props, { rejectWithValue }) => {
+    return await axios.post('/login', props)
       .then(response => {
-        return response.data
+        const token = response.data.access_token
+        const decodedToken = jwtDecode<JwtPayload>(token)
+        const roles = decodedToken.realm_access.roles
+        const role = findRole(roles)
+        if (role === undefined) {
+          return rejectWithValue(response)
+        }
+        return { username: props.username, role, token }
       }).catch(error => {
         console.error(error)
         return rejectWithValue(error)
@@ -45,7 +88,7 @@ export const login = createAsyncThunk(
 export const logout = createAsyncThunk(
   'userAuth/logout',
   async (_, { rejectWithValue }) => {
-    return await axios.get('/auth/logout')
+    return await axios.get('/login/logout')
       .then(response => {
         return response.data
       }).catch(error => {
@@ -136,7 +179,13 @@ const userAuthSlice = createSlice({
         state.isLoginPending = false
         state.isLoginError = true
       })
-      .addCase(logout.pending, (state) => {
+      .addCase(logout.fulfilled, (state) => {
+        window.sessionStorage.removeItem(SESSION_STORAGE_AUTH_KEY)
+        window.sessionStorage.removeItem(SESSION_STORAGE_USER_DATA_KEY)
+        state.token = undefined
+        state.user = undefined
+      })
+      .addCase(logout.rejected, (state) => {
         window.sessionStorage.removeItem(SESSION_STORAGE_AUTH_KEY)
         window.sessionStorage.removeItem(SESSION_STORAGE_USER_DATA_KEY)
         state.token = undefined

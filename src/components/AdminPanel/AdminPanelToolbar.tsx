@@ -1,8 +1,9 @@
-import { GridToolbarContainer } from '@mui/x-data-grid'
-import { Button } from '@mui/material'
 import { Add } from '@mui/icons-material'
-import * as React from 'react'
+import { Button } from '@mui/material'
 import Typography from '@mui/material/Typography'
+import { GridToolbarContainer } from '@mui/x-data-grid'
+import * as React from 'react'
+
 import { useAppDispatch } from '../../redux/hooks'
 import { openCreateUserDialog } from '../../redux/slices/adminPanelSlice'
 

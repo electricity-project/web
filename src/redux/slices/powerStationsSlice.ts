@@ -29,7 +29,12 @@ export const fetchPowerStations = createAsyncThunk(
         sort: `${props.field},${props.sort}`
       }
     }
-    return await axios.get('/power-station', { params })
+    return await axios.post('/power-station',
+      {
+        ipv6Patterns: Array.from(props.ipv6Patterns),
+        statePatterns: Array.from(props.statePatterns),
+        typePatterns: Array.from(props.typePatterns)
+      }, { params })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -163,7 +168,7 @@ const powerStationsSlice = createSlice({
       .addCase(fetchPowerStations.fulfilled, (state, action) => {
         state.isLoading = false
         state.rows = action.payload.content
-        state.allRowsCount = action.payload.pageMetadata.totalElements
+        state.allRowsCount = action.payload.totalElements
       })
       .addCase(fetchPowerStations.rejected, (state) => {
         state.isLoading = false

@@ -1,4 +1,3 @@
-import * as React from 'react'
 import Box from '@mui/material/Box'
 import {
   DataGrid,
@@ -7,8 +6,10 @@ import {
   gridSortModelSelector,
   plPL, useGridApiRef
 } from '@mui/x-data-grid'
+import * as React from 'react'
+import { useEffect } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import AdminPanelToolbar from './AdminPanelToolbar'
 import {
   fetchUsers,
   fetchWeatherApiKey, reset,
@@ -16,13 +17,13 @@ import {
   selectIsLoading,
   selectRows
 } from '../../redux/slices/adminPanelSlice'
-import getColumns from './ColumnsDefinition'
 import AdminPanelAlerts from './AdminPanelAlerts'
-import DeleteUserConfirmDialog from './DeleteUserConfirmDialog'
-import WeatherApiKey from './WeatherApiKey'
-import { useEffect } from 'react'
+import AdminPanelToolbar from './AdminPanelToolbar'
+import getColumns from './ColumnsDefinition'
 import CreateUserDialog from './CreateUserDialog'
+import DeleteUserConfirmDialog from './DeleteUserConfirmDialog'
 import EditUserDialog from './EditUserDialog'
+import WeatherApiKey from './WeatherApiKey'
 
 const AdminPanel: React.FC = () => {
   const dispatch = useAppDispatch()

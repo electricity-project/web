@@ -1,5 +1,7 @@
-import * as React from 'react'
 import { Alert, Snackbar } from '@mui/material'
+import * as React from 'react'
+import { useEffect } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   clearAlert, clearAlertProps,
@@ -8,7 +10,6 @@ import {
   selectIsAlertVisible,
   updateAlert
 } from '../../redux/slices/powerStationsSlice'
-import { useEffect } from 'react'
 
 const PowerStationAlerts: React.FC = () => {
   const dispatch = useAppDispatch()

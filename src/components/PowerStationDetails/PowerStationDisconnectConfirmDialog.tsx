@@ -1,15 +1,16 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import * as React from 'react'
-import {
-  disconnectPowerStation
-} from '../../redux/slices/powerStationsSlice'
+import { useNavigate } from 'react-router-dom'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   closeDisconnectConfirmDialog,
   selectDisconnectConfirmDialogId,
   selectIsDisconnectConfirmDialogOpen
 } from '../../redux/slices/powerStationDetailsSlice'
-import { useNavigate } from 'react-router-dom'
+import {
+  disconnectPowerStation
+} from '../../redux/slices/powerStationsSlice'
 
 const PowerStationDisconnectConfirmDialog: React.FC = () => {
   const dispatch = useAppDispatch()

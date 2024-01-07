@@ -118,9 +118,7 @@
     }
   ],
   "power-stations-page-0": {
-    "pageMetadata": {
-      "totalElements": 11
-    },
+    "totalElements": 11,
     "content": [
       {
         "id": 1,
@@ -197,9 +195,7 @@
     ]
   },
   "power-stations-page-1": {
-    "pageMetadata": {
-      "totalElements": 11
-    },
+    "totalElements": 11,
     "content": [
       {
         "id": 9,
@@ -1368,34 +1364,57 @@
     }
   ],
   "users-page-0": {
-    "pageMetadata": {
-      "totalElements": 2
-    },
+    "totalElements": 2,
     "content": [
       {
         "id": 1,
-        "username": "wbednarz",
-        "role": "ADMIN"
+        "username": "admin",
+        "roles": [
+          {
+            "name": "ADMIN"
+          }
+        ]
       },
       {
         "id": 2,
         "username": "jan_kowalski",
-        "role": "USER"
+        "roles": [
+          {
+            "name": "USER"
+          }
+        ]
       }
     ]
   },
-  "auth-login": {
-    "token": "token",
-    "username": "wbednarz",
-    "role": "USER_SET_PASSWORD"
+  "user-info": {
+    "username": "admin",
+    "roles": [
+      {
+        "name": "ADMIN"
+      }
+    ]
   },
+  "user-validate": {},
+  "user": {
+    "password": "one-time-password"
+  },
+  "user-reset-password": {
+    "password": "new-one-time-password"
+  },
+  "login": {
+    "access_token": "eyJhbGciOiJSUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICItbERyNlBfam5wS1hhZHpMdGRaaHVXbnVPVDhvc0duOUYyV1ZWMlB4YkFnIn0.eyJleHAiOjE3MDQ2Mzk3MjAsImlhdCI6MTcwNDYzOTQyMCwianRpIjoiNThiODEzZWUtOTA1Ny00NDRhLWI5ODEtOGQ1MzkzMWRiMjA3IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDAwL3JlYWxtcy9zem96ZS1yZWFsbSIsImF1ZCI6ImFjY291bnQiLCJzdWIiOiI2MTI0ZDJjMC0wNDNkLTRhYzYtYTc2Zi1hZDYwOTM2YWYxNjAiLCJ0eXAiOiJCZWFyZXIiLCJhenAiOiJzem96ZS1jbGllbnQiLCJzZXNzaW9uX3N0YXRlIjoiNWNiNzNjNGItZTNjYi00NThmLWJmY2ItYzdkOThhMDMxOWI4IiwiYWNyIjoiMSIsImFsbG93ZWQtb3JpZ2lucyI6WyIvKiJdLCJyZWFsbV9hY2Nlc3MiOnsicm9sZXMiOlsiZGVmYXVsdC1yb2xlcy1zem96ZS1yZWFsbSIsIm9mZmxpbmVfYWNjZXNzIiwiQURNSU4iLCJ1bWFfYXV0aG9yaXphdGlvbiJdfSwicmVzb3VyY2VfYWNjZXNzIjp7ImFjY291bnQiOnsicm9sZXMiOlsibWFuYWdlLWFjY291bnQiLCJtYW5hZ2UtYWNjb3VudC1saW5rcyIsInZpZXctcHJvZmlsZSJdfX0sInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjVjYjczYzRiLWUzY2ItNDU4Zi1iZmNiLWM3ZDk4YTAzMTliOCIsImVtYWlsX3ZlcmlmaWVkIjp0cnVlLCJuYW1lIjoiQWRtaW5pc3RyYXRvciIsInByZWZlcnJlZF91c2VybmFtZSI6ImFkbWluIiwiZ2l2ZW5fbmFtZSI6IkFkbWluaXN0cmF0b3IiLCJmYW1pbHlfbmFtZSI6IiIsImVtYWlsIjoiYWRtaW5Ac3pvemUuY29tIn0.V4z6cftYcRs9H_HMAeByewFtA1KB0ICiLpJJcss6RQcTXrS7QkMBPhwCv_rt5VH2-uJ5rF6zSNndvKVEgvqe7aUibfB3pG0qx8rGpG02p1QBZ18VLEzjfTvsjNPz-i9uwwiLAlSuwBIuQU-BQof12xLrl2jGHaJlbM8hInUkmxif1-Bh2eNNBCh0R49Pk_kitUzr9vohIeiszUNJ2Iay-83OLaJsFQ2oDPdMdLl0fT3IaqttxRUqVjSY618InJKe0nNlXgaQxZYVkjvbOlSmDTgRi23DEc4QbihwT71ac0HzJvUuNCbgvM3etcTApoxnmY9ClJeJ4GWtPYNSvJq3vw",
+    "expires_in": 300,
+    "refresh_expires_in": 1800,
+    "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCIgOiAiSldUIiwia2lkIiA6ICI3MDM5YTU0OC00ZTJiLTQxNWQtOGYxZi1lNTM2ZGQxMzhhNTEifQ.eyJleHAiOjE3MDQ2NDEyMjAsImlhdCI6MTcwNDYzOTQyMCwianRpIjoiNzc1YmZjZWYtN2M0NC00NzVmLWFiN2ItMjVkM2I2OTFhYWI4IiwiaXNzIjoiaHR0cDovL2xvY2FsaG9zdDo5MDAwL3JlYWxtcy9zem96ZS1yZWFsbSIsImF1ZCI6Imh0dHA6Ly9sb2NhbGhvc3Q6OTAwMC9yZWFsbXMvc3pvemUtcmVhbG0iLCJzdWIiOiI2MTI0ZDJjMC0wNDNkLTRhYzYtYTc2Zi1hZDYwOTM2YWYxNjAiLCJ0eXAiOiJSZWZyZXNoIiwiYXpwIjoic3pvemUtY2xpZW50Iiwic2Vzc2lvbl9zdGF0ZSI6IjVjYjczYzRiLWUzY2ItNDU4Zi1iZmNiLWM3ZDk4YTAzMTliOCIsInNjb3BlIjoiZW1haWwgcHJvZmlsZSIsInNpZCI6IjVjYjczYzRiLWUzY2ItNDU4Zi1iZmNiLWM3ZDk4YTAzMTliOCJ9.EVYTlNZGD2EuIKNgb1jCQLPM7fg06ZLoyjlXvYGyndU",
+    "token_type": "Bearer",
+    "not-before-policy": 1704639166,
+    "session_state": "5cb73c4b-e3cb-458f-bfcb-c7d98a0319b8",
+    "scope": "email profile"
+  },
+  "logout": {},
   "auth-password": {
     "token": "token",
-    "username": "wbednarz",
-    "role": "ADMIN"
-  },
-  "user-info": {
-    "username": "wbednarz",
+    "username": "admin",
     "role": "ADMIN"
   }
 }

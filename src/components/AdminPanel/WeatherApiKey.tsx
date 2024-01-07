@@ -1,4 +1,4 @@
-import * as React from 'react'
+import { Clear, OpenInNew, Save, Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   CircularProgress,
   FormControl,
@@ -9,9 +9,11 @@ import {
   Stack,
   Tooltip
 } from '@mui/material'
-import { Clear, OpenInNew, Save, Visibility, VisibilityOff } from '@mui/icons-material'
+import Box from '@mui/material/Box'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
 import { useState } from 'react'
-import UnsavedChangesPrompt from '../common/UnsavedChangesPrompt'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   clearWeatherApiError,
@@ -19,8 +21,7 @@ import {
   selectWeatherApiKey,
   setWeatherApiKey
 } from '../../redux/slices/adminPanelSlice'
-import Typography from '@mui/material/Typography'
-import Box from '@mui/material/Box'
+import UnsavedChangesPrompt from '../common/UnsavedChangesPrompt'
 
 const WeatherApiKey: React.FC = () => {
   const dispatch = useAppDispatch()

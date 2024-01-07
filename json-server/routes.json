@@ -1,4 +1,5 @@
 {
+  "/api/*": "/$1",
   "/power-station/count": "/power-station-count",
   "/power-station?page=0&size=:size": "/power-stations-page-0",
   "/power-station?page=1&size=:size": "/power-stations-page-1",
@@ -12,8 +13,11 @@
   "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=MINUTE": "/power-production-last60Minutes",
   "/power-production?ipv6=:ipv6&duration=49&aggregationPeriodType=HOUR": "/power-production-last48Hours",
   "/power-production?ipv6=:ipv6&duration=61&aggregationPeriodType=DAY": "/power-production-last60Days",
-  "/users?page=0&size=:size": "/users-page-0",
-  "/auth/login": "/auth-login",
+  "/user?page=0&size=:size": "/users-page-0",
+  "/user/info/me": "/user-info",
+  "/user/update?userId=:userId": "/user",
+  "/user/validate?username=:username": "/user-validate",
+  "/users/reset-password?username=:username": "/user-reset-password",
   "/auth/password": "/auth-password",
-  "/user/info": "/user-info"
+  "/login/logout": "/logout"
 }

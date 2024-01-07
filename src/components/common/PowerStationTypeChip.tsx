@@ -1,7 +1,8 @@
-import * as React from 'react'
-import { PowerStationType, powerStationTypeToString } from './types'
 import { HelpOutline, SolarPower, WindPower } from '@mui/icons-material'
 import { Chip, Tooltip } from '@mui/material'
+import * as React from 'react'
+
+import { PowerStationType, powerStationTypeToString } from './types'
 
 const PowerStationTypeChip: React.FC<{ powerStationType: PowerStationType | undefined }> = ({ powerStationType }) => {
   let icon, color, title, borderColor, label

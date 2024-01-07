@@ -1,15 +1,11 @@
 import { type AlertColor } from '@mui/material'
-import type {
-  GridPaginationModel,
-  GridRowId,
-  GridSortItem,
-  GridValidRowModel
-} from '@mui/x-data-grid'
+import type { GridPaginationModel, GridRowId, GridSortItem, GridValidRowModel } from '@mui/x-data-grid'
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 
 import axios from '../../axiosConfig'
-import { type UserRole } from '../../components/common/types'
+import { UserRole } from '../../components/common/types'
 import { type RootState } from '../store'
+import { findRole } from './userAuthSlice'
 
 export const fetchUsers = createAsyncThunk(
   'adminPanel/fetchUsers',
@@ -24,21 +20,27 @@ export const fetchUsers = createAsyncThunk(
         sort: `${props.field},${props.sort}`
       }
     }
-    return await axios.get('/users', { params })
+    return await axios.get('/user', { params })
       .then(response => {
-        return response.data
+        return { ...response.data, content: mapUsers(response.data.content) }
       }).catch(error => {
         console.error(error)
         return rejectWithValue(error)
       })
   }
 )
+
+const mapUsers = (users: any[]): any[] => {
+  return users.map((user: any) => {
+    return { ...user, role: findRole(user.roles.map((role: any) => role.name)) ?? UserRole.User }
+  })
+}
 
 export const createUser = createAsyncThunk(
   'adminPanel/createUser',
   async (props: UserProps, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.post('/users', props)
+    return await axios.post('/user', props)
       .then(response => {
         return response.data
       }).catch(error => {
@@ -48,11 +50,16 @@ export const createUser = createAsyncThunk(
   }
 )
 
+interface UserUpdateProps {
+  id: GridRowId
+  newValue: UserProps
+}
+
 export const updateUser = createAsyncThunk(
   'adminPanel/updateUser',
-  async (props: UserProps, { rejectWithValue }) => {
+  async (props: UserUpdateProps, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.put('/users', props)
+    return await axios.put('/user/update', props.newValue, { params: { userId: props.id } })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -66,7 +73,7 @@ export const deleteUser = createAsyncThunk(
   'adminPanel/deleteUser',
   async (id: GridRowId, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.delete(`/users/${id}`)
+    return await axios.delete('/user/delete', { params: { userId: id } })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -82,7 +89,7 @@ export const validateUsername = createAsyncThunk(
     if (username === '') {
       return
     }
-    return await axios.get('/users/validate', { params: { username } })
+    return await axios.post('/user/validate', undefined, { params: { username } })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -150,6 +157,11 @@ interface UserProps {
   role: UserRole
 }
 
+interface EditedUserData {
+  id: GridRowId
+  userData: UserProps
+}
+
 interface AdminPanelState {
   rows: GridValidRowModel[]
   allRowsCount: number
@@ -169,7 +181,7 @@ interface AdminPanelState {
   isCreateUserPending: boolean
   isCreateUserError: boolean
   oneTimePassword: string | undefined
-  editedUserData: UserProps | undefined
+  editedUserData: EditedUserData | undefined
   isEditUserDialogOpen: boolean
   isEditUserPending: boolean
   isEditUserError: boolean
@@ -248,7 +260,7 @@ const adminPanelSlice = createSlice({
         state.isUsernameValidationError = false
         state.oneTimePassword = undefined
         state.isEditUserDialogOpen = true
-        state.editedUserData = state.rows[rowIndex] as UserProps
+        state.editedUserData = { id: action.payload, userData: state.rows[rowIndex] as UserProps }
       }
     },
     closeEditUserDialog: (state) => {
@@ -265,7 +277,7 @@ const adminPanelSlice = createSlice({
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.isLoading = false
         state.rows = action.payload.content
-        state.allRowsCount = action.payload.pageMetadata.totalElements
+        state.allRowsCount = action.payload.totalElements
       })
       .addCase(fetchUsers.rejected, (state) => {
         state.isLoading = false
@@ -277,7 +289,7 @@ const adminPanelSlice = createSlice({
       })
       .addCase(createUser.fulfilled, (state, action) => {
         state.isCreateUserPending = false
-        state.oneTimePassword = action.payload
+        state.oneTimePassword = action.payload.password
       })
       .addCase(createUser.rejected, (state) => {
         state.isCreateUserPending = false
@@ -324,7 +336,7 @@ const adminPanelSlice = createSlice({
       })
       .addCase(resetPassword.fulfilled, (state, action) => {
         state.isEditUserPending = false
-        state.oneTimePassword = action.payload
+        state.oneTimePassword = action.payload.password
       })
       .addCase(resetPassword.rejected, (state) => {
         state.isEditUserPending = false
@@ -393,7 +405,7 @@ export const selectIsUsernameValidationError = (state: RootState): boolean => st
 export const selectIsCreateUserPending = (state: RootState): boolean => state.adminPanel.isCreateUserPending
 export const selectIsCreateUserError = (state: RootState): boolean => state.adminPanel.isCreateUserError
 export const selectOneTimePassword = (state: RootState): string | undefined => state.adminPanel.oneTimePassword
-export const selectEditedUserData = (state: RootState): UserProps | undefined => state.adminPanel.editedUserData
+export const selectEditedUserData = (state: RootState): EditedUserData | undefined => state.adminPanel.editedUserData
 export const selectIsEditUserDialogOpen = (state: RootState): boolean => state.adminPanel.isEditUserDialogOpen
 export const selectIsEditUserPending = (state: RootState): boolean => state.adminPanel.isEditUserPending
 export const selectIsEditUserError = (state: RootState): boolean => state.adminPanel.isEditUserError

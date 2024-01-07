@@ -1,7 +1,7 @@
-import * as React from 'react'
-import Box from '@mui/material/Box'
 import { WarningAmber } from '@mui/icons-material'
+import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
+import * as React from 'react'
 
 const PowerStationErrorPage: React.FC = () => {
   return (

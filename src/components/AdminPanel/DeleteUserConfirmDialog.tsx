@@ -1,5 +1,6 @@
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material'
 import * as React from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   closeDeleteUserConfirmDialog, deleteUser,

@@ -43,7 +43,8 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
   const dispatch = useAppDispatch()
   const isUsernameValidationPending: boolean = useAppSelector(selectIsUsernameValidationPending)
   const isUsernameValidationError: boolean = useAppSelector(selectIsUsernameValidationError)
-  const editedUserData = useAppSelector(selectEditedUserData)
+  const editedUser = useAppSelector(selectEditedUserData)
+  const editedUserData = editedUser?.userData
   const isEditUserPending = useAppSelector(selectIsEditUserPending)
   const isEditUserError = useAppSelector(selectIsEditUserError)
   const oneTimePassword = useAppSelector(selectOneTimePassword)
@@ -74,7 +75,7 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
   }
 
   const handleSave = (): void => {
-    dispatch(updateUser({ username: newUsername, role: newRole }))
+    dispatch(updateUser({ id: editedUser?.id ?? '', newValue: { username: newUsername, role: newRole } }))
       .then((result) => {
         if (result.type === updateUser.fulfilled.type) {
           afterEditAction()

@@ -1,4 +1,9 @@
 import {
+  HighlightOff, Info, Pause,
+  PlayArrow
+} from '@mui/icons-material'
+import { CircularProgress, Tooltip } from '@mui/material'
+import {
   GridActionsCellItem,
   type GridColDef,
   type GridColumnHeaderParams,
@@ -6,22 +11,18 @@ import {
   type GridRowParams
 } from '@mui/x-data-grid'
 import ipaddr from 'ipaddr.js'
-import { CircularProgress, Tooltip } from '@mui/material'
-import {
-  HighlightOff, Info, Pause,
-  PlayArrow
-} from '@mui/icons-material'
-import { useNavigate } from 'react-router-dom'
 import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  selectPendingRows,
   openDisconnectConfirmDialog,
+  selectPendingRows,
   startPowerStation, stopPowerStation
 } from '../../redux/slices/powerStationsSlice'
-import { PowerStationState, powerStationStateToString, PowerStationType } from '../common/types'
-import PowerStationTypeChip from '../common/PowerStationTypeChip'
 import PowerStationStateChip from '../common/PowerStationStateChip'
+import PowerStationTypeChip from '../common/PowerStationTypeChip'
+import { PowerStationState, powerStationStateToString, PowerStationType } from '../common/types'
 
 const getColumns = (afterAction: () => void): GridColDef[] => {
   const dispatch = useAppDispatch()

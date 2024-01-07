@@ -1,8 +1,8 @@
-import * as React from 'react'
-import Typography from '@mui/material/Typography'
 import { Card, CardContent, Grid } from '@mui/material'
-import classes from './PowerProduction.module.css'
+import Typography from '@mui/material/Typography'
+import * as React from 'react'
 import { useEffect } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   fetchLast48HoursPowerProduction, fetchLast60DaysPowerProduction,
@@ -11,6 +11,7 @@ import {
   selectLast60MinutesDataset, selectPowerStationsMaintenance, selectRunningPowerStations
 } from '../../redux/slices/powerProductionSlice'
 import PowerProductionCharts from '../common/PowerProductionCharts/PowerProductionCharts'
+import classes from './PowerProduction.module.css'
 
 // eslint-disable-next-line
 const UPDATE_INTERVAL = Number(process.env.REACT_APP_API_UPDATE_INTERVAL || 60000) // 1 minute

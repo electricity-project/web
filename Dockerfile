@@ -1,6 +1,6 @@
 FROM node:alpine AS builder
 ENV NODE_ENV production
-ENV REACT_APP_API_BASE_URL http://localhost:8084/
+ENV REACT_APP_API_BASE_URL http://localhost:8084
 ENV REACT_APP_API_UPDATE_INTERVAL 60000
 WORKDIR /app
 COPY ./package*.json ./

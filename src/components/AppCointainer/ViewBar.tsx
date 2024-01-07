@@ -1,11 +1,12 @@
-import * as React from 'react'
+import { HighlightOff, Pause, PlayArrow } from '@mui/icons-material'
+import { CircularProgress, IconButton, Paper, Tooltip } from '@mui/material'
+import AppBar from '@mui/material/AppBar'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
-import { CircularProgress, IconButton, Paper, Tooltip } from '@mui/material'
-import { HighlightOff, Pause, PlayArrow } from '@mui/icons-material'
-import AppBar from '@mui/material/AppBar'
+import type { JSX } from 'react'
+import * as React from 'react'
 import { matchPath, useLocation } from 'react-router-dom'
-import { selectPendingRows, startPowerStation, stopPowerStation } from '../../redux/slices/powerStationsSlice'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   fetchLast48HoursPowerProduction, fetchLast60DaysPowerProduction,
@@ -14,8 +15,8 @@ import {
   openDisconnectConfirmDialog,
   selectDetails, selectIsDetailsError
 } from '../../redux/slices/powerStationDetailsSlice'
+import { selectPendingRows, startPowerStation, stopPowerStation } from '../../redux/slices/powerStationsSlice'
 import { PowerStationState, powerStationStateToString } from '../common/types'
-import type { JSX } from 'react'
 
 const ViewBar: React.FC = () => {
   const dispatch = useAppDispatch()

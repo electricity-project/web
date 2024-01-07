@@ -9,18 +9,19 @@ import {
   TableRow,
   Tooltip
 } from '@mui/material'
-import * as React from 'react'
 import Box from '@mui/material/Box'
-import PowerStationTypeChip from '../common/PowerStationTypeChip'
-import PowerStationStateChip from '../common/PowerStationStateChip'
+import ipaddr from 'ipaddr.js'
+import type { JSX } from 'react'
+import * as React from 'react'
+
 import {
   type PowerStationDetails,
   type SolarPanelDetails,
   type WindTurbineDetails
 } from '../../redux/slices/powerStationDetailsSlice'
-import ipaddr from 'ipaddr.js'
+import PowerStationStateChip from '../common/PowerStationStateChip'
+import PowerStationTypeChip from '../common/PowerStationTypeChip'
 import { PowerStationType } from '../common/types'
-import type { JSX } from 'react'
 
 const StyledTableCell = styled(TableCell)(() => ({
   [`&.${tableCellClasses.body}`]: {

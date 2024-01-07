@@ -1,27 +1,29 @@
-import * as React from 'react'
+import { Alert, Snackbar } from '@mui/material'
 import Box from '@mui/material/Box'
 import {
   DataGrid,
-  type GridRowModesModel,
-  type GridRowModel,
-  type GridEventListener,
   gridClasses,
+  type GridEventListener,
+  type GridRowModel,
+  type GridRowModesModel,
   plPL
 } from '@mui/x-data-grid'
-import {
-  reset,
-  selectIsLoading, selectRowModesModel,
-  selectRows,
-  setNewRowModesModel, updateRow, validatePowerStationByIpv6, selectIsConnectionError, clearConnectionError
-} from '../../redux/slices/powerStationsCreatorSlice'
+import * as React from 'react'
+import { useEffect } from 'react'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import PowerStationsCreatorToolbar from './PowerStationsCreatorToolbar'
+import {
+  clearConnectionError,
+  reset,
+  selectIsConnectionError, selectIsLoading, selectRowModesModel,
+  selectRows,
+  setNewRowModesModel, updateRow, validatePowerStationByIpv6
+} from '../../redux/slices/powerStationsCreatorSlice'
+import { PowerStationCreationStatus } from '../common/types'
+import UnsavedChangesPrompt from '../common/UnsavedChangesPrompt'
 import getColumns from './ColumnsDefinition'
 import PowerStationsCreatorFooter from './PowerStationsCreatorFooter'
-import { useEffect } from 'react'
-import UnsavedChangesPrompt from '../common/UnsavedChangesPrompt'
-import { Alert, Snackbar } from '@mui/material'
-import { PowerStationCreationStatus } from '../common/types'
+import PowerStationsCreatorToolbar from './PowerStationsCreatorToolbar'
 
 const PowerStationsCreator: React.FC = () => {
   const dispatch = useAppDispatch()

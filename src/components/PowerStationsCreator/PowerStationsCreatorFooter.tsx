@@ -1,15 +1,16 @@
-import * as React from 'react'
-import { GridFooterContainer } from '@mui/x-data-grid'
 import { Button, Grid } from '@mui/material'
+import Box from '@mui/material/Box'
+import { GridFooterContainer } from '@mui/x-data-grid'
+import * as React from 'react'
+import { useNavigate } from 'react-router-dom'
+
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  reset,
   connectPowerStations,
+  reset,
   selectIsLoading,
   selectRows
 } from '../../redux/slices/powerStationsCreatorSlice'
-import Box from '@mui/material/Box'
-import { useNavigate } from 'react-router-dom'
 import { addAlertToQueue } from '../../redux/slices/powerStationsSlice'
 import { PowerStationCreationStatus } from '../common/types'
 
