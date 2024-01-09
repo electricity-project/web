@@ -14,7 +14,7 @@ export const validatePowerStationByIpv6 = createAsyncThunk(
   'powerStationsCreator/validateByIpv6',
   async ({ ipv6, id }: { ipv6: string, id: GridRowId }, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.get('/power-stations/validate',
+    return await axios.get('/power-station/validate',
       { params: { ipv6 } }
     ).then(response => {
       return response.data
@@ -27,9 +27,9 @@ export const validatePowerStationByIpv6 = createAsyncThunk(
 
 export const connectPowerStations = createAsyncThunk(
   'powerStationsCreator/connect',
-  async (ipv6Array: string[], { rejectWithValue }) => {
+  async (ipv6List: string[], { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.post('/power-stations', { ipv6: ipv6Array })
+    return await axios.post('/power-station', ipv6List)
       .then(response => {
         return response.data
       }).catch(error => {

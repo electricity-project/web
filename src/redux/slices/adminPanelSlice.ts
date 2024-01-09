@@ -5,7 +5,6 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
 import axios from '../../axiosConfig'
 import { UserRole } from '../../components/common/types'
 import { type RootState } from '../store'
-import { findRole } from './userAuthSlice'
 
 export const fetchUsers = createAsyncThunk(
   'adminPanel/fetchUsers',
@@ -34,6 +33,16 @@ const mapUsers = (users: any[]): any[] => {
   return users.map((user: any) => {
     return { ...user, role: findRole(user.roles.map((role: any) => role.name)) ?? UserRole.User }
   })
+}
+
+export const findRole = (roles: string[]): UserRole | undefined => {
+  let role
+  if (roles.includes(UserRole.Admin)) {
+    role = UserRole.Admin
+  } else if (roles.includes(UserRole.User)) {
+    role = UserRole.User
+  }
+  return role
 }
 
 export const createUser = createAsyncThunk(
@@ -71,9 +80,9 @@ export const updateUser = createAsyncThunk(
 
 export const deleteUser = createAsyncThunk(
   'adminPanel/deleteUser',
-  async (id: GridRowId, { rejectWithValue }) => {
+  async (userId: GridRowId, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.delete('/user/delete', { params: { userId: id } })
+    return await axios.delete('/user/delete', { params: { userId } })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -91,7 +100,10 @@ export const validateUsername = createAsyncThunk(
     }
     return await axios.post('/user/validate', undefined, { params: { username } })
       .then(response => {
-        return response.data
+        if (response.data === true) {
+          return response.data
+        }
+        return rejectWithValue(response)
       }).catch(error => {
         console.error(error)
         return rejectWithValue(error)
@@ -101,9 +113,9 @@ export const validateUsername = createAsyncThunk(
 
 export const resetPassword = createAsyncThunk(
   'adminPanel/resetPassword',
-  async (username: string, { rejectWithValue }) => {
+  async (userId: GridRowId, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.get('/users/reset-password', { params: { username } })
+    return await axios.post('/user/password', undefined, { params: { userId } })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -116,7 +128,7 @@ export const resetPassword = createAsyncThunk(
 export const fetchWeatherApiKey = createAsyncThunk(
   'adminPanel/fetchWeatherApiKey',
   async (_, { rejectWithValue }) => {
-    return await axios.get('/weather-api-key')
+    return await axios.get('/user/weather-api-key')
       .then(response => {
         return response.data
       }).catch(error => {
@@ -130,7 +142,7 @@ export const setWeatherApiKey = createAsyncThunk(
   'adminPanel/setWeatherApiKey',
   async (newWeatherApiKey: string, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.put('/weather-api-key', { apiKey: newWeatherApiKey })
+    return await axios.post('/user/weather-api-key', { weatherApiKey: newWeatherApiKey })
       .then(response => {
         return response.data
       }).catch(error => {
@@ -267,6 +279,9 @@ const adminPanelSlice = createSlice({
       state.isEditUserDialogOpen = false
       state.editedUserData = undefined
       state.oneTimePassword = undefined
+    },
+    clearUsernameValidationError: (state) => {
+      state.isUsernameValidationError = false
     }
   },
   extraReducers: (builder) => {
@@ -311,6 +326,7 @@ const adminPanelSlice = createSlice({
       })
       .addCase(deleteUser.fulfilled, (state, action) => {
         removeFromPendingRows(state, action.meta.arg)
+        state.rows = state.rows.filter((row) => row.id !== action.meta.arg)
         state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Pomyślnie usunięto użytkownika', severity: 'success' }]
       })
       .addCase(deleteUser.rejected, (state, action) => {
@@ -318,7 +334,6 @@ const adminPanelSlice = createSlice({
         state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Nie udało się usunąć użytkownika', severity: 'error' }]
       })
       .addCase(validateUsername.pending, (state) => {
-        state.isUsernameValidationError = false
         state.isUsernameValidationPending = true
       })
       .addCase(validateUsername.fulfilled, (state) => {
@@ -345,11 +360,13 @@ const adminPanelSlice = createSlice({
       .addCase(fetchWeatherApiKey.pending, (state) => {
         state.isLoadingWeatherApiKey = true
       })
-      .addCase(fetchWeatherApiKey.fulfilled, (state) => {
+      .addCase(fetchWeatherApiKey.fulfilled, (state, action) => {
         state.isLoadingWeatherApiKey = false
+        state.weatherApiKey = action.payload.weatherApiKey
       })
       .addCase(fetchWeatherApiKey.rejected, (state) => {
         state.isLoadingWeatherApiKey = false
+        state.weatherApiKey = ''
       })
       .addCase(setWeatherApiKey.pending, (state) => {
         state.isLoadingWeatherApiKey = true
@@ -385,7 +402,8 @@ export const {
   closeCreateUserDialog,
   clearOneTimePassword,
   openEditUserDialog,
-  closeEditUserDialog
+  closeEditUserDialog,
+  clearUsernameValidationError
 } = adminPanelSlice.actions
 export const selectRows = (state: RootState): GridValidRowModel[] => state.adminPanel.rows
 export const selectAllRowsCount = (state: RootState): number => state.adminPanel.allRowsCount

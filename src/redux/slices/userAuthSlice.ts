@@ -101,7 +101,7 @@ export const logout = createAsyncThunk(
 export const changePassword = createAsyncThunk(
   'userAuth/changePassword',
   async (newPassword: string, { rejectWithValue }) => {
-    return await axios.post('/auth/password', { newPassword })
+    return await axios.post('/user/my-password', undefined, { params: { password: newPassword } })
       .then(response => {
         return response.data
       }).catch(error => {

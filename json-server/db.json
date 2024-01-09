@@ -226,11 +226,6 @@
       }
     ]
   },
-  "power-stations": {
-    "ipv6": [
-      "0000:0000:0000:0000:0000:0000:0000:0001"
-    ]
-  },
   "aggregated-power-production-last60Minutes": [
     {
       "aggregatedValue": 23592,
@@ -1398,7 +1393,7 @@
   "user": {
     "password": "one-time-password"
   },
-  "user-reset-password": {
+  "user-password": {
     "password": "new-one-time-password"
   },
   "login": {
@@ -1416,5 +1411,8 @@
     "token": "token",
     "username": "admin",
     "role": "ADMIN"
+  },
+  "user-weather-api-key": {
+    "weatherApiKey": "weather-api-key"
   }
 }

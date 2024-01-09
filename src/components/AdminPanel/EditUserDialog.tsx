@@ -19,12 +19,13 @@ import {
   TextField
 } from '@mui/material'
 import Box from '@mui/material/Box'
+import { type GridRowId } from '@mui/x-data-grid'
 import * as React from 'react'
 import { type ChangeEvent, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
-  clearOneTimePassword,
+  clearOneTimePassword, clearUsernameValidationError,
   closeEditUserDialog,
   resetPassword,
   selectEditedUserData,
@@ -58,7 +59,11 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
 
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value
-    void dispatch(validateUsername(value))
+    if (value === '' || value === editedUser?.userData.username) {
+      dispatch(clearUsernameValidationError())
+    } else {
+      void dispatch(validateUsername(value))
+    }
     setNewUsername(value)
   }
 
@@ -67,7 +72,7 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
   }
 
   const handlePasswordReset = (): void => {
-    void dispatch(resetPassword(editedUserData?.username as string))
+    void dispatch(resetPassword(editedUser?.id as GridRowId))
   }
 
   const handleDialogClose = (): void => {
@@ -75,7 +80,7 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
   }
 
   const handleSave = (): void => {
-    dispatch(updateUser({ id: editedUser?.id ?? '', newValue: { username: newUsername, role: newRole } }))
+    dispatch(updateUser({ id: editedUser?.id as GridRowId, newValue: { username: newUsername, role: newRole } }))
       .then((result) => {
         if (result.type === updateUser.fulfilled.type) {
           afterEditAction()
@@ -100,8 +105,8 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
     return (
       <>
         <DialogTitle>Edycja użytkownika</DialogTitle>
-        <DialogContent sx={{ minWidth: 620, minHeight: 278.1 }} dividers>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 220.1 }}>
+        <DialogContent sx={{ minWidth: 620, minHeight: 282.1 }} dividers>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 224.1 }}>
             <CircularProgress size={32} />
           </Box>
         </DialogContent>
@@ -113,15 +118,15 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
     return (
       <>
         <DialogTitle>Edycja użytkownika</DialogTitle>
-        <DialogContent sx={{ maxWidth: 620, minHeight: 225.6 }} dividers>
+        <DialogContent sx={{ maxWidth: 620, minHeight: 229.6 }} dividers>
           <DialogContentText>
             Hasło zostało zresetowane pomyślnie!
           </DialogContentText>
-          <DialogContentText mt={1}>
+          <DialogContentText mt={1.25}>
             Poniżej znajduje się hasło jednorazowe, którego należy użyć przy następnym logowaniu.
             Po zamknięciu tego okna hasła nie da się wyświetlić ponownie.
           </DialogContentText>
-          <FormControl sx={{ mt: 4.25 }} variant="outlined" fullWidth>
+          <FormControl sx={{ mt: 4.5 }} variant="outlined" fullWidth>
             <InputLabel htmlFor="outlined-adornment-password">Hasło jednorazowe</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -152,42 +157,55 @@ const EditUserDialogContent: React.FC<{ afterEditAction: () => void }> = ({ afte
     )
   }
 
+  let spacing = 5.24
+  if (isEditUserError && isUsernameValidationError) {
+    spacing = 2
+  } else if (isEditUserPending) {
+    spacing = 4.865
+  } else if (isUsernameValidationError) {
+    spacing = 2.375
+  }
+
   return (
     <>
       <DialogTitle>Edycja użytkownika</DialogTitle>
       <DialogContent sx={{ minWidth: 620 }} dividers>
-        <Stack spacing={isEditUserError ? 3.5 : 5.75} pt={isEditUserError ? 0 : 2.25} pb={isEditUserError ? 0 : 2}>
+        <Stack spacing={3} pt={isEditUserError ? 0 : 2.75} pb={isEditUserError ? 0 : 2.5}>
           {isEditUserError && (
-            <DialogContentText color={'error'}>
+            <DialogContentText color={'error'} fontSize={14}>
               Wystąpił błąd. Spróbuj ponownie.
             </DialogContentText>
           )}
-          <TextField
-            required
-            focused
-            id="username"
-            label="Nazwa użytkownika"
-            type="text"
-            variant="outlined"
-            value={newUsername}
-            onChange={handleUsernameChange}
-            color={isUsernameValidationError
-              ? 'error'
-              : isUsernameValidationPending || newUsername === '' || newUsername === editedUserData?.username ? 'primary' : 'success'}/>
-          <FormControl>
-            <InputLabel id="role-select-label">Rola</InputLabel>
-            <Select
-              labelId="role-select-label"
-              id="role-select"
-              value={newRole}
-              disabled={loggedUsed?.username === editedUserData?.username}
-              label="Rola"
-              onChange={handleRoleChange}
-            >
-              <MenuItem value={UserRole.Admin}>{userRoleToString(UserRole.Admin, true)}</MenuItem>
-              <MenuItem value={UserRole.User}>{userRoleToString(UserRole.User, true)}</MenuItem>
-            </Select>
-          </FormControl>
+          <Stack spacing={spacing}>
+            <TextField
+              error={isUsernameValidationError}
+              required
+              focused
+              id="username"
+              label="Nazwa użytkownika"
+              type="text"
+              variant="outlined"
+              value={newUsername}
+              helperText={isUsernameValidationError ? 'Nazwa użytkownika jest zajęta' : ''}
+              onChange={handleUsernameChange}
+              color={isUsernameValidationError
+                ? 'error'
+                : isUsernameValidationPending || newUsername === '' || newUsername === editedUserData?.username ? 'primary' : 'success'}/>
+            <FormControl>
+              <InputLabel id="role-select-label">Rola</InputLabel>
+              <Select
+                labelId="role-select-label"
+                id="role-select"
+                value={newRole}
+                disabled={loggedUsed?.username === editedUserData?.username}
+                label="Rola"
+                onChange={handleRoleChange}
+              >
+                <MenuItem value={UserRole.Admin}>{userRoleToString(UserRole.Admin, true)}</MenuItem>
+                <MenuItem value={UserRole.User}>{userRoleToString(UserRole.User, true)}</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ px: 3 }}>

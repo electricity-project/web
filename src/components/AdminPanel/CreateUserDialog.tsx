@@ -19,6 +19,7 @@ import { type ChangeEvent, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
+  clearUsernameValidationError,
   closeCreateUserDialog, createUser,
   selectIsCreateUserDialogOpen, selectIsCreateUserError, selectIsCreateUserPending,
   selectIsUsernameValidationError, selectIsUsernameValidationPending, selectOneTimePassword, validateUsername
@@ -40,7 +41,11 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
 
   const handleUsernameChange = (event: ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value
-    void dispatch(validateUsername(value))
+    if (value === '') {
+      dispatch(clearUsernameValidationError())
+    } else {
+      void dispatch(validateUsername(value))
+    }
     setUsername(value)
   }
 
@@ -73,8 +78,8 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
     return (
       <>
         <DialogTitle>Kreator użytkownika</DialogTitle>
-        <DialogContent sx={{ minWidth: 620, minHeight: 278.1 }} dividers>
-          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 220.1 }}>
+        <DialogContent sx={{ minWidth: 620, minHeight: 282.1 }} dividers>
+          <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 224.1 }}>
             <CircularProgress size={32} />
           </Box>
         </DialogContent>
@@ -86,15 +91,15 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
     return (
       <>
         <DialogTitle>Kreator użytkownika</DialogTitle>
-        <DialogContent sx={{ maxWidth: 620, minHeight: 225.6 }} dividers>
+        <DialogContent sx={{ maxWidth: 620, minHeight: 229.6 }} dividers>
           <DialogContentText>
             Użytkownik <b>{username}</b> został utworzony pomyślnie!
           </DialogContentText>
-          <DialogContentText mt={1}>
+          <DialogContentText mt={1.25}>
             Poniżej znajduje się hasło jednorazowe, którego należy użyć przy pierwszym logowaniu.
             Po zamknięciu tego okna hasła nie da się wyświetlić ponownie.
           </DialogContentText>
-          <FormControl sx={{ mt: 4 }} variant="outlined" fullWidth>
+          <FormControl sx={{ mt: 4.5 }} variant="outlined" fullWidth>
             <InputLabel htmlFor="outlined-adornment-password">Hasło jednorazowe</InputLabel>
             <OutlinedInput
               id="outlined-adornment-password"
@@ -124,41 +129,54 @@ const CreateUserDialogContent: React.FC<{ afterCreateAction: () => void }> = ({ 
     )
   }
 
+  let spacing = 5.24
+  if (isCreateUserError && isUsernameValidationError) {
+    spacing = 2
+  } else if (isCreateUserError) {
+    spacing = 4.865
+  } else if (isUsernameValidationError) {
+    spacing = 2.375
+  }
+
   return (
     <>
       <DialogTitle>Kreator użytkownika</DialogTitle>
       <DialogContent sx={{ minWidth: 620 }} dividers>
-        <Stack spacing={isCreateUserError ? 3.5 : 5.75} pt={isCreateUserError ? 0 : 2.25} pb={isCreateUserError ? 0 : 2}>
+        <Stack spacing={3} pt={isCreateUserError ? 0 : 2.75} pb={isCreateUserError ? 0 : 2.5}>
           {isCreateUserError && (
-            <DialogContentText color={'error'}>
+            <DialogContentText color={'error'} fontSize={14}>
               Wystąpił błąd. Spróbuj ponownie.
             </DialogContentText>
           )}
-          <TextField
-            required
-            focused
-            id="username"
-            label="Nazwa użytkownika"
-            type="text"
-            variant="outlined"
-            value={username}
-            onChange={handleUsernameChange}
-            color={isUsernameValidationError
-              ? 'error'
-              : isUsernameValidationPending || username === '' ? 'primary' : 'success'}/>
-          <FormControl>
-            <InputLabel id="role-select-label">Rola</InputLabel>
-            <Select
-              labelId="role-select-label"
-              id="role-select"
-              value={role}
-              label="Rola"
-              onChange={handleRoleChange}
-            >
-              <MenuItem value={UserRole.Admin}>{userRoleToString(UserRole.Admin, true)}</MenuItem>
-              <MenuItem value={UserRole.User}>{userRoleToString(UserRole.User, true)}</MenuItem>
-            </Select>
-          </FormControl>
+          <Stack spacing={spacing}>
+            <TextField
+              required
+              error={isUsernameValidationError}
+              focused
+              id="username"
+              label="Nazwa użytkownika"
+              type="text"
+              variant="outlined"
+              helperText={isUsernameValidationError ? 'Nazwa użytkownika jest zajęta' : ''}
+              value={username}
+              onChange={handleUsernameChange}
+              color={isUsernameValidationError
+                ? 'error'
+                : isUsernameValidationPending || username === '' ? 'primary' : 'success'}/>
+            <FormControl>
+              <InputLabel id="role-select-label">Rola</InputLabel>
+              <Select
+                labelId="role-select-label"
+                id="role-select"
+                value={role}
+                label="Rola"
+                onChange={handleRoleChange}
+              >
+                <MenuItem value={UserRole.Admin}>{userRoleToString(UserRole.Admin, true)}</MenuItem>
+                <MenuItem value={UserRole.User}>{userRoleToString(UserRole.User, true)}</MenuItem>
+              </Select>
+            </FormControl>
+          </Stack>
         </Stack>
       </DialogContent>
       <DialogActions sx={{ px: 3 }}>

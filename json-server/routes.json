@@ -3,7 +3,7 @@
   "/power-station/count": "/power-station-count",
   "/power-station?page=0&size=:size": "/power-stations-page-0",
   "/power-station?page=1&size=:size": "/power-stations-page-1",
-  "/power-stations/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6",
+  "/power-station/validate?ipv6=:ipv6": "/power-stations-validate/:ipv6",
   "/power-station/start?id=:id": "/power-station/:id",
   "/power-station/stop?id=:id": "/power-station/:id",
   "/power-station/disconnect?id=:id": "/power-station/:id",
@@ -17,7 +17,8 @@
   "/user/info/me": "/user-info",
   "/user/update?userId=:userId": "/user",
   "/user/validate?username=:username": "/user-validate",
-  "/users/reset-password?username=:username": "/user-reset-password",
-  "/auth/password": "/auth-password",
+  "/user/password?userId=:userId": "/user-password",
+  "/user/weather-api-key": "/user-weather-api-key",
+  "/user/my-password?password=:password": "/auth-password",
   "/login/logout": "/logout"
 }

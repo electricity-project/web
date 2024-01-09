@@ -12,7 +12,7 @@ import {
 import Box from '@mui/material/Box'
 import Typography from '@mui/material/Typography'
 import * as React from 'react'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
@@ -30,6 +30,10 @@ const WeatherApiKey: React.FC = () => {
   const weatherApiKey = useAppSelector(selectWeatherApiKey)
   const [showApiKey, setShowApiKey] = useState(false)
   const [tempWeatherApiKey, setTempWeatherApiKey] = useState<string>(weatherApiKey)
+
+  useEffect(() => {
+    setTempWeatherApiKey(weatherApiKey)
+  }, [weatherApiKey])
 
   const handleSeeDetails = (): void => {
     window.open('https://www.weatherapi.com/docs/', '_blank', 'noreferrer')
