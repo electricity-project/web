@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 import { matchPath, Navigate, Outlet, useLocation } from 'react-router-dom'
 
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
-import { getUserInfo, selectUser } from '../../redux/slices/userAuthSlice'
+import { getUserInfo, refreshAuthTokens, selectTokenExpirationTime, selectUser } from '../../redux/slices/userAuthSlice'
 import { UserRole } from '../common/types'
 import AppHeader from './AppBar'
 import AppSideNav from './AppSideNav'
@@ -16,6 +16,7 @@ const AppContainer: React.FC = () => {
   const dispatch = useAppDispatch()
   const [isOpen, setIsOpen] = React.useState(false)
   const user = useAppSelector(selectUser)
+  const tokenExpirationTime = useAppSelector(selectTokenExpirationTime)
   const isAdmin = user?.role === UserRole.Admin
   const { pathname } = useLocation()
 
@@ -23,6 +24,15 @@ const AppContainer: React.FC = () => {
     void (async () => {
       await dispatch(getUserInfo())
     })()
+    if (tokenExpirationTime !== undefined) {
+      void dispatch(refreshAuthTokens())
+      const interval = setInterval(() => {
+        void dispatch(refreshAuthTokens())
+      }, tokenExpirationTime)
+      return () => {
+        clearInterval(interval)
+      }
+    }
   }, [])
 
   const toggleDrawer = (): void => {
