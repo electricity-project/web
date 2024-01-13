@@ -1414,5 +1414,103 @@
   },
   "user-weather-api-key": {
     "weatherApiKey": "weather-api-key"
-  }
+  },
+  "power-production-prediction": [
+    {
+      "predictedValue": 263594,
+      "timestamp": "2023-12-20T01:00:00"
+    },
+    {
+      "predictedValue": 7248537,
+      "timestamp": "2023-12-20T02:00:00"
+    },
+    {
+      "predictedValue": 4467289,
+      "timestamp": "2023-12-20T03:00:00"
+    },
+    {
+      "predictedValue": 26008250,
+      "timestamp": "2023-12-20T04:00:00"
+    },
+    {
+      "predictedValue": 20722262,
+      "timestamp": "2023-12-20T05:00:00"
+    },
+    {
+      "predictedValue": 7375000,
+      "timestamp": "2023-12-20T06:00:00"
+    },
+    {
+      "predictedValue": 1414514,
+      "timestamp": "2023-12-20T07:00:00"
+    },
+    {
+      "predictedValue": 6597470,
+      "timestamp": "2023-12-20T08:00:00"
+    },
+    {
+      "predictedValue": 10581377,
+      "timestamp": "2023-12-20T09:00:00"
+    },
+    {
+      "predictedValue": 11316228,
+      "timestamp": "2023-12-20T10:00:00"
+    },
+    {
+      "predictedValue": 8597095,
+      "timestamp": "2023-12-20T11:00:00"
+    },
+    {
+      "predictedValue": 8597095,
+      "timestamp": "2023-12-20T12:00:00"
+    },
+    {
+      "predictedValue": 263594,
+      "timestamp": "2023-12-20T13:00:00"
+    },
+    {
+      "predictedValue": 7248537,
+      "timestamp": "2023-12-20T14:00:00"
+    },
+    {
+      "predictedValue": 4467289,
+      "timestamp": "2023-12-20T15:00:00"
+    },
+    {
+      "predictedValue": 26008250,
+      "timestamp": "2023-12-20T16:00:00"
+    },
+    {
+      "predictedValue": 20722262,
+      "timestamp": "2023-12-20T17:00:00"
+    },
+    {
+      "predictedValue": 7375000,
+      "timestamp": "2023-12-20T18:00:00"
+    },
+    {
+      "predictedValue": 1414514,
+      "timestamp": "2023-12-20T19:00:00"
+    },
+    {
+      "predictedValue": 6597470,
+      "timestamp": "2023-12-20T20:00:00"
+    },
+    {
+      "predictedValue": 10581377,
+      "timestamp": "2023-12-20T21:00:00"
+    },
+    {
+      "predictedValue": 11316228,
+      "timestamp": "2023-12-20T22:00:00"
+    },
+    {
+      "predictedValue": 1131628,
+      "timestamp": "2023-12-20T23:00:00"
+    },
+    {
+      "predictedValue": 116228,
+      "timestamp": "2023-12-20T24:00:00"
+    }
+  ]
 }

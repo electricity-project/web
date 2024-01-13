@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/tool
 import moment from 'moment'
 
 import axios from '../../axiosConfig'
-import { AggregationPeriodType } from '../../components/common/types'
+import { AggregationPeriodType, type PowerStationsCount } from '../../components/common/types'
 import { type RootState } from '../store'
 
 export const fetchPowerStationsCount = createAsyncThunk(
@@ -52,13 +52,6 @@ const fetchPowerProduction = async (
       console.error(error)
       return rejectWithValue(error)
     })
-}
-
-interface PowerStationsCount {
-  WORKING: number
-  STOPPED: number
-  DAMAGED: number
-  MAINTENANCE: number
 }
 
 export interface PowerProductionAggregation {

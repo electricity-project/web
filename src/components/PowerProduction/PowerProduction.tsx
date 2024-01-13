@@ -94,7 +94,7 @@ const PowerProduction: React.FC = () => {
             <Grid item className={classes.gridItem} key={key}>
               <Card className={classes.card}>
                 <CardContent className={classes.cardContent}>
-                  <Typography variant={'h5'} className={classes.cardName}>
+                  <Typography variant={'h5'} className={classes.cardName} fontWeight={'bold'}>
                     {header}
                   </Typography>
                   <Typography variant={'h6'} mt={4} textAlign={'center'}>

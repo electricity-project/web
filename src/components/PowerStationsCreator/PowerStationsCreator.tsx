@@ -84,10 +84,7 @@ const PowerStationsCreator: React.FC = () => {
           onRowEditStart={handleRowEditStart}
           processRowUpdate={handleProcessRowUpdate}
           loading={isLoading}
-          onProcessRowUpdateError={(error) => {
-            // TODO
-            console.log(error)
-          }}
+          onProcessRowUpdateError={(error) => { console.log(error) }}
           slots={{
             toolbar: PowerStationsCreatorToolbar,
             footer: PowerStationsCreatorFooter

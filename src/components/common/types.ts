@@ -60,3 +60,15 @@ export const userRoleToString = (userRole: UserRole, capitalize?: boolean): stri
       return ''
   }
 }
+
+export interface PowerStationsCount {
+  WORKING: number
+  STOPPED: number
+  DAMAGED: number
+  MAINTENANCE: number
+}
+
+export enum PowerStationsScope {
+  AllPowerStations = 'ALL_POWER_STATIONS',
+  WorkingPowerStations = 'WORKING_POWER_STATIONS'
+}

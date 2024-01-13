@@ -1,6 +1,7 @@
 import { configureStore } from '@reduxjs/toolkit'
 
 import adminPanelSlice from './slices/adminPanelSlice'
+import powerProductionPredictionSlice from './slices/powerProductionPredictionSlice'
 import powerProductionSlice from './slices/powerProductionSlice'
 import powerStationDetailsSlice from './slices/powerStationDetailsSlice'
 import powerStationsCreatorSlice from './slices/powerStationsCreatorSlice'
@@ -13,6 +14,7 @@ const store = configureStore({
     powerStations: powerStationsSlice,
     powerStationDetails: powerStationDetailsSlice,
     powerStationsCreator: powerStationsCreatorSlice,
+    powerProductionPrediction: powerProductionPredictionSlice,
     adminPanel: adminPanelSlice,
     userAuth: userAuthSlice
   }

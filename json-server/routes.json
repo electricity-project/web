@@ -20,5 +20,6 @@
   "/user/password?userId=:userId": "/user-password",
   "/user/weather-api-key": "/user-weather-api-key",
   "/user/my-password?password=:password": "/auth-password",
-  "/login/logout": "/logout"
+  "/login/logout": "/logout",
+  "/login/refresh-token?token=:token": "/login"
 }
