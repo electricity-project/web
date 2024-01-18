@@ -77,7 +77,7 @@ const PowerStationDetails: React.FC = () => {
         case 1:
           return powerStationStateToString(PowerStationState.Maintenance, true)
         default:
-          return ''
+          return 'Nieznany'
       }
     }
 
