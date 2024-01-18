@@ -1,3 +1,5 @@
+import type { GridRowId } from '@mui/x-data-grid'
+
 export enum PowerStationState {
   Working = 'WORKING',
   Stopped = 'STOPPED',
@@ -26,7 +28,7 @@ export enum PowerStationType {
 export const powerStationTypeToString = (powerStationType: PowerStationType, capitalize?: boolean): string => {
   switch (powerStationType) {
     case PowerStationType.WindTurbine:
-      return capitalize === true ? 'wiatrowa' : 'Wiatrowa'
+      return capitalize === true ? 'Wiatrowa' : 'wiatrowa'
     case PowerStationType.SolarPanel:
       return capitalize === true ? 'Słoneczna' : 'słoneczna'
   }
@@ -71,4 +73,9 @@ export interface PowerStationsCount {
 export enum PowerStationsScope {
   AllPowerStations = 'ALL_POWER_STATIONS',
   WorkingPowerStations = 'WORKING_POWER_STATIONS'
+}
+
+export interface PowerStationProps {
+  id: GridRowId
+  ipv6: string
 }

@@ -13,7 +13,7 @@ import {
   fetchLast60MinutesPowerProduction,
   fetchPowerStationDetails,
   openDisconnectConfirmDialog,
-  selectDetails, selectIsDetailsError
+  selectDetails, selectIsDetailsError, selectIsLoadingDetails
 } from '../../redux/slices/powerStationDetailsSlice'
 import { selectPendingRows, startPowerStation, stopPowerStation } from '../../redux/slices/powerStationsSlice'
 import { PowerStationState, powerStationStateToString } from '../common/types'
@@ -47,10 +47,11 @@ const ViewBar: React.FC = () => {
   }
 
   const createButtons = (): JSX.Element | null => {
+    const isLoadingDetails = useAppSelector(selectIsLoadingDetails)
     const isDetailsError = useAppSelector(selectIsDetailsError)
 
     if (matchPath('/power-stations/:id', pathname) === null ||
-      powerStationDetails === undefined || isDetailsError) {
+      powerStationDetails === undefined || isLoadingDetails || isDetailsError) {
       return null
     }
 
@@ -74,7 +75,7 @@ const ViewBar: React.FC = () => {
       }
 
       const onStop = (): void => {
-        dispatch(stopPowerStation(powerStationDetails.id))
+        dispatch(stopPowerStation({ id: powerStationDetails.id, ipv6: powerStationDetails.ipv6 }))
           .then((result) => {
             if (result.type === stopPowerStation.fulfilled.type) {
               fetchDetailsData(powerStationDetails.id)
@@ -83,7 +84,7 @@ const ViewBar: React.FC = () => {
       }
 
       const onStart = (): void => {
-        dispatch(startPowerStation(powerStationDetails.id))
+        dispatch(startPowerStation({ id: powerStationDetails.id, ipv6: powerStationDetails.ipv6 }))
           .then((result) => {
             if (result.type === startPowerStation.fulfilled.type) {
               fetchDetailsData(powerStationDetails.id)
@@ -122,7 +123,7 @@ const ViewBar: React.FC = () => {
         <Tooltip
           disableInteractive
           title='Odłącz elektrownię od systemu'>
-          <IconButton onClick={() => { dispatch(openDisconnectConfirmDialog(powerStationDetails.id)) }}>
+          <IconButton onClick={() => { dispatch(openDisconnectConfirmDialog({ id: powerStationDetails.id, ipv6: powerStationDetails.ipv6 })) }}>
             <HighlightOff color={'error'} sx={{ fontSize: 25 }} />
           </IconButton>
         </Tooltip>

@@ -81,8 +81,8 @@ const PowerProductionCharts: React.FC<PowerProductionChartsProps> =
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
         <Tabs value={tabIndex} onChange={handleTabChange}>
           <Tab label="Ostatnie 60 minut" sx={{ textTransform: 'none' }} />
-          <Tab label="Ostatnie 48 godzin" sx={{ textTransform: 'none' }} />
-          <Tab label="Ostatnie 60 dni" sx={{ textTransform: 'none' }} />
+          <Tab label="Ostatnie 48 godzin" sx={{ textTransform: 'none' }} disabled={last48HoursDataset.length === 0}/>
+          <Tab label="Ostatnie 60 dni" sx={{ textTransform: 'none' }} disabled={last60DaysDataset.length === 0} />
         </Tabs>
       </Box>
       <Box sx={{ width: '100%', minWidth: '700px', minHeight: '200px', flex: 1, padding: 0, border: 1, borderTop: 0, borderColor: 'divider' }}>

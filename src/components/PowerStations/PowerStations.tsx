@@ -3,7 +3,7 @@ import {
   DataGrid,
   gridClasses,
   gridPaginationModelSelector,
-  gridQuickFilterValuesSelector,
+  gridQuickFilterValuesSelector, type GridSortItem,
   gridSortModelSelector,
   plPL,
   useGridApiRef
@@ -84,8 +84,11 @@ const PowerStations: React.FC = () => {
       } else if (value.length >= 3 && powerStationTypeToString(PowerStationType.WindTurbine).startsWith(value)) {
         typePatterns.add(PowerStationType.WindTurbine)
       } else {
-        if (ipaddr.isValid(value)) {
-          ipv6Patterns.add(ipaddr.parse(value).toString())
+        if (ipaddr.IPv6.isValid(value)) {
+          const ipv6Pattern = ipaddr.parse(value).toNormalizedString().split(':')
+            .map((octet) => octet.padStart(4, '0'))
+            .join(':')
+          ipv6Patterns.add(ipv6Pattern)
         } else {
           ipv6Patterns.add(value)
         }
@@ -96,6 +99,7 @@ const PowerStations: React.FC = () => {
   const updateDataGrid = (): void => {
     const paginationModel = gridPaginationModelSelector(dataGridApiRef)
     const sortModel = gridSortModelSelector(dataGridApiRef)
+      .map((sortItem: GridSortItem) => sortItem.field === 'ipv6' ? { ...sortItem, field: 'ipv6Address' } : sortItem)
     const quickFilterValues = gridQuickFilterValuesSelector(dataGridApiRef)
     const ipv6Patterns = new Set<string>()
     const statePatterns = new Set<PowerStationState>()

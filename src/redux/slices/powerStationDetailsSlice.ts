@@ -3,7 +3,12 @@ import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/tool
 import moment from 'moment/moment'
 
 import axios from '../../axiosConfig'
-import { AggregationPeriodType, type PowerStationState, type PowerStationType } from '../../components/common/types'
+import {
+  AggregationPeriodType,
+  type PowerStationProps,
+  type PowerStationState,
+  type PowerStationType
+} from '../../components/common/types'
 import { type RootState } from '../store'
 import {
   getFirstDate, toUnit
@@ -39,6 +44,7 @@ export const fetchLast48HoursPowerProduction = createAsyncThunk(
 export const fetchLast60DaysPowerProduction = createAsyncThunk(
   'powerStationDetails/fetchLast60Days',
   async (ipv6: string, { rejectWithValue }) => {
+    await new Promise(resolve => setTimeout(resolve, 10000))
     return await fetchPowerProduction(ipv6, 61, AggregationPeriodType.Day, rejectWithValue)
   }
 )
@@ -88,7 +94,7 @@ interface powerStationDetailsState {
   isDetailsError: boolean
   details: PowerStationDetails | undefined
   isDisconnectConfirmDialogOpen: boolean
-  disconnectConfirmDialogId: GridRowId | undefined
+  disconnectConfirmDialog: PowerStationProps | undefined
   last60MinutesDataset: PowerProduction[]
   last48HoursDataset: PowerProduction[]
   last60DaysDataset: PowerProduction[]
@@ -99,7 +105,7 @@ const initialState: powerStationDetailsState = {
   isDetailsError: false,
   details: undefined,
   isDisconnectConfirmDialogOpen: false,
-  disconnectConfirmDialogId: undefined,
+  disconnectConfirmDialog: undefined,
   last60MinutesDataset: [],
   last48HoursDataset: [],
   last60DaysDataset: []
@@ -112,11 +118,11 @@ const powerStationDetailsSlice = createSlice({
     reset: () => initialState,
     openDisconnectConfirmDialog: (state, action) => {
       state.isDisconnectConfirmDialogOpen = true
-      state.disconnectConfirmDialogId = action.payload
+      state.disconnectConfirmDialog = action.payload
     },
     closeDisconnectConfirmDialog: (state) => {
       state.isDisconnectConfirmDialogOpen = false
-      state.disconnectConfirmDialogId = undefined
+      state.disconnectConfirmDialog = undefined
     }
   },
   extraReducers: (builder) => {
@@ -137,13 +143,13 @@ const powerStationDetailsSlice = createSlice({
         if (state.details !== undefined) {
           state.details.actualPowerProduction = state.last60MinutesDataset[state.last60MinutesDataset.length - 1]?.power
         }
+        state.isLoadingDetails = false
       })
       .addCase(fetchLast48HoursPowerProduction.fulfilled, (state, action: PayloadAction<PowerProduction[]>) => {
         state.last48HoursDataset = fillDatasetWithValues(transformDataset(action.payload), 48, AggregationPeriodType.Hour)
       })
       .addCase(fetchLast60DaysPowerProduction.fulfilled, (state, action: PayloadAction<PowerProduction[]>) => {
         state.last60DaysDataset = fillDatasetWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Day)
-        state.isLoadingDetails = false
       })
   }
 })
@@ -178,7 +184,7 @@ export const selectIsLoadingDetails = (state: RootState): boolean => state.power
 export const selectIsDetailsError = (state: RootState): boolean => state.powerStationDetails.isDetailsError
 export const selectDetails = (state: RootState): PowerStationDetails | undefined => state.powerStationDetails.details
 export const selectIsDisconnectConfirmDialogOpen = (state: RootState): boolean => state.powerStationDetails.isDisconnectConfirmDialogOpen
-export const selectDisconnectConfirmDialogId = (state: RootState): GridRowId | undefined => state.powerStationDetails.disconnectConfirmDialogId
+export const selectDisconnectConfirmDialog = (state: RootState): PowerStationProps | undefined => state.powerStationDetails.disconnectConfirmDialog
 export const selectLast60MinutesDataset = (state: RootState): PowerProduction[] => state.powerStationDetails.last60MinutesDataset
 export const selectLast48HoursDataset = (state: RootState): PowerProduction[] => state.powerStationDetails.last48HoursDataset
 export const selectLast60DaysDataset = (state: RootState): PowerProduction[] => state.powerStationDetails.last60DaysDataset

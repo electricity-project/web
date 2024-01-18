@@ -4,14 +4,14 @@ import * as React from 'react'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   closeDisconnectConfirmDialog, disconnectPowerStation,
-  selectDisconnectConfirmDialogId,
+  selectDisconnectConfirmDialog,
   selectIsDisconnectConfirmDialogOpen
 } from '../../redux/slices/powerStationsSlice'
 
 const PowerStationDisconnectConfirmDialog: React.FC<{ afterConfirm: () => void }> = ({ afterConfirm }) => {
   const dispatch = useAppDispatch()
   const isDisconnectConfirmDialogOpen = useAppSelector(selectIsDisconnectConfirmDialogOpen)
-  const powerStationToDisconnectId = useAppSelector(selectDisconnectConfirmDialogId)
+  const powerStationToDisconnect = useAppSelector(selectDisconnectConfirmDialog)
 
   const handleNo = (): void => {
     dispatch(closeDisconnectConfirmDialog())
@@ -19,8 +19,8 @@ const PowerStationDisconnectConfirmDialog: React.FC<{ afterConfirm: () => void }
 
   const handleYes = (): void => {
     dispatch(closeDisconnectConfirmDialog())
-    if (powerStationToDisconnectId !== undefined) {
-      dispatch(disconnectPowerStation(powerStationToDisconnectId))
+    if (powerStationToDisconnect !== undefined) {
+      dispatch(disconnectPowerStation(powerStationToDisconnect))
         .then((result) => {
           if (result.type === disconnectPowerStation.fulfilled.type) {
             afterConfirm()

@@ -54,6 +54,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
       description: 'Typ elektrowni',
       flex: 3,
       minWidth: 150,
+      sortable: false,
       hideable: false,
       type: 'singleSelect',
       valueOptions: [PowerStationType.WindTurbine, PowerStationType.SolarPanel],
@@ -112,7 +113,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
           </Tooltip>)
 
         const onStop = (): void => {
-          dispatch(stopPowerStation(params.id))
+          dispatch(stopPowerStation({ id: params.id, ipv6: params.row.ipv6 }))
             .then((result) => {
               if (result.type === stopPowerStation.fulfilled.type) {
                 afterAction()
@@ -121,7 +122,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
         }
 
         const onStart = (): void => {
-          dispatch(startPowerStation(params.id))
+          dispatch(startPowerStation({ id: params.id, ipv6: params.row.ipv6 }))
             .then((result) => {
               if (result.type === startPowerStation.fulfilled.type) {
                 afterAction()
@@ -165,7 +166,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
             <span>
               <GridActionsCellItem
                 icon={<HighlightOff color={'error'} sx={{ fontSize: 25 }} />}
-                onClick={() => { dispatch(openDisconnectConfirmDialog(params.id)) }}
+                onClick={() => { dispatch(openDisconnectConfirmDialog({ id: params.id, ipv6: params.row.ipv6 })) }}
                 label="Disconnect"
                 key={'disconnect'} />
             </span>

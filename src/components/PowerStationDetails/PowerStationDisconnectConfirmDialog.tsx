@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../redux/hooks'
 import {
   closeDisconnectConfirmDialog,
-  selectDisconnectConfirmDialogId,
+  selectDisconnectConfirmDialog,
   selectIsDisconnectConfirmDialogOpen
 } from '../../redux/slices/powerStationDetailsSlice'
 import {
@@ -16,7 +16,7 @@ const PowerStationDisconnectConfirmDialog: React.FC = () => {
   const dispatch = useAppDispatch()
   const navigate = useNavigate()
   const isDisconnectConfirmDialogOpen = useAppSelector(selectIsDisconnectConfirmDialogOpen)
-  const powerStationToDisconnectId = useAppSelector(selectDisconnectConfirmDialogId)
+  const powerStationToDisconnect = useAppSelector(selectDisconnectConfirmDialog)
 
   const handleNo = (): void => {
     dispatch(closeDisconnectConfirmDialog())
@@ -24,8 +24,8 @@ const PowerStationDisconnectConfirmDialog: React.FC = () => {
 
   const handleYes = (): void => {
     dispatch(closeDisconnectConfirmDialog())
-    if (powerStationToDisconnectId !== undefined) {
-      dispatch(disconnectPowerStation(powerStationToDisconnectId))
+    if (powerStationToDisconnect !== undefined) {
+      dispatch(disconnectPowerStation(powerStationToDisconnect))
         .then((result) => {
           if (result.type === disconnectPowerStation.fulfilled.type) {
             navigate('/power-stations')

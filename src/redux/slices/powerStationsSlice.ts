@@ -3,7 +3,11 @@ import type { GridRowId, GridSortDirection, GridValidRowModel } from '@mui/x-dat
 import { createAsyncThunk, createSlice, type PayloadAction } from '@reduxjs/toolkit'
 
 import axios from '../../axiosConfig'
-import { type PowerStationState as PowerStationStateType, type PowerStationType } from '../../components/common/types'
+import {
+  type PowerStationProps,
+  type PowerStationState as PowerStationStateType,
+  type PowerStationType
+} from '../../components/common/types'
 import { type RootState } from '../store'
 
 interface FetchPowerStationsProps {
@@ -44,13 +48,13 @@ export const fetchPowerStations = createAsyncThunk(
   }
 )
 
-export const startPowerStation = createAsyncThunk(
+export const startPowerStation = createAsyncThunk<any, PowerStationProps>(
   'powerStations/start',
-  async (id: GridRowId, { rejectWithValue }) => {
+  async (props, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.get('/power-station/start',
       {
-        params: { id }
+        params: { ipv6: props.ipv6 }
       }).then(response => {
       return response.data
     }).catch(error => {
@@ -60,13 +64,13 @@ export const startPowerStation = createAsyncThunk(
   }
 )
 
-export const stopPowerStation = createAsyncThunk(
+export const stopPowerStation = createAsyncThunk<any, PowerStationProps>(
   'powerStations/stop',
-  async (id: GridRowId, { rejectWithValue }) => {
+  async (props, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.get('/power-station/stop',
       {
-        params: { id }
+        params: { ipv6: props.ipv6 }
       }).then(response => {
       return response.data
     }).catch(error => {
@@ -76,13 +80,13 @@ export const stopPowerStation = createAsyncThunk(
   }
 )
 
-export const disconnectPowerStation = createAsyncThunk(
+export const disconnectPowerStation = createAsyncThunk<any, PowerStationProps>(
   'powerStations/disconnect',
-  async (id: GridRowId, { rejectWithValue }) => {
+  async (props, { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.get('/power-station/disconnect',
       {
-        params: { id }
+        params: { ipv6: props.ipv6 }
       }).then(response => {
       return response.data
     }).catch(error => {
@@ -115,7 +119,7 @@ interface PowerStationState {
   alertsQueue: readonly AlertProps[]
   alertProps: AlertProps | undefined
   isDisconnectConfirmDialogOpen: boolean
-  disconnectConfirmDialogId: GridRowId | undefined
+  disconnectConfirmDialog: PowerStationProps | undefined
 }
 
 const initialState: PowerStationState = {
@@ -127,7 +131,7 @@ const initialState: PowerStationState = {
   alertsQueue: [],
   alertProps: undefined,
   isDisconnectConfirmDialogOpen: false,
-  disconnectConfirmDialogId: undefined
+  disconnectConfirmDialog: undefined
 }
 
 const powerStationsSlice = createSlice({
@@ -153,11 +157,11 @@ const powerStationsSlice = createSlice({
     },
     openDisconnectConfirmDialog: (state, action) => {
       state.isDisconnectConfirmDialogOpen = true
-      state.disconnectConfirmDialogId = action.payload
+      state.disconnectConfirmDialog = action.payload
     },
     closeDisconnectConfirmDialog: (state) => {
       state.isDisconnectConfirmDialogOpen = false
-      state.disconnectConfirmDialogId = undefined
+      state.disconnectConfirmDialog = undefined
     }
   },
   extraReducers: (builder) => {
@@ -174,34 +178,34 @@ const powerStationsSlice = createSlice({
         state.isLoading = false
       })
       .addCase(startPowerStation.pending, (state, action) => {
-        state.pendingRows[action.meta.arg] = PendingRowReason.Start
+        state.pendingRows[action.meta.arg.id] = PendingRowReason.Start
       })
       .addCase(startPowerStation.fulfilled, (state, action) => {
-        removeFromPendingRows(state, action.meta.arg)
+        removeFromPendingRows(state, action.meta.arg.id)
       })
       .addCase(startPowerStation.rejected, (state, action) => {
-        removeFromPendingRows(state, action.meta.arg)
+        removeFromPendingRows(state, action.meta.arg.id)
         state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Nie udało się uruchomić pracy elektrowni', severity: 'error' }]
       })
       .addCase(stopPowerStation.pending, (state, action) => {
-        state.pendingRows[action.meta.arg] = PendingRowReason.Stop
+        state.pendingRows[action.meta.arg.id] = PendingRowReason.Stop
       })
       .addCase(stopPowerStation.fulfilled, (state, action) => {
-        removeFromPendingRows(state, action.meta.arg)
+        removeFromPendingRows(state, action.meta.arg.id)
       })
       .addCase(stopPowerStation.rejected, (state, action) => {
-        removeFromPendingRows(state, action.meta.arg)
+        removeFromPendingRows(state, action.meta.arg.id)
         state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Nie udało się zatrzymać pracy elektrowni', severity: 'error' }]
       })
       .addCase(disconnectPowerStation.pending, (state, action) => {
-        state.pendingRows[action.meta.arg] = PendingRowReason.Disconnect
+        state.pendingRows[action.meta.arg.id] = PendingRowReason.Disconnect
       })
       .addCase(disconnectPowerStation.fulfilled, (state, action) => {
-        removeFromPendingRows(state, action.meta.arg)
+        removeFromPendingRows(state, action.meta.arg.id)
         state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Pomyślnie odłączono elektrownię od systemu', severity: 'success' }]
       })
       .addCase(disconnectPowerStation.rejected, (state, action) => {
-        removeFromPendingRows(state, action.meta.arg)
+        removeFromPendingRows(state, action.meta.arg.id)
         state.alertsQueue = [...state.alertsQueue, { key: new Date().getTime(), message: 'Nie udało się odłączyć elektrowni od systemu', severity: 'error' }]
       })
   }
@@ -229,5 +233,5 @@ export const selectIsAlertVisible = (state: RootState): boolean => state.powerSt
 export const selectAlertsQueue = (state: RootState): readonly AlertProps[] => state.powerStations.alertsQueue
 export const selectAlertProps = (state: RootState): AlertProps | undefined => state.powerStations.alertProps
 export const selectIsDisconnectConfirmDialogOpen = (state: RootState): boolean => state.powerStations.isDisconnectConfirmDialogOpen
-export const selectDisconnectConfirmDialogId = (state: RootState): GridRowId | undefined => state.powerStations.disconnectConfirmDialogId
+export const selectDisconnectConfirmDialog = (state: RootState): PowerStationProps | undefined => state.powerStations.disconnectConfirmDialog
 export default powerStationsSlice.reducer
