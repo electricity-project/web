@@ -44,7 +44,6 @@ export const fetchLast48HoursPowerProduction = createAsyncThunk(
 export const fetchLast60DaysPowerProduction = createAsyncThunk(
   'powerStationDetails/fetchLast60Days',
   async (ipv6: string, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 10000))
     return await fetchPowerProduction(ipv6, 61, AggregationPeriodType.Day, rejectWithValue)
   }
 )

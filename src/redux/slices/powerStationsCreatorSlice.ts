@@ -29,7 +29,7 @@ export const connectPowerStations = createAsyncThunk(
   'powerStationsCreator/connect',
   async (ipv6List: string[], { rejectWithValue }) => {
     await new Promise(resolve => setTimeout(resolve, 500))
-    return await axios.post('/power-station', ipv6List)
+    return await axios.post('/power-station/connect', ipv6List)
       .then(response => {
         return response.data
       }).catch(error => {
