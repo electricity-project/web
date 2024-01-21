@@ -66,7 +66,7 @@ const PowerStationDetails: React.FC = () => {
   const createStateChart: () => JSX.Element = () => {
     const tickNumber = 60
     const tickLabelInterval = (time: { getMinutes: () => number }): boolean => time.getMinutes() % 5 === 0
-    const valueFormatter = (value: any): string => {
+    const seriesValueFormatter = (value: any): string => {
       switch (value) {
         case 4:
           return powerStationStateToString(PowerStationState.Working, true)
@@ -79,6 +79,11 @@ const PowerStationDetails: React.FC = () => {
         default:
           return 'Nieznany'
       }
+    }
+
+    const yAxisValueFormatter = (value: any): string => {
+      const newValue = seriesValueFormatter(value)
+      return newValue === 'Nieznany' ? '' : newValue
     }
 
     return (
@@ -103,7 +108,7 @@ const PowerStationDetails: React.FC = () => {
             max: 4.6,
             min: 0,
             tickNumber: 4,
-            valueFormatter
+            valueFormatter: yAxisValueFormatter
           }
         ]}
         margin={{ left: 90 }}
@@ -113,7 +118,7 @@ const PowerStationDetails: React.FC = () => {
             curve: 'step',
             label: 'Status elektrowni',
             color: 'orange',
-            valueFormatter
+            valueFormatter: seriesValueFormatter
           }
         ]}
         dataset={last60MinutesDataset.map((element) => {
