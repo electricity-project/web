@@ -5,7 +5,7 @@ import { type PowerStationsCount, type PowerStationsScope } from '../../componen
 import { type RootState } from '../store'
 
 interface PowerPredictionProps {
-  date: Date
+  date: string
   powerStationsScope: PowerStationsScope
 }
 

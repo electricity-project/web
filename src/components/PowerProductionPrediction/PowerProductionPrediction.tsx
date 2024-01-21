@@ -50,7 +50,7 @@ const PowerProductionPrediction: React.FC = () => {
 
   const handleMakePrediction = (): void => {
     void dispatch(fetchPowerStationsCount())
-    void dispatch(fetchPowerProductionPrediction({ date: date.toDate(), powerStationsScope }))
+    void dispatch(fetchPowerProductionPrediction({ date: date.toDate().toLocaleDateString(), powerStationsScope }))
   }
 
   const handleClearPrediction = (): void => {
