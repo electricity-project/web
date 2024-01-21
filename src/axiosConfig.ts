@@ -9,7 +9,7 @@ const instance = axios.create({
   headers: {
     'Content-type': 'application/json'
   },
-  timeout: 10000
+  timeout: 30000
 })
 instance.interceptors.request.use((config) => {
   if (store.getState().userAuth.token !== undefined) {

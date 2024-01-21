@@ -6,7 +6,7 @@ import { UserRole } from '../../components/common/types'
 import { type RootState } from '../store'
 
 const calculateTokenExpirationTime = (actualTokenExpirationTime: number): number => {
-  return Math.max(actualTokenExpirationTime - 10, 1) * 1000
+  return Math.max(actualTokenExpirationTime - 60, 1) * 1000
 }
 
 const SESSION_STORAGE_TOKEN_KEY = 'authToken'

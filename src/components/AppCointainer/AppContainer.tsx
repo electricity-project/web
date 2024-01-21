@@ -1,4 +1,4 @@
-import { Backdrop, CssBaseline } from '@mui/material'
+import { Backdrop, ClickAwayListener, CssBaseline } from '@mui/material'
 import Box from '@mui/material/Box'
 import Toolbar from '@mui/material/Toolbar'
 import * as React from 'react'
@@ -39,6 +39,12 @@ const AppContainer: React.FC = () => {
     setIsOpen(!isOpen)
   }
 
+  const handleClickAway = (): void => {
+    if (isOpen) {
+      toggleDrawer()
+    }
+  }
+
   if (!isAdmin && matchPath('/admin', pathname) !== null) {
     return <Navigate to={'/power-production'} replace />
   }
@@ -46,32 +52,34 @@ const AppContainer: React.FC = () => {
   return (
     <>
       <Backdrop sx={{ color: '#000000', zIndex: 1098 }} open={isOpen} />
-      <Box sx={{ display: 'flex' }}>
-        <CssBaseline/>
-        <AppHeader onIconClick={toggleDrawer} />
-        <AppSideNav isOpen={isOpen} />
-        <Box sx={{ height: '100vh', display: 'flex', flexFlow: 'column', flex: 1, minWidth: 0 }}>
-          <Toolbar style={{ padding: 0 }}/>
-          <Box
-            component="main"
-            sx={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}
-          >
-            <ViewBar />
-            <Box sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              flex: 1,
-              p: 2,
-              minHeight: 0,
-              overflow: 'hidden',
-              overflowY: 'auto',
-              overflowX: 'auto'
-            }}>
-              <Outlet/>
+      <ClickAwayListener onClickAway={handleClickAway}>
+        <Box sx={{ display: 'flex' }}>
+          <CssBaseline/>
+          <AppHeader onIconClick={toggleDrawer} />
+          <AppSideNav isOpen={isOpen} />
+          <Box sx={{ height: '100vh', display: 'flex', flexFlow: 'column', flex: 1, minWidth: 0 }}>
+            <Toolbar style={{ padding: 0 }}/>
+            <Box
+              component="main"
+              sx={{ display: 'flex', flexDirection: 'column', flex: 1, minHeight: 0 }}
+            >
+              <ViewBar />
+              <Box sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                flex: 1,
+                p: 2,
+                minHeight: 0,
+                overflow: 'hidden',
+                overflowY: 'auto',
+                overflowX: 'auto'
+              }}>
+                <Outlet/>
+              </Box>
             </Box>
           </Box>
         </Box>
-      </Box>
+      </ClickAwayListener>
     </>
   )
 }
