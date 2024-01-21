@@ -21,33 +21,34 @@ export const fetchPowerStationsCount = createAsyncThunk(
 export const fetchLast60MinutesPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast60Minutes',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(61, AggregationPeriodType.Minute, rejectWithValue)
+    return await fetchPowerProduction(61, AggregationPeriodType.Minute, rejectWithValue, true)
   }
 )
 
 export const fetchLast48HoursPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast48Hours',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(48, AggregationPeriodType.Hour, rejectWithValue)
+    return await fetchPowerProduction(48, AggregationPeriodType.Hour, rejectWithValue, false)
   }
 )
 
 export const fetchLast60DaysPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast60Days',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(60, AggregationPeriodType.Day, rejectWithValue)
+    return await fetchPowerProduction(60, AggregationPeriodType.Day, rejectWithValue, false)
   }
 )
 
 const fetchPowerProduction = async (
   duration: number,
   aggregationPeriodType: AggregationPeriodType,
-  rejectWithValue: any
+  rejectWithValue: any,
+  removeLastElement: boolean
 ): Promise<any> => {
   return await axios.get('/aggregated-power-production',
     { params: { duration, aggregationPeriodType } })
     .then(response => {
-      return response.data.reverse().slice(0, duration - 1)
+      return removeLastElement ? response.data.reverse().slice(0, duration - 1) : response.data.reverse()
     }).catch(error => {
       console.error(error)
       return rejectWithValue(error)
