@@ -37,14 +37,14 @@ export const fetchLast60MinutesPowerProduction = createAsyncThunk(
 export const fetchLast48HoursPowerProduction = createAsyncThunk(
   'powerStationDetails/fetchLast48Hours',
   async (ipv6: string, { rejectWithValue }) => {
-    return await fetchPowerProduction(ipv6, 49, AggregationPeriodType.Hour, rejectWithValue)
+    return await fetchPowerProduction(ipv6, 48, AggregationPeriodType.Hour, rejectWithValue)
   }
 )
 
 export const fetchLast60DaysPowerProduction = createAsyncThunk(
   'powerStationDetails/fetchLast60Days',
   async (ipv6: string, { rejectWithValue }) => {
-    return await fetchPowerProduction(ipv6, 61, AggregationPeriodType.Day, rejectWithValue)
+    return await fetchPowerProduction(ipv6, 60, AggregationPeriodType.Day, rejectWithValue)
   }
 )
 

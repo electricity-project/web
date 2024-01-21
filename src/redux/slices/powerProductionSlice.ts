@@ -28,14 +28,14 @@ export const fetchLast60MinutesPowerProduction = createAsyncThunk(
 export const fetchLast48HoursPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast48Hours',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(49, AggregationPeriodType.Hour, rejectWithValue)
+    return await fetchPowerProduction(48, AggregationPeriodType.Hour, rejectWithValue)
   }
 )
 
 export const fetchLast60DaysPowerProduction = createAsyncThunk(
   'powerProduction/fetchLast60Days',
   async (_, { rejectWithValue }) => {
-    return await fetchPowerProduction(61, AggregationPeriodType.Day, rejectWithValue)
+    return await fetchPowerProduction(60, AggregationPeriodType.Day, rejectWithValue)
   }
 )
 
