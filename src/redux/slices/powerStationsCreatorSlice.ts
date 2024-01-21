@@ -31,7 +31,8 @@ export const connectPowerStations = createAsyncThunk(
     await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.post('/power-station/connect', ipv6List)
       .then(response => {
-        return response.data
+        const notConnectedPowerStations = response.data as string[]
+        return notConnectedPowerStations.length === 0 ? response.data : rejectWithValue(notConnectedPowerStations)
       }).catch(error => {
         console.error(error)
         return rejectWithValue(error)
@@ -118,7 +119,15 @@ const powerStationsCreatorSlice = createSlice({
         state.isConnectionError = false
       })
       .addCase(connectPowerStations.fulfilled, () => initialState)
-      .addCase(connectPowerStations.rejected, (state) => {
+      .addCase(connectPowerStations.rejected, (state, action: any) => {
+        if (action.payload.length !== undefined && action.payload.length !== 0) {
+          const errorRows = getRowsByIpv6(state, action.payload)
+          errorRows.forEach((errorRow) => {
+            setStatus(errorRow, PowerStationCreationStatus.Error)
+            errorRow.error = 'Błąd przy podłączaniu elektrowni'
+          })
+          state.rows = errorRows
+        }
         state.isLoading = false
         state.isConnectionError = true
       })
@@ -127,6 +136,10 @@ const powerStationsCreatorSlice = createSlice({
 
 const getRowById = (state: PowerStationCreatorState, id: GridRowId): GridValidRowModel | undefined => {
   return state.rows.find((row) => row.id === id)
+}
+
+const getRowsByIpv6 = (state: PowerStationCreatorState, ipv6List: string[]): GridValidRowModel[] => {
+  return state.rows.filter((row) => ipv6List.includes(row.ipv6))
 }
 
 const setStatus = (row: GridValidRowModel | undefined, status: PowerStationCreationStatus): void => {

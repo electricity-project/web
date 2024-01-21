@@ -7,6 +7,7 @@
   "/power-station/start?ipv6=:ipv6": "/power-station/1",
   "/power-station/stop?ipv6=:ipv6": "/power-station/1",
   "/power-station/disconnect?ipv6=:ipv6": "/power-station/1",
+  "/power-station/connect": "/power-station-connect",
   "/aggregated-power-production?duration=61&aggregationPeriodType=MINUTE": "/aggregated-power-production-last60Minutes",
   "/aggregated-power-production?duration=49&aggregationPeriodType=HOUR": "/aggregated-power-production-last48Hours",
   "/aggregated-power-production?duration=61&aggregationPeriodType=DAY": "/aggregated-power-production-last60Days",
