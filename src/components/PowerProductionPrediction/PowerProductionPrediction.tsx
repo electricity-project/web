@@ -84,22 +84,51 @@ const PowerProductionPrediction: React.FC = () => {
             scaleType: 'time',
             tickNumber,
             tickLabelInterval,
-            valueFormatter: (value: Date): string => {
-              if (value.getHours() + value.getMinutes() + value.getSeconds() === 0) {
-                return '24:00'
-              }
-              return value.toLocaleString('pl-PL', { hour: '2-digit', minute: '2-digit', hour12: false })
-            }
+            valueFormatter: (value: Date): string =>
+              value.toLocaleString('pl-PL', { hour: '2-digit', minute: '2-digit', hour12: false })
           }
         ]}
         series={[
           {
-            dataKey: 'predictedValue',
+            dataKey: 'powerProduction',
             curve: 'linear',
             label: 'Produkcja prądu (kWh)'
           }
         ]}
-        dataset={powerProductionPrediction as Array<{ timestamp: Date, predictedValue: number }>}
+        dataset={powerProductionPrediction as Array<{ timestamp: Date, powerProduction: number }>}
+      />
+    )
+  }
+
+  const createPowerTurnOnPredictionChart: () => JSX.Element = () => {
+    const tickNumber = 24
+    const tickLabelInterval = (time: { getHours: () => number }): boolean => time.getHours() % 2 === 0
+
+    return (
+      <LineChart
+        slots={{
+          axisContent: CustomAxisContentWithTime
+        }}
+        margin={{ left: 90 }}
+        xAxis={[
+          {
+            dataKey: 'timestamp',
+            scaleType: 'time',
+            tickNumber,
+            tickLabelInterval,
+            valueFormatter: (value: Date): string =>
+              value.toLocaleString('pl-PL', { hour: '2-digit', minute: '2-digit', hour12: false })
+          }
+        ]}
+        series={[
+          {
+            dataKey: 'runningPowerStationsNumber',
+            curve: 'linear',
+            label: 'Liczba uruchomionych elektrowni',
+            color: 'orange'
+          }
+        ]}
+        dataset={powerProductionPrediction as Array<{ timestamp: Date, runningPowerStationsNumber: number }>}
       />
     )
   }
@@ -165,19 +194,33 @@ const PowerProductionPrediction: React.FC = () => {
         </Stack>
       </Stack>
       {powerProductionPrediction !== undefined && allPowerStations !== undefined && (
-        <Box sx={{
-          width: '100%',
-          minWidth: '700px',
-          minHeight: '400px',
-          flex: 1,
-          padding: 0,
-          border: 1,
-          borderTop: 0,
-          borderColor: 'divider'
-        }}>
-          <Divider orientation="horizontal" flexItem />
-          {createPowerProductionPredictionChart()}
-        </Box>
+        <>
+          <Box sx={{
+            width: '100%',
+            minWidth: '700px',
+            minHeight: '400px',
+            flex: 1,
+            padding: 0,
+            border: 1,
+            borderTop: 0,
+            borderColor: 'divider'
+          }}>
+            <Divider orientation="horizontal" flexItem/>
+            {createPowerProductionPredictionChart()}
+          </Box>
+          <Box sx={{
+            width: '100%',
+            minWidth: '700px',
+            minHeight: '400px',
+            flex: 1,
+            padding: 0,
+            border: 1,
+            borderTop: 0,
+            borderColor: 'divider'
+          }}>
+            {createPowerTurnOnPredictionChart()}
+          </Box>
+        </>
       )}
     </>
   )

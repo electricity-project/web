@@ -28,7 +28,6 @@ export const validatePowerStationByIpv6 = createAsyncThunk(
 export const connectPowerStations = createAsyncThunk(
   'powerStationsCreator/connect',
   async (ipv6List: string[], { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.post('/power-station/connect', ipv6List)
       .then(response => {
         const notConnectedPowerStations = response.data as string[]

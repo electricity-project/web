@@ -37,7 +37,8 @@ export const fetchPowerStationsCount = createAsyncThunk<PowerStationsCount>(
 )
 
 export interface PowerProductionPrediction {
-  predictedValue: number
+  powerProduction: number
+  runningPowerStationsNumber: number
   timestamp: Date
 }
 
@@ -79,7 +80,7 @@ const powerProductionPredictionSlice = createSlice({
         const powerProductionPrediction = transformDataset(action.payload)
         state.powerProductionPrediction = powerProductionPrediction
         state.allDayPowerProductionPrediction = powerProductionPrediction
-          .map((prediction) => prediction.predictedValue)
+          .map((prediction) => prediction.powerProduction)
           .reduce((accumulator, prediction) => {
             return prediction === undefined ? accumulator : accumulator + prediction
           }, 0)
@@ -96,7 +97,11 @@ const powerProductionPredictionSlice = createSlice({
 
 export const transformDataset = (dataset: PowerProductionPrediction[]): PowerProductionPrediction[] => {
   return dataset.map((element) => {
-    return { predictedValue: element.predictedValue ?? undefined, timestamp: new Date(element.timestamp) }
+    return {
+      powerProduction: element.powerProduction ?? undefined,
+      runningPowerStationsNumber: element.runningPowerStationsNumber ?? undefined,
+      timestamp: new Date(element.timestamp)
+    }
   })
 }
 

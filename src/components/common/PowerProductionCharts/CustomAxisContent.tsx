@@ -9,7 +9,7 @@ const CustomAxisContent: React.FC<{ chartsAxisContentProps: ChartsAxisContentPro
   const valueFormatter = (value: Date): string => {
     let options: Intl.DateTimeFormatOptions = { day: '2-digit', month: '2-digit', year: 'numeric' }
     if (isTime) {
-      options = { ...options, hour: '2-digit', minute: '2-digit', second: '2-digit', hourCycle: 'h24' }
+      options = { ...options, hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }
       return value.toLocaleString('pl-PL', options)
     }
     return value.toLocaleDateString('pl-PL', options)

@@ -1421,100 +1421,124 @@
   },
   "power-production-prediction": [
     {
-      "predictedValue": 263594,
+      "powerProduction": 116228,
+      "runningPowerStationsNumber": 102,
+      "timestamp": "2023-12-20T00:00:00"
+    },
+    {
+      "powerProduction": 263594,
+      "runningPowerStationsNumber": 152,
       "timestamp": "2023-12-20T01:00:00"
     },
     {
-      "predictedValue": 7248537,
+      "powerProduction": 7248537,
+      "runningPowerStationsNumber": 252,
       "timestamp": "2023-12-20T02:00:00"
     },
     {
-      "predictedValue": 4467289,
+      "powerProduction": 4467289,
+      "runningPowerStationsNumber": 122,
       "timestamp": "2023-12-20T03:00:00"
     },
     {
-      "predictedValue": 26008250,
+      "powerProduction": 26008250,
+      "runningPowerStationsNumber": 122,
       "timestamp": "2023-12-20T04:00:00"
     },
     {
-      "predictedValue": 20722262,
+      "powerProduction": 20722262,
+      "runningPowerStationsNumber": 122,
       "timestamp": "2023-12-20T05:00:00"
     },
     {
-      "predictedValue": 7375000,
+      "powerProduction": 7375000,
+      "runningPowerStationsNumber": 142,
       "timestamp": "2023-12-20T06:00:00"
     },
     {
-      "predictedValue": 1414514,
+      "powerProduction": 1414514,
+      "runningPowerStationsNumber": 1002,
       "timestamp": "2023-12-20T07:00:00"
     },
     {
-      "predictedValue": 6597470,
+      "powerProduction": 6597470,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T08:00:00"
     },
     {
-      "predictedValue": 10581377,
+      "powerProduction": 10581377,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T09:00:00"
     },
     {
-      "predictedValue": 11316228,
+      "powerProduction": 11316228,
+      "runningPowerStationsNumber": 152,
       "timestamp": "2023-12-20T10:00:00"
     },
     {
-      "predictedValue": 8597095,
+      "powerProduction": 8597095,
+      "runningPowerStationsNumber": 22,
       "timestamp": "2023-12-20T11:00:00"
     },
     {
-      "predictedValue": 8597095,
+      "powerProduction": 8597095,
+      "runningPowerStationsNumber": 2,
       "timestamp": "2023-12-20T12:00:00"
     },
     {
-      "predictedValue": 263594,
+      "powerProduction": 263594,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T13:00:00"
     },
     {
-      "predictedValue": 7248537,
+      "powerProduction": 7248537,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T14:00:00"
     },
     {
-      "predictedValue": 4467289,
+      "powerProduction": 4467289,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T15:00:00"
     },
     {
-      "predictedValue": 26008250,
+      "powerProduction": 26008250,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T16:00:00"
     },
     {
-      "predictedValue": 20722262,
+      "powerProduction": 20722262,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T17:00:00"
     },
     {
-      "predictedValue": 7375000,
+      "powerProduction": 7375000,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T18:00:00"
     },
     {
-      "predictedValue": 1414514,
+      "powerProduction": 1414514,
+      "runningPowerStationsNumber": 142,
       "timestamp": "2023-12-20T19:00:00"
     },
     {
-      "predictedValue": 6597470,
+      "powerProduction": 6597470,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T20:00:00"
     },
     {
-      "predictedValue": 10581377,
+      "powerProduction": 10581377,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T21:00:00"
     },
     {
-      "predictedValue": 11316228,
+      "powerProduction": 11316228,
+      "runningPowerStationsNumber": 102,
       "timestamp": "2023-12-20T22:00:00"
     },
     {
-      "predictedValue": 1131628,
+      "powerProduction": 1131628,
+      "runningPowerStationsNumber": 142,
       "timestamp": "2023-12-20T23:00:00"
-    },
-    {
-      "predictedValue": 116228,
-      "timestamp": "2023-12-20T24:00:00"
     }
   ]
 }
