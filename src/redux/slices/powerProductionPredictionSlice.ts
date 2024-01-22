@@ -83,7 +83,7 @@ const powerProductionPredictionSlice = createSlice({
       .addCase(fetchPowerProductionPrediction.pending, (state) => {
         state.isPrediction = true
         state.isLoading = true
-        state.isError = true
+        state.isError = false
       })
       .addCase(fetchPowerProductionPrediction.fulfilled, (state, action) => {
         const powerProductionPrediction = transformDataset(action.payload)
@@ -98,7 +98,7 @@ const powerProductionPredictionSlice = createSlice({
       .addCase(fetchPowerProductionPrediction.rejected, (state, action) => {
         state.isPrediction = false
         state.isLoading = false
-        state.isError = false
+        state.isError = true
       })
       .addCase(fetchPowerStationsCount.pending, (state) => {
         state.isPrediction = true
