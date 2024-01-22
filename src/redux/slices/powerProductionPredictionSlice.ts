@@ -12,7 +12,6 @@ interface PowerPredictionProps {
 export const fetchPowerProductionPrediction = createAsyncThunk<PowerProductionPrediction[], PowerPredictionProps>(
   'powerProductionPrediction/fetchPowerProductionPrediction',
   async (props, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 10000))
     return await axios.get('/power-production-prediction',
       { params: props })
       .then(response => {
@@ -95,7 +94,7 @@ const powerProductionPredictionSlice = createSlice({
           }, 0)
         state.isLoading = false
       })
-      .addCase(fetchPowerProductionPrediction.rejected, (state, action) => {
+      .addCase(fetchPowerProductionPrediction.rejected, (state) => {
         state.isPrediction = false
         state.isLoading = false
         state.isError = true
