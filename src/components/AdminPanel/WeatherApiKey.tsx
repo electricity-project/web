@@ -83,7 +83,7 @@ const WeatherApiKey: React.FC = () => {
         </Tooltip>
       </Stack>
       <Stack direction="row" spacing={2} mb={4}>
-        <FormControl error={isWeatherApiKeyError} sx={{ width: '32ch' }} variant="outlined">
+        <FormControl error={isWeatherApiKeyError} sx={{ width: '45ch' }} variant="outlined">
           <InputLabel htmlFor="outlined-adornment-password">Klucz API</InputLabel>
           <OutlinedInput
             id="outlined-adornment-password"

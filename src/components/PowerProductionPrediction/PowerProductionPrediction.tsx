@@ -1,6 +1,7 @@
 import 'moment/locale/pl'
 
-import { Button, Card, CardContent, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material'
+import { LoadingButton } from '@mui/lab'
+import { Alert, Button, Card, CardContent, Stack, ToggleButton, ToggleButtonGroup } from '@mui/material'
 import Box from '@mui/material/Box'
 import Divider from '@mui/material/Divider'
 import Typography from '@mui/material/Typography'
@@ -15,7 +16,7 @@ import {
   clearPowerProductionPrediction,
   fetchPowerProductionPrediction,
   fetchPowerStationsCount, reset, selectAllDayPowerProductionPrediction,
-  selectAllPowerStations, selectIsPrediction,
+  selectAllPowerStations, selectIsError, selectIsLoading, selectIsPrediction,
   selectPowerProductionPrediction,
   selectWorkingPowerStations
 } from '../../redux/slices/powerProductionPredictionSlice'
@@ -27,6 +28,8 @@ import { PowerStationsScope } from '../common/types'
 const PowerProductionPrediction: React.FC = () => {
   const dispatch = useAppDispatch()
   const isPrediction = useAppSelector(selectIsPrediction)
+  const isLoading = useAppSelector(selectIsLoading)
+  const isError = useAppSelector(selectIsError)
   const powerProductionPrediction = useAppSelector(selectPowerProductionPrediction)
   const allDayPowerProductionPrediction = useAppSelector(selectAllDayPowerProductionPrediction)
   const allPowerStations = useAppSelector(selectAllPowerStations)
@@ -165,9 +168,15 @@ const PowerProductionPrediction: React.FC = () => {
                 Tylko sprawne
               </ToggleButton>
             </ToggleButtonGroup>
-            {isPrediction
-              ? (<Button variant={'outlined'} onClick={handleClearPrediction}>Wyczyść predykcję</Button>)
-              : (<Button variant={'contained'} onClick={handleMakePrediction}>Wykonaj predykcję</Button>)}
+            {isLoading
+              ? (
+              <LoadingButton loading variant={'outlined'}>
+                Wykonaj predykcję
+              </LoadingButton>
+                )
+              : isPrediction
+                ? (<Button variant={'outlined'} onClick={handleClearPrediction}>Wyczyść predykcję</Button>)
+                : (<Button variant={'contained'} onClick={handleMakePrediction}>Wykonaj predykcję</Button>)}
           </Stack>
           <Stack direction={'row'} spacing={5}>
             <Card sx={{ minWidth: 350, minHeight: 150 }} raised>
@@ -191,6 +200,7 @@ const PowerProductionPrediction: React.FC = () => {
               </CardContent>
             </Card>
           </Stack>
+          {isError && (<Alert severity="error">Wystąpił błąd! Spróbuj ponownie później.</Alert>)}
         </Stack>
       </Stack>
       {powerProductionPrediction !== undefined && allPowerStations !== undefined && (

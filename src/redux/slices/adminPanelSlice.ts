@@ -48,7 +48,6 @@ export const findRole = (roles: string[]): UserRole | undefined => {
 export const createUser = createAsyncThunk(
   'adminPanel/createUser',
   async (props: UserProps, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.post('/user', props)
       .then(response => {
         return response.data
@@ -67,7 +66,6 @@ interface UserUpdateProps {
 export const updateUser = createAsyncThunk(
   'adminPanel/updateUser',
   async (props: UserUpdateProps, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.put('/user/update', props.newValue, { params: { userId: props.id } })
       .then(response => {
         return response.data
@@ -81,7 +79,6 @@ export const updateUser = createAsyncThunk(
 export const deleteUser = createAsyncThunk(
   'adminPanel/deleteUser',
   async (userId: GridRowId, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.delete('/user/delete', { params: { userId } })
       .then(response => {
         return response.data
@@ -114,7 +111,6 @@ export const validateUsername = createAsyncThunk(
 export const resetPassword = createAsyncThunk(
   'adminPanel/resetPassword',
   async (userId: GridRowId, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.post('/user/password', undefined, { params: { userId } })
       .then(response => {
         return response.data
@@ -141,7 +137,6 @@ export const fetchWeatherApiKey = createAsyncThunk(
 export const setWeatherApiKey = createAsyncThunk(
   'adminPanel/setWeatherApiKey',
   async (newWeatherApiKey: string, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.post('/user/weather-api-key', { weatherApiKey: newWeatherApiKey })
       .then(response => {
         return response.data

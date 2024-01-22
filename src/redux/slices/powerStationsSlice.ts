@@ -51,7 +51,6 @@ export const fetchPowerStations = createAsyncThunk(
 export const startPowerStation = createAsyncThunk<any, PowerStationProps>(
   'powerStations/start',
   async (props, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.get('/power-station/start',
       {
         params: { ipv6: props.ipv6 }
@@ -67,7 +66,6 @@ export const startPowerStation = createAsyncThunk<any, PowerStationProps>(
 export const stopPowerStation = createAsyncThunk<any, PowerStationProps>(
   'powerStations/stop',
   async (props, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.get('/power-station/stop',
       {
         params: { ipv6: props.ipv6 }
@@ -83,7 +81,6 @@ export const stopPowerStation = createAsyncThunk<any, PowerStationProps>(
 export const disconnectPowerStation = createAsyncThunk<any, PowerStationProps>(
   'powerStations/disconnect',
   async (props, { rejectWithValue }) => {
-    await new Promise(resolve => setTimeout(resolve, 500))
     return await axios.get('/power-station/disconnect',
       {
         params: { ipv6: props.ipv6 }

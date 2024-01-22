@@ -12,6 +12,7 @@ interface PowerPredictionProps {
 export const fetchPowerProductionPrediction = createAsyncThunk<PowerProductionPrediction[], PowerPredictionProps>(
   'powerProductionPrediction/fetchPowerProductionPrediction',
   async (props, { rejectWithValue }) => {
+    await new Promise(resolve => setTimeout(resolve, 10000))
     return await axios.get('/power-production-prediction',
       { params: props })
       .then(response => {
@@ -43,6 +44,8 @@ export interface PowerProductionPrediction {
 }
 
 interface PowerProductionState {
+  isLoading: boolean
+  isError: boolean
   isPrediction: boolean
   powerProductionPrediction: PowerProductionPrediction[] | undefined
   allDayPowerProductionPrediction: number | undefined
@@ -51,6 +54,8 @@ interface PowerProductionState {
 }
 
 const initialState: PowerProductionState = {
+  isLoading: false,
+  isError: false,
   isPrediction: false,
   powerProductionPrediction: undefined,
   allDayPowerProductionPrediction: undefined,
@@ -65,6 +70,8 @@ const powerProductionPredictionSlice = createSlice({
     reset: () => initialState,
     clearPowerProductionPrediction: (state) => {
       state.isPrediction = false
+      state.isLoading = false
+      state.isError = false
       state.powerProductionPrediction = undefined
       state.allDayPowerProductionPrediction = undefined
       state.workingPowerStations = undefined
@@ -75,6 +82,8 @@ const powerProductionPredictionSlice = createSlice({
     builder
       .addCase(fetchPowerProductionPrediction.pending, (state) => {
         state.isPrediction = true
+        state.isLoading = true
+        state.isError = true
       })
       .addCase(fetchPowerProductionPrediction.fulfilled, (state, action) => {
         const powerProductionPrediction = transformDataset(action.payload)
@@ -84,6 +93,12 @@ const powerProductionPredictionSlice = createSlice({
           .reduce((accumulator, prediction) => {
             return prediction === undefined ? accumulator : accumulator + prediction
           }, 0)
+        state.isLoading = false
+      })
+      .addCase(fetchPowerProductionPrediction.rejected, (state, action) => {
+        state.isPrediction = false
+        state.isLoading = false
+        state.isError = false
       })
       .addCase(fetchPowerStationsCount.pending, (state) => {
         state.isPrediction = true
@@ -111,6 +126,8 @@ export const {
 } = powerProductionPredictionSlice.actions
 
 export const selectIsPrediction = (state: RootState): boolean => state.powerProductionPrediction.isPrediction
+export const selectIsLoading = (state: RootState): boolean => state.powerProductionPrediction.isLoading
+export const selectIsError = (state: RootState): boolean => state.powerProductionPrediction.isError
 export const selectPowerProductionPrediction = (state: RootState): PowerProductionPrediction[] | undefined => state.powerProductionPrediction.powerProductionPrediction
 export const selectAllDayPowerProductionPrediction = (state: RootState): number | undefined => state.powerProductionPrediction.allDayPowerProductionPrediction
 export const selectAllPowerStations = (state: RootState): number | undefined => state.powerProductionPrediction.allPowerStations
