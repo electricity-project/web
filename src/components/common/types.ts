@@ -4,7 +4,8 @@ export enum PowerStationState {
   Working = 'WORKING',
   Stopped = 'STOPPED',
   Damaged = 'DAMAGED',
-  Maintenance = 'MAINTENANCE'
+  Maintenance = 'MAINTENANCE',
+  StoppedByUser = "STOPPED_BY_USER"
 }
 
 export const powerStationStateToString = (powerStationState: PowerStationState, capitalize?: boolean): string => {
@@ -17,6 +18,8 @@ export const powerStationStateToString = (powerStationState: PowerStationState, 
       return capitalize === true ? 'Uszkodzona' : 'uszkodzona'
     case PowerStationState.Maintenance:
       return capitalize === true ? 'W naprawie' : 'w naprawie'
+    case PowerStationState.StoppedByUser:
+      return capitalize === true ? 'Zatrzymana ręcznie': 'zatrzymana ręcznie'
   }
 }
 
@@ -68,6 +71,7 @@ export interface PowerStationsCount {
   STOPPED: number
   DAMAGED: number
   MAINTENANCE: number
+  STOPPED_BY_USER: number
 }
 
 export enum PowerStationsScope {

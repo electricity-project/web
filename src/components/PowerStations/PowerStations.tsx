@@ -3,17 +3,18 @@ import {
   DataGrid,
   gridClasses,
   gridPaginationModelSelector,
-  gridQuickFilterValuesSelector, type GridSortItem,
+  gridQuickFilterValuesSelector,
+  type GridSortItem,
   gridSortModelSelector,
   plPL,
   useGridApiRef
 } from '@mui/x-data-grid'
 import ipaddr from 'ipaddr.js'
 import * as React from 'react'
-import { useEffect, useRef } from 'react'
-import { useLocation, useNavigate } from 'react-router-dom'
+import {useEffect, useRef} from 'react'
+import {useLocation, useNavigate} from 'react-router-dom'
 
-import { useAppDispatch, useAppSelector } from '../../redux/hooks'
+import {useAppDispatch, useAppSelector} from '../../redux/hooks'
 import {
   fetchPowerStations,
   reset,
@@ -22,7 +23,7 @@ import {
   selectRows
 } from '../../redux/slices/powerStationsSlice'
 import PowerStationAlerts from '../common/PowerStationAlerts'
-import { PowerStationState, powerStationStateToString, PowerStationType, powerStationTypeToString } from '../common/types'
+import {PowerStationState, powerStationStateToString, PowerStationType, powerStationTypeToString} from '../common/types'
 import getColumns from './ColumnsDefinition'
 import PowerStationDisconnectConfirmDialog from './PowerStationDisconnectConfirmDialog'
 import PowerStationsToolbar from './PowerStationsToolbar'
@@ -75,7 +76,10 @@ const PowerStations: React.FC = () => {
         statePatterns.add(PowerStationState.Working)
       } else if (value.length >= 3 && powerStationStateToString(PowerStationState.Stopped).startsWith(value)) {
         statePatterns.add(PowerStationState.Stopped)
-      } else if (value.length >= 3 && powerStationStateToString(PowerStationState.Damaged).startsWith(value)) {
+        statePatterns.add(PowerStationState.StoppedByUser)
+      } else if (value.length >= 9 && powerStationStateToString(PowerStationState.StoppedByUser).startsWith(value)) {
+        statePatterns.add(PowerStationState.StoppedByUser)
+      }else if (value.length >= 3 && powerStationStateToString(PowerStationState.Damaged).startsWith(value)) {
         statePatterns.add(PowerStationState.Damaged)
       } else if (value.length >= 3 && powerStationStateToString(PowerStationState.Maintenance).startsWith(value)) {
         statePatterns.add(PowerStationState.Maintenance)

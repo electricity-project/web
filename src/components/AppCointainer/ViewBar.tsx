@@ -103,7 +103,7 @@ const ViewBar: React.FC = () => {
           </Tooltip>
         )
       }
-      const isDisabled = powerStationDetails.state !== PowerStationState.Stopped
+      const isDisabled = !(powerStationDetails.state === PowerStationState.Stopped ||  powerStationDetails.state === PowerStationState.StoppedByUser)
       return (
         <Tooltip
           disableInteractive

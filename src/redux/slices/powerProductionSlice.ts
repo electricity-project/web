@@ -97,7 +97,7 @@ const powerProductionSlice = createSlice({
         state.last60DaysDataset = fillDatasetWithValues(transformDataset(action.payload), 60, AggregationPeriodType.Day)
       })
       .addCase(fetchPowerStationsCount.fulfilled, (state, action: PayloadAction<PowerStationsCount>) => {
-        state.allPowerStations = action.payload.WORKING + action.payload.DAMAGED + action.payload.STOPPED + action.payload.MAINTENANCE
+        state.allPowerStations = action.payload.WORKING + action.payload.DAMAGED + action.payload.STOPPED + action.payload.MAINTENANCE+ + action.payload.STOPPED_BY_USER
         state.runningPowerStations = action.payload.WORKING
         state.powerStationsMaintenance = action.payload.MAINTENANCE
       })

@@ -19,6 +19,12 @@ const PowerStationStateChip: React.FC<{ powerStationState: PowerStationState | u
       title = 'Elektrownia nie produkuje prądu'
       label = powerStationStateToString(PowerStationState.Stopped, true)
       break
+    case PowerStationState.StoppedByUser:
+      color = undefined
+      icon = <PauseCircleOutline />
+      title = 'Elektrownia nie produkuje prądu'
+      label = powerStationStateToString(PowerStationState.StoppedByUser, true)
+      break
     case PowerStationState.Damaged:
       color = 'error' as const
       icon = <ErrorOutline />

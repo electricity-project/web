@@ -103,8 +103,8 @@ const powerProductionPredictionSlice = createSlice({
         state.isPrediction = true
       })
       .addCase(fetchPowerStationsCount.fulfilled, (state, action) => {
-        state.allPowerStations = action.payload.WORKING + action.payload.DAMAGED + action.payload.STOPPED + action.payload.MAINTENANCE
-        state.workingPowerStations = action.payload.WORKING + action.payload.STOPPED
+        state.allPowerStations = action.payload.WORKING + action.payload.DAMAGED + action.payload.STOPPED + action.payload.MAINTENANCE + action.payload.STOPPED_BY_USER
+        state.workingPowerStations = action.payload.WORKING + action.payload.STOPPED + action.payload.STOPPED_BY_USER
       })
   }
 })

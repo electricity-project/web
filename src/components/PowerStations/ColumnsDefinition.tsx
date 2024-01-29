@@ -75,7 +75,8 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
       minWidth: 145,
       hideable: false,
       type: 'singleSelect',
-      valueOptions: [PowerStationState.Working, PowerStationState.Stopped, PowerStationState.Damaged, PowerStationState.Maintenance],
+      valueOptions: [PowerStationState.Working, PowerStationState.Stopped, PowerStationState.StoppedByUser,
+          PowerStationState.Damaged, PowerStationState.Maintenance],
       renderHeader: (params: GridColumnHeaderParams) => (
         <Tooltip disableInteractive title={params.colDef.description}>
           <strong>{params.colDef.headerName}</strong>
@@ -144,7 +145,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
               </span>
             </Tooltip>)
         } else {
-          const isDisabled = params.row.state !== PowerStationState.Stopped
+          const isDisabled = !(params.row.state === PowerStationState.Stopped ||  params.row.state === PowerStationState.StoppedByUser)
           actions.push(
             <Tooltip
               disableInteractive

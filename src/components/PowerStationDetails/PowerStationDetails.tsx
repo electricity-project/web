@@ -68,10 +68,12 @@ const PowerStationDetails: React.FC = () => {
     const tickLabelInterval = (time: { getMinutes: () => number }): boolean => time.getMinutes() % 5 === 0
     const seriesValueFormatter = (value: any): string => {
       switch (value) {
-        case 4:
+        case 5:
           return powerStationStateToString(PowerStationState.Working, true)
-        case 3:
+        case 4:
           return powerStationStateToString(PowerStationState.Stopped, true)
+        case 3:
+          return powerStationStateToString(PowerStationState.StoppedByUser, true)
         case 2:
           return powerStationStateToString(PowerStationState.Damaged, true)
         case 1:
@@ -105,13 +107,13 @@ const PowerStationDetails: React.FC = () => {
         yAxis={[
           {
             tickMinStep: 1,
-            max: 4.6,
+            max: 5.6,
             min: 0,
-            tickNumber: 4,
+            tickNumber: 5,
             valueFormatter: yAxisValueFormatter
           }
         ]}
-        margin={{ left: 90 }}
+        margin={{ left: 130 }}
         series={[
           {
             dataKey: 'state',
@@ -125,9 +127,12 @@ const PowerStationDetails: React.FC = () => {
           let newState
           switch (element.state) {
             case PowerStationState.Working:
-              newState = 4
+              newState = 5
               break
             case PowerStationState.Stopped:
+              newState = 4
+              break
+            case PowerStationState.StoppedByUser:
               newState = 3
               break
             case PowerStationState.Damaged:
