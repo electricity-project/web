@@ -91,11 +91,7 @@ const PowerProductionPrediction: React.FC = () => {
               value.toLocaleString('pl-PL', { hour: '2-digit', minute: '2-digit', hour12: false })
           }
         ]}
-        yAxis={[
-          {
-            min: 0
-          }
-        ]}
+        yAxis={[{ min: 0 }]}
         series={[
           {
             dataKey: 'powerProduction',
@@ -128,11 +124,7 @@ const PowerProductionPrediction: React.FC = () => {
               value.toLocaleString('pl-PL', { hour: '2-digit', minute: '2-digit', hour12: false })
           }
         ]}
-        yAxis={[
-          {
-            min: 0
-          }
-        ]}
+        yAxis={[{ min: 0 }]}
         series={[
           {
             dataKey: 'runningPowerStationsNumber',

@@ -5,7 +5,7 @@ export enum PowerStationState {
   Stopped = 'STOPPED',
   Damaged = 'DAMAGED',
   Maintenance = 'MAINTENANCE',
-  StoppedByUser = "STOPPED_BY_USER"
+  StoppedByUser = 'STOPPED_BY_USER'
 }
 
 export const powerStationStateToString = (powerStationState: PowerStationState, capitalize?: boolean): string => {
@@ -19,7 +19,7 @@ export const powerStationStateToString = (powerStationState: PowerStationState, 
     case PowerStationState.Maintenance:
       return capitalize === true ? 'W naprawie' : 'w naprawie'
     case PowerStationState.StoppedByUser:
-      return capitalize === true ? 'Zatrzymana ręcznie': 'zatrzymana ręcznie'
+      return capitalize === true ? 'Zatrzymana ręcznie' : 'zatrzymana ręcznie'
   }
 }
 
