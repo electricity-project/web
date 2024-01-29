@@ -63,7 +63,7 @@ const PowerProduction: React.FC = () => {
   const getCardsProps = (): CardProps[] => [
     {
       key: 'actual-power-production',
-      header: 'Sumaryczna produkcja prądu',
+      header: 'Sumaryczna produkcja\nenergii elektrycznej',
       text: getActualPowerProductionText()
     },
     {
@@ -94,10 +94,10 @@ const PowerProduction: React.FC = () => {
             <Grid item className={classes.gridItem} key={key}>
               <Card className={classes.card}>
                 <CardContent className={classes.cardContent}>
-                  <Typography variant={'h5'} className={classes.cardName} fontWeight={'bold'}>
+                  <Typography variant={'h5'} className={classes.cardName} fontWeight={'bold'} style={{ whiteSpace: 'pre-line' }}>
                     {header}
                   </Typography>
-                  <Typography variant={'h6'} mt={4} textAlign={'center'}>
+                  <Typography variant={'h6'} mt={2.5} textAlign={'center'}>
                     {text}
                   </Typography>
                 </CardContent>

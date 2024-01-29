@@ -68,7 +68,7 @@ const PowerProductionCharts: React.FC<PowerProductionChartsProps> =
           {
             dataKey,
             curve: 'linear',
-            label: 'Produkcja prądu (kWh)'
+            label: 'Produkcja energii elektrycznej (kWh)'
           }
         ]}
         dataset={chartDatasets[tabIndex]}

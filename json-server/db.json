@@ -78,7 +78,7 @@
     {
       "id": 7,
       "ipv6": "53:32:0000:1ac:0000:32:0000:0007",
-      "state": "STOPPED",
+      "state": "STOPPED_BY_USER",
       "type": "SOLAR_PANEL",
       "creationTime": "2021-12-17T12:58:00",
       "maxPower": 23592,
@@ -181,7 +181,7 @@
       {
         "id": 7,
         "ipv6": "53:32:0000:1ac:0000:32:0000:0007",
-        "state": "STOPPED",
+        "state": "STOPPED_BY_USER",
         "type": "SOLAR_PANEL",
         "creationTime": "2021-12-17T12:58:00",
         "maxPower": 23592,
@@ -824,6 +824,7 @@
   "power-station-count": {
     "WORKING": 1300,
     "STOPPED": 187,
+    "STOPPED_BY_USER": 1,
     "DAMAGED": 3,
     "MAINTENANCE": 10
   },
@@ -1010,17 +1011,17 @@
     },
     {
       "power": 1130,
-      "state": "WORKING",
+      "state": "STOPPED_BY_USER",
       "timestamp": "2023-12-20T23:22:00"
     },
     {
       "power": 1130,
-      "state": "WORKING",
+      "state": "STOPPED_BY_USER",
       "timestamp": "2023-12-20T23:21:00"
     },
     {
       "power": 1130,
-      "state": "WORKING",
+      "state": "STOPPED_BY_USER",
       "timestamp": "2023-12-20T23:20:00"
     },
     {

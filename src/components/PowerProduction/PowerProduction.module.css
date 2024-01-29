@@ -1,5 +1,5 @@
 .card {
-    min-height: 150px;
+    min-height: 170px;
 }
 
 .cardContent {
@@ -16,4 +16,5 @@
 
 .cardName {
     text-align: center;
+    min-height: 64px;
 }

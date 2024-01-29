@@ -10,19 +10,19 @@ const PowerStationStateChip: React.FC<{ powerStationState: PowerStationState | u
     case PowerStationState.Working:
       color = 'success' as const
       icon = <CheckCircleOutline />
-      title = 'Elektrownia produkuje prąd'
+      title = 'Elektrownia produkuje energię elektryczną'
       label = powerStationStateToString(PowerStationState.Working, true)
       break
     case PowerStationState.Stopped:
       color = undefined
       icon = <PauseCircleOutline />
-      title = 'Elektrownia nie produkuje prądu'
+      title = 'Elektrownia nie produkuje energii elektrycznej'
       label = powerStationStateToString(PowerStationState.Stopped, true)
       break
     case PowerStationState.StoppedByUser:
       color = undefined
       icon = <PauseCircleOutline />
-      title = 'Elektrownia nie produkuje prądu'
+      title = 'Elektrownia nie produkuje energii elektrycznej'
       label = powerStationStateToString(PowerStationState.StoppedByUser, true)
       break
     case PowerStationState.Damaged:

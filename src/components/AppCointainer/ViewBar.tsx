@@ -36,13 +36,13 @@ const ViewBar: React.FC = () => {
       viewHeaderText = 'Szczegóły elektrowni'
       break
     case '/power-prediction':
-      viewHeaderText = 'Predykcja produkcji prądu'
+      viewHeaderText = 'Predykcja produkcji energii elektrycznej'
       break
     case '/admin':
       viewHeaderText = 'Panel administratora'
       break
     default:
-      viewHeaderText = 'Stan produkcji prądu'
+      viewHeaderText = 'Stan produkcji energii elektrycznej'
       break
   }
 
@@ -107,7 +107,7 @@ const ViewBar: React.FC = () => {
       return (
         <Tooltip
           disableInteractive
-          title={isDisabled ? `Nie można uruchomić gdy jest ${powerStationStateToString(powerStationDetails.state)}` : 'Uruchom pracę elektrowni'}>
+          title={isDisabled ? `Nie można uruchomić, gdy jest ${powerStationStateToString(powerStationDetails.state)}` : 'Uruchom pracę elektrowni'}>
           <span>
             <IconButton disabled={isDisabled} onClick={onStart}>
               <PlayArrow sx={{ fontSize: 25 }} />

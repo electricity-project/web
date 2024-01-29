@@ -35,7 +35,7 @@ const getNavElements = (isAdmin: boolean): NavElement[] => {
       key: 'power-production',
       linkTo: '/power-production',
       icon: <ElectricBolt />,
-      text: 'Stan produkcji prądu',
+      text: 'Stan produkcji energii elektrycznej',
       isSelectedPattern: '/power-production'
     },
     {
@@ -49,7 +49,7 @@ const getNavElements = (isAdmin: boolean): NavElement[] => {
       key: 'power-prediction',
       linkTo: '/power-prediction',
       icon: <QueryStats />,
-      text: 'Predykcja produkcji prądu',
+      text: 'Predykcja produkcji energii elektrycznej',
       isSelectedPattern: '/power-prediction'
     }
   ]
@@ -66,7 +66,7 @@ const getNavElements = (isAdmin: boolean): NavElement[] => {
   return navElements
 }
 
-const drawerWidth = 275
+const drawerWidth = 360
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,

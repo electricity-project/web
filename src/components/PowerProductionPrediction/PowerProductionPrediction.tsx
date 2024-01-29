@@ -96,7 +96,7 @@ const PowerProductionPrediction: React.FC = () => {
           {
             dataKey: 'powerProduction',
             curve: 'linear',
-            label: 'Produkcja prądu (kWh)'
+            label: 'Produkcja energii elektrycznej (kWh)'
           }
         ]}
         dataset={powerProductionPrediction as Array<{ timestamp: Date, powerProduction: number }>}
@@ -141,18 +141,18 @@ const PowerProductionPrediction: React.FC = () => {
   return (
     <>
       <Stack direction={'row'} justifyContent={'flex-start'} spacing={20} p={1}>
-        <Box minWidth={150} minHeight={150}>
+        <Box minWidth={320} minHeight={150}>
           <Card>
-          <DateCalendar
-            disableHighlightToday
-            disabled={isPrediction}
-            value={date}
-            onChange={handleDateChange}
-            views={['day']}
-            defaultValue={moment().add(1, 'days')}
-            minDate={moment().add(1, 'days')}
-            maxDate={moment().add(14, 'days')}
-            sx={{ m: 0 }} />
+            <DateCalendar
+              disableHighlightToday
+              disabled={isPrediction}
+              value={date}
+              onChange={handleDateChange}
+              views={['day']}
+              defaultValue={moment().add(1, 'days')}
+              minDate={moment().add(1, 'days')}
+              maxDate={moment().add(14, 'days')}
+              sx={{ m: 0 }} />
           </Card>
         </Box>
         <Stack spacing={5}>
@@ -191,10 +191,10 @@ const PowerProductionPrediction: React.FC = () => {
                 </Typography>
               </CardContent>
             </Card>
-            <Card sx={{ minWidth: 350, minHeight: 150 }} raised>
+            <Card sx={{ minWidth: 350, minHeight: 150, px: 1 }} raised>
               <CardContent sx={{ pt: 3 }}>
                 <Typography variant={'h5'} textAlign={'center'} fontWeight={'bold'}>
-                  Prąd sumarycznie
+                  Energia elektryczna sumarycznie
                 </Typography>
                 <Typography variant={'h6'} mt={4} textAlign={'center'}>
                   {getAllDayPowerProductionPredictionText()}

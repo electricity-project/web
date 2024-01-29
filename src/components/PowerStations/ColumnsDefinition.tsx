@@ -149,7 +149,7 @@ const getColumns = (afterAction: () => void): GridColDef[] => {
           actions.push(
             <Tooltip
               disableInteractive
-              title={isDisabled ? `Nie można uruchomić gdy jest ${powerStationStateToString(params.row.state)}` : 'Uruchom pracę elektrowni'}>
+              title={isDisabled ? `Nie można uruchomić, gdy jest ${powerStationStateToString(params.row.state)}` : 'Uruchom pracę elektrowni'}>
               <span>
                 <GridActionsCellItem
                   disabled={isDisabled}
